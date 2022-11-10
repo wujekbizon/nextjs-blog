@@ -7,3 +7,7 @@ export interface PostItemType {
 export type PostsProps = {
   posts: PostItemType[];
 };
+
+export type PostProps = {
+  post: PostItemType;
+};

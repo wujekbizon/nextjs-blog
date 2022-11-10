@@ -1,6 +1,7 @@
 import AllPosts from '../../components/posts/AllPosts';
 import { PostsProps } from '../../types/postsTypes';
 import { getAllPosts } from '../../helpers/archiveUtils';
+import { GetStaticProps } from 'next';
 
 const AllPostsPage = ({ posts }: PostsProps) => {
   return (
@@ -10,7 +11,7 @@ const AllPostsPage = ({ posts }: PostsProps) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = () => {
   const allPosts = getAllPosts();
 
   return {
@@ -18,5 +19,5 @@ export async function getStaticProps() {
       posts: allPosts,
     },
   };
-}
+};
 export default AllPostsPage;

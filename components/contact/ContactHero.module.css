@@ -1,0 +1,21 @@
+.contact {
+  padding: 30px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: grey;
+  padding: 80px;
+  border-radius: 6px;
+}
+
+.title h1 {
+  font-size: 36px;
+}
+
+.title p {
+  font-size: 21px;
+}

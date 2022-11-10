@@ -20,4 +20,4 @@ function printBasics() {
 printBasics();
 ```
 
-Learn more about it [here](https://academind.com).
+## More Content Coming Soon

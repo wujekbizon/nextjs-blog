@@ -16,6 +16,11 @@ const MainNavigation = () => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
+          <li>
+            <Link href="https://g-w.vercel.app/" target="_blank">
+              Portfolio
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

@@ -1,0 +1,79 @@
+.contact {
+  margin: var(--size-8) auto;
+  border-radius: 6px;
+  border: 1px solid black;
+  background: linear-gradient(180deg, #431e3f, #1d1c25);
+  width: 90%;
+  max-width: 50rem;
+  padding: var(--size-4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: var(--size-4);
+}
+
+.contact h1 {
+  font-size: var(--size-8);
+  margin: var(--size-4) 0;
+  text-align: left;
+  font-family: 'Roboto-Condensed';
+  font-weight: 600;
+  color: #040c18;
+}
+
+.form label {
+  display: block;
+  margin: var(--size-2) 0 var(--size-1) 0;
+  color: whitesmoke;
+  text-transform: uppercase;
+  font-size: var(--size-3);
+}
+
+.form input,
+.form textarea {
+  font: inherit;
+  padding: var(--size-1);
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #040c18;
+  background: #c0c5cc;
+  resize: none;
+  outline: none;
+}
+
+.controls {
+  display: flex;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.control {
+  flex: 1;
+  min-width: 10rem;
+}
+
+.actions {
+  margin-top: var(--size-4);
+  text-align: right;
+}
+
+.form button {
+  font: inherit;
+  cursor: pointer;
+  background-color: whitesmoke;
+  border: 1px solid black;
+  padding: var(--size-2) var(--size-4);
+  border-radius: 4px;
+  color: black;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form button:hover {
+  background: linear-gradient(180deg, #431e3f, #1d1c25);
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .contact h1 {
+    font-size: var(--size-12);
+    text-align: center;
+  }
+}
