@@ -12,6 +12,7 @@ const PostDetailsPage = ({ post }: PostProps) => {
   return (
     <section>
       <PostContent post={post} />
+      {!post && <p>Loading...</p>}
     </section>
   );
 };
