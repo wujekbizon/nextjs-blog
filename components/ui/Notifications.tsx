@@ -1,6 +1,7 @@
 import styles from './Notifications.module.css';
 import { NotificationDataType } from '../../types/contextTypes';
 import { useContext } from 'react';
+import ReactDOM from 'react-dom';
 import NotificationContext from '../../store/notificationContext';
 
 const Notifications = (props: NotificationDataType) => {
@@ -23,11 +24,12 @@ const Notifications = (props: NotificationDataType) => {
   }
 
   const cssClasses = `${styles.notification} ${statusClasses}`;
-  return (
+  return ReactDOM.createPortal(
     <div className={cssClasses} onClick={notificationCtx.hideNotification}>
       <h2>{title}</h2>
       <p>{message}</p>
-    </div>
+    </div>,
+    document.getElementById('notifications')!
   );
 };
 export default Notifications;

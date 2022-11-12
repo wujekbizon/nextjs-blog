@@ -3,6 +3,7 @@ import { PostProps } from '../../types/postsTypes';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getPostsFile, getPostData } from '../../helpers/archiveUtils';
 import { ParsedUrlQuery } from 'querystring';
+import Head from 'next/head';
 
 interface IParams extends ParsedUrlQuery {
   slug: string;
@@ -11,6 +12,10 @@ interface IParams extends ParsedUrlQuery {
 const PostDetailsPage = ({ post }: PostProps) => {
   return (
     <section>
+      <Head>
+        <title>{post.data.title}</title>
+        <meta name="description" content={post.data.excerpt} />
+      </Head>
       <PostContent post={post} />
       {!post && <p>Loading...</p>}
     </section>

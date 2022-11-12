@@ -8,24 +8,24 @@ import { duotoneSpace } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Content } from 'mdast';
 import React, { ReactNode, ReactElement } from 'react';
 
-type NodeToProps<T> = {
-  node: T;
-  children: T extends { children: any } ? ReactNode : never;
-  className?: string;
-};
+// type NodeToProps<T> = {
+//   node: T;
+//   children: T extends { children: any } ? ReactNode : never;
+//   className?: string;
+// };
 
-type CustomRenderers = {
-  [K in Content['type']]?: (
-    props: NodeToProps<Extract<Content, { type: K }>>
-  ) => ReactElement;
-};
+// type CustomRenderers = {
+//   [K in Content['type']]?: (
+//     props: NodeToProps<Extract<Content, { type: K }>>
+//   ) => ReactElement;
+// };
 
 const PostContent = ({ post }: PostProps) => {
   const imagePath = `/images/posts/${post.slug}/${post.data.image}`;
 
   const customRenderers = {
     p(props: any) {
-      const { node, children } = props;
+      const { node } = props;
       const image = node.children[0];
 
       if (image.type === 'element' && image.tagName === 'img') {
@@ -41,18 +41,16 @@ const PostContent = ({ post }: PostProps) => {
           </div>
         );
       }
-      return <p>{children}</p>;
+      return <p>{props.children}</p>;
     },
 
     code(code: any) {
       const { className, children } = code;
-      const language = className?.split('-')[1]; // className is something like language-js => We need the "js" part here
+      const language = className.split('-')[1]; // className is something like language-js => We need the "js" part here
       return (
-        <SyntaxHighlighter
-          style={duotoneSpace}
-          language={language}
-          children={String(children).replace(/\n$/, '')}
-        />
+        <SyntaxHighlighter style={duotoneSpace} language={language}>
+          {children}
+        </SyntaxHighlighter>
       );
     },
   };
