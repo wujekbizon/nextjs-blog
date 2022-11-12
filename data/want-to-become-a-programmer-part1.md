@@ -299,7 +299,7 @@ For those who want to see fully working implementation, get my [wolfpad](https:/
 
 Get a file here: [useSyncExternalStore.js](https://drive.google.com/file/d/124fEdZrNmxMonWoUMZhI_c5xGO9ZS5f2/view). Then run at terminal you can add or remove content and even share with your friends and coworkers. The idea behind wolfpad is to write code and share with others.
 
-```node
+```js
 npx wolfpad serve useSyncExternalStore.js
 Navigate to http://localhost:4005 to edit the file.
 ```

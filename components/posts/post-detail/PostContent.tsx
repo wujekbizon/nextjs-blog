@@ -2,11 +2,21 @@ import styles from './PostContent.module.css';
 import PostHeader from './PostHeader';
 import { PostProps } from '../../../types/postsTypes';
 import ReactMarkdown from 'react-markdown';
-import Image from 'next/legacy/image';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { duotoneSpace } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { Content } from 'mdast';
-import React, { ReactNode, ReactElement } from 'react';
+import Image from 'next/image';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import duotoneSpace from 'react-syntax-highlighter/dist/cjs/styles/prism/duotone-space';
+import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
+import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+
+SyntaxHighlighter.registerLanguage('js', js);
+SyntaxHighlighter.registerLanguage('ts', ts);
+SyntaxHighlighter.registerLanguage('tsx', tsx);
+SyntaxHighlighter.registerLanguage('jsx', jsx);
+
+// import { Content } from 'mdast';
+// import React, { ReactNode, ReactElement } from 'react';
 
 // type NodeToProps<T> = {
 //   node: T;

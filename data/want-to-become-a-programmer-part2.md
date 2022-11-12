@@ -225,7 +225,7 @@ Before we start converting our ssr project into Typescript I just want to keep i
 
 We will work on ssr project wrote in Next.js, so let's quickly convert it to Typescript. First I'll create new folder and call it a ssr-ts then copy my whole ssr project into it. Then let's change store.js into store.ts and index.js into index.tsx. Now re-run the server to acknowledge that there are changes in the file names. Next.js will throw an error that said it looks like we're using Typescript so we need to add some dependencies.
 
-```node
+```js
 npm install --dev typescript @types/react @types/node
 ```
 
