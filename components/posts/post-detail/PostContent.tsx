@@ -15,21 +15,6 @@ SyntaxHighlighter.registerLanguage('ts', ts);
 SyntaxHighlighter.registerLanguage('tsx', tsx);
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
-// import { Content } from 'mdast';
-// import React, { ReactNode, ReactElement } from 'react';
-
-// type NodeToProps<T> = {
-//   node: T;
-//   children: T extends { children: any } ? ReactNode : never;
-//   className?: string;
-// };
-
-// type CustomRenderers = {
-//   [K in Content['type']]?: (
-//     props: NodeToProps<Extract<Content, { type: K }>>
-//   ) => ReactElement;
-// };
-
 const PostContent = ({ post }: PostProps) => {
   const imagePath = `/images/posts/${post.slug}/${post.data.image}`;
 
