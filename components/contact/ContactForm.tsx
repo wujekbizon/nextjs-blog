@@ -1,5 +1,6 @@
 import styles from './ContactForm.module.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import NotificationContext from '../../store/notificationContext';
 
 type ContactDetails = {
   email: string;
@@ -27,7 +28,8 @@ const ContactForm = () => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredName, setEnteredName] = useState('');
   const [enteredMessage, setEnteredMessage] = useState('');
-  const [error, setError] = useState(false);
+
+  const notificationCtx = useContext(NotificationContext);
 
   const sendMessageHandler = async (
     event: React.FormEvent<HTMLFormElement>
@@ -43,7 +45,11 @@ const ContactForm = () => {
       !enteredMessage ||
       enteredMessage.trim() === ''
     ) {
-      console.log('Invalid Inputs');
+      notificationCtx.showNotification({
+        title: 'Error!',
+        message: 'Invalid Input!',
+        status: 'error',
+      });
       return;
     }
 
@@ -53,15 +59,29 @@ const ContactForm = () => {
       message: enteredMessage,
     };
 
+    notificationCtx.showNotification({
+      title: 'Sending...',
+      message: 'Your message is currently being added.',
+      status: 'pending',
+    });
+
     try {
       await sendContactData(message);
+      notificationCtx.showNotification({
+        title: 'Success!',
+        message: 'Successfully send a message!',
+        status: 'success',
+      });
       setEnteredEmail('');
       setEnteredName('');
       setEnteredMessage('');
     } catch (error) {
       if (error instanceof Error) {
-        setError(true);
-        console.log(error.message);
+        notificationCtx.showNotification({
+          title: 'Error!',
+          message: error.message || 'Something went wrong!',
+          status: 'error',
+        });
       } else {
         throw new Error('Something went wrong');
       }
@@ -70,7 +90,7 @@ const ContactForm = () => {
 
   return (
     <section className={styles.contact}>
-      <h1 className="gradient__text">How can I help you ?</h1>
+      <h1 className="gradient__text">Contact Me</h1>
       <form className={styles.form} onSubmit={sendMessageHandler}>
         <div className={styles.controls}>
           <div className={styles.control}>

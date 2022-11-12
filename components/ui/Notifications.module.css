@@ -1,43 +1,32 @@
 .notification {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4rem;
+  width: 100%;
+  background-color: #1b1b1b;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: blue;
-  background-color: grey;
-  padding: 0 var(--size-8);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  height: 5rem;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  color: white;
+  padding: 0.5rem 10%;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .notification h2 {
-  font-size: var(--size-6);
   margin: 0;
+  font-size: 1.25rem;
+  color: white;
 }
 
-.notification p {
-  margin: 0;
+.pending {
+  background-color: #042c54;
 }
 
 .success {
   background-color: green;
-  color: grey;
 }
 
 .error {
-  background-color: red;
-}
-
-@media (min-width: 768px) {
-  .notification {
-    width: 40rem;
-    left: calc(50% - 20rem);
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-  }
+  background-color: rgb(228, 29, 29);
 }

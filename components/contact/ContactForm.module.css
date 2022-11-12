@@ -11,7 +11,7 @@
 }
 
 .contact h1 {
-  font-size: var(--size-8);
+  font-size: var(--size-6);
   margin: var(--size-4) 0;
   text-align: left;
   font-family: 'Roboto-Condensed';
@@ -73,7 +73,7 @@
 
 @media (min-width: 768px) {
   .contact h1 {
-    font-size: var(--size-12);
+    font-size: var(--size-10);
     text-align: center;
   }
 }

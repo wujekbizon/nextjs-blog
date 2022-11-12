@@ -5,9 +5,10 @@ export type NotificationDataType = {
 };
 
 export type InitialState = {
-  notification: {};
+  notification: NotificationDataType;
   showNotification: (
     notificationData: NotificationDataType
   ) => void | undefined;
   hideNotification: () => void | undefined;
+  isActive: boolean;
 };
