@@ -12,7 +12,7 @@ type ContactDocument = {
 
 export const connectDatabase = async (dbName: string) => {
   const client = await MongoClient.connect(
-    `mongodb+srv://grzegorz:Od4W7qH3Ec6DwzlF@cluster0.knuso.mongodb.net/${dbName}?retryWrites=true&w=majority`
+    `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.knuso.mongodb.net/${dbName}?retryWrites=true&w=majority`
   );
   return client;
 };
