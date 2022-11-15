@@ -8,6 +8,10 @@
   padding: 0 10%;
 }
 
+.header nav {
+  display: none;
+}
+
 .header ul {
   list-style: none;
   display: flex;
@@ -31,6 +35,46 @@
   color: whitesmoke;
 }
 
+.navbar_btn {
+  display: flex;
+  position: relative;
+  z-index: 99;
+}
+
+.navbar_btn button {
+  display: block;
+  z-index: 10;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.3s linear;
+}
+
+.navbar_btn line {
+  color: #fff;
+  transition: all 0.3s linear;
+}
+
+.navbar_btn button:hover line {
+  color: #fa8231;
+}
+
+.navbar_btn button:hover path {
+  color: #fa8231;
+}
+
+.mdclose {
+  color: hsl(0 0% 100%);
+  width: 42px;
+  height: 42px;
+}
+
+.fimenu {
+  color: hsl(0 0% 100%);
+  width: 42px;
+  height: 42px;
+}
+
 @media (min-width: 768px) {
   .header ul {
     gap: 0.5rem;
@@ -38,5 +82,13 @@
 
   .header a {
     font-size: var(--size-5);
+  }
+
+  .header nav {
+    display: flex;
+  }
+
+  .navbar_btn {
+    display: none;
   }
 }

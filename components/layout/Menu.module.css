@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: #031b34;
+  padding: 2rem;
+  position: absolute;
+  top: 60px;
+  right: -20px;
+  min-width: 200px;
+  border-radius: 5px;
+  box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
+  z-index: 99;
+}
+
+.list li {
+  margin: 15px;
+}
+
+.list a {
+  margin: 1rem 0;
+  color: white;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.list a:hover {
+  color: #fa8231;
+}
