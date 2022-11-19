@@ -11,24 +11,22 @@ date: '2022-11-19'
 Welcome back. It's been some time since our last rendezvous with coding.
 Winter is coming at least in my part of the world where I live. So when is cold and gloomily outside, I like to sit in my chair with hot cup of coffie and tell some stories.
 
-That's why in this part of the blog I decided that I will share some story of how I created my interactive coding environment. So I'll not only tell you why I created this app but I'll tell you how I did it.
+That's why in this part of the blog, I decided that I will share some story of how, I created my interactive coding environment. So I'll not only tell you why, I created this app but I'll tell you, how I did it.
 
-So I have an idea. Let's create this app again. This time let's use Next Js , originally I used React.
-
-This will be good practice with coding, like always let's add Typescript to this project , because we'll have good examples of how to write a generics function in Typescript.
+So I have an idea. Let's create this app again. This time let's use Next Js , originally I used React. This will be a good practice with coding, like always, let's add Typescript.
 
 # 2. Long time ago ...
 
 It was a winter , the January 1 of 2022 , when I decided that I need to change my life. Yes, like almost 99% of our population , I had my New Year's resolutions.
 
-I decided that I will start to do what, I love the most , which is coding. Back then I thought that, if I'll know how to create a simple website, this will give me a power to change and rule a world. Ofcourse it's a joke but a funny one. What I mean is that I thought this is enough to land a job in IT.
+I decided, that I will start to do, what I love the most, which is a coding. Back then I thought that, if I'll know how to create a simple website, this will give me a power to change and rule a world. Ofcourse it's a silly joke but a funny one. What I mean is that, I thought this is enough, to land a job in IT.
 
-How do I actually started with the programming. I was looking for remote work because of the pandemic and I found one of those advertisments saying that they will teach me coding if I'll pay them a lot of money. You will probably know where this going, so instead of that I decided to start learning myself.
-Back then didn't know about Visual Studio Code , instead I used CodePen and that was my first contact with interactive coding environment.
-What I created back then I thought was awesome, here is [Greg First Website](https://codepen.io/Wolfingerr/full/mdBQbLQ).
+How do I actually started with the programming ?. I was looking for a remote work, because of the pandemic and I found one of those bootcamps advertisments, saying that, they will teach me coding if I'll pay them a lot of money. You will probably know where this going, so instead of that, I decided to start learning myself.
 
-But I didn't stop on that, for over 6 months Udemy.com was my home where I start to learn Javascript then React with Redux and finally Typescript.
+Back then didn't know about Visual Studio Code, instead I used CodePen and that was my first contact with interactive coding environment.
+What I created back then, I thought was awesome, here is [Greg First Website](https://codepen.io/Wolfingerr/full/mdBQbLQ).
 
+I didn't stop on that, for over 6 months Udemy.com was my home, where I started to learn Javascript then React with Redux and finally Typescript.
 And then I started to work on my own version of interactive coding 'playground'.
 
 # 3. Let's create Wolfpad 2.0.
@@ -37,7 +35,7 @@ Since then I created fully functional and working Wolfpad which I published on N
 
 Ok, so it's time to focus on project, let's start writing code.
 
-Let's create new Next.js project with Typescript.
+Let's create a new project in Next.js with Typescript.
 
 ```ts
 npx create-next-app@latest --typescript
@@ -51,13 +49,13 @@ npm install axios esbuild-wasm localforage wolfpad
 
 Let's go quickly thru our list of dependencies we just installed.
 
-1. We need Axois because we'll be fetching some data from [unpkg.com](https://unpkg.com). For those that unfamiliar, unpkg is a fast, global content delivery network for everything on npm. Use it to quickly and easily load any file from any package using a URL like: _unpkg.com/:package@:version/:file_
+1. We need Axois because we'll be fetching some data from [unpkg.com](https://unpkg.com). For those that unfamiliar, unpkg is a fast, global content delivery network for everything on npm. Use it to quickly and easily load any file from any package using a URL.
 
 2. Esbuild is a next-generation JavaScript bundler aimed at improving build tool performance and ease of use. And some of its main features are: Extreme speed without needing a cache. ES6 and CommonJS modules.
 
    ![esbuild](esbuild.png)
 
-3. In order to avoid big numbers of request to unpkg.com we will use localforage to cache [Local Forage Official Docs](https://localforage.github.io/localForage/).
+3. In order to avoid big numbers of request to unpkg.com we will use localforage to filecache [Local Forage Official Docs](https://localforage.github.io/localForage/).
 
 Now after cleaning a bit our starting template , let's think how we will structure this project.
 
@@ -87,10 +85,10 @@ const HomePage = () => {
 export default HomePage;
 ```
 
-For now let's not worry about CSS so much, so I'll do some inline styles.
+For now let's not worry about CSS that much, so I'll do inline style.
 Eventually this will be a Home Page of ours application.
 
-Inside **pages** folder, let's create wolfpad folder and inside, index.tsx file. I want to structure my application this way, so index.tsx will be my main page for wolfpad and maybe in a future we'll add more content and more pages, like login page or register page for a new user.
+Inside **pages** folder, let's create wolfpad folder and inside, index.tsx file. I want to structure my application this way, so index.tsx will be my main page for wolfpad and maybe in a future, we'll add more content and more pages, like login page or register page.
 
 Last but not least we need to find inside **node_modules** folder, **esbuild-wasm** folder and inside, a file **_esbuild.wasm_**, copy and paste it into **public** folder in root directory.
 
