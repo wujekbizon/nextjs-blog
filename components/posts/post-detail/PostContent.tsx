@@ -31,7 +31,7 @@ const PostContent = ({ post }: PostProps) => {
               alt={image.properties.alt}
               width={600}
               height={400}
-              layout="responsive"
+              style={{ width: '100%', height: 'auto' }}
             />
           </div>
         );

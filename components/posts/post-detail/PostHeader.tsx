@@ -6,7 +6,13 @@ const PostHeader = ({ title, image }: { title: string; image: string }) => {
     <>
       <header className={styles.header}>
         <h1>{title}</h1>
-        <Image src={image} alt={title} width={200} height={150} />
+        <Image
+          src={image}
+          alt={title}
+          width={300}
+          height={200}
+          style={{ width: '100%', height: 'auto' }}
+        />
       </header>
       <div className={styles.divider} />
     </>
