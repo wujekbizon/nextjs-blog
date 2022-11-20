@@ -204,8 +204,7 @@ const CodeInput = ({
         <h1>Wolfpad</h1>
       </div>
       <textarea
-        cols={100}
-        rows={10}
+        style={{ width: '100%', height: '250px' }}
         value={inputValue}
         onChange={(e) => onChange(e)}
       />
@@ -311,6 +310,219 @@ So now, we should be able to enter whatever imports in ours input field and this
 ![React](imports.png)
 
 Nice, it's working and when I open my network tab I can also see, that my filecache working as well. Now we need to see if we can imports not only js files but also css files as well.
+
+It will not be that easy, as we might think, well, it should work by basically changing loader to css , right now we loading just jsx files. Unfortuantely this approach will not work. Why, beacuse esbuild working with the file system, and we are bundling user code in a browser, there is no file system in a browser. This will work 100% in a Node enviroment, but not in a browser. So we need to find a way, to tweak ours code and this is a solution and also small refactor to existing code.
+
+```ts
+// fetch-plugin.ts
+
+import * as esbuild from 'esbuild-wasm';
+import axios from 'axios';
+import localforage from 'localforage';
+
+const fileCache = localforage.createInstance({
+  name: 'filecache',
+});
+
+export const fetchPlugin = (inputCode: string) => {
+  return {
+    name: 'fetch-plugin',
+    setup(build: esbuild.PluginBuild) {
+      build.onLoad({ filter: /(^index\.js$)/ }, () => {
+        return {
+          loader: 'jsx',
+          contents: inputCode,
+        };
+      });
+
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+
+        if (cachedResult) {
+          return cachedResult;
+        }
+
+        const { data, request } = await axios.get(args.path);
+
+        const escaped = data
+          .replace(/\n/g, '')
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
+
+        const contents = `
+        const style = document.createElement("style");
+        style.innerText = '${escaped}';
+        document.head.appendChild(style);
+        
+        `;
+
+        const result: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
+
+        await fileCache.setItem(args.path, result);
+
+        return result;
+      });
+
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+
+        if (cachedResult) {
+          return cachedResult;
+        }
+
+        const { data, request } = await axios.get(args.path);
+
+        const result: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents: data,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
+
+        await fileCache.setItem(args.path, result);
+
+        return result;
+      });
+    },
+  };
+};
+```
+
+Let's see if this working, let's import css file.
+
+```node
+import 'bootstrap@5.2.2/dist/css/bootstrap.css';
+```
+
+Nice, it's working , it's bundling css file and returning whatever is fetched from unpkg.com, also, when we copy the whole thing and we paste it in to dev console, we can apply all css features into current html document.
+
+![css file import](css.png)
+
+Right now the code is working fine, but it doesn't look good , we have many repetitions. So let's fix this.
+
+Let's refactor fetch-plugin.ts a bit.
+
+```ts
+// fetch-plugin.ts
+
+import * as esbuild from 'esbuild-wasm';
+import axios from 'axios';
+import localforage from 'localforage';
+
+const fileCache = localforage.createInstance({
+  name: 'filecache',
+});
+
+export const fetchPlugin = (inputCode: string) => {
+  return {
+    name: 'fetch-plugin',
+    setup(build: esbuild.PluginBuild) {
+      build.onLoad({ filter: /(^index\.js$)/ }, () => {
+        return {
+          loader: 'jsx',
+          contents: inputCode,
+        };
+      });
+
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
+          args.path
+        );
+
+        if (cachedResult) {
+          return cachedResult;
+        }
+      });
+
+      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+        const { data, request } = await axios.get(args.path);
+        const escaped = data
+          .replace(/\n/g, '')
+          .replace(/"/g, '\\"')
+          .replace(/'/g, "\\'");
+
+        const contents = `
+        const style = document.createElement("style");
+        style.innerText = '${escaped}';
+        document.head.appendChild(style);
+        
+        `;
+
+        const result: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
+
+        await fileCache.setItem(args.path, result);
+
+        return result;
+      });
+
+      build.onLoad({ filter: /.*/ }, async (args: any) => {
+        const { data, request } = await axios.get(args.path);
+
+        const result: esbuild.OnLoadResult = {
+          loader: 'jsx',
+          contents: data,
+          resolveDir: new URL('./', request.responseURL).pathname,
+        };
+
+        await fileCache.setItem(args.path, result);
+
+        return result;
+      });
+    },
+  };
+};
+```
+
+The last thing, I want to do is to remove esbuild.wasm file from public folder , the one we copied from node_modules/esbuild-wasm. Instead of that, we can now get this file directly from unpkg.com. Esbuild is a npm module so this shouldn't be a problem.
+
+```tsx
+// index.tsx
+
+const PlaygroundPage = () => {
+  const [input, setInput] = useState('');
+  const [code, setCode] = useState('');
+  const [initialized, setInitialized] = useState(false);
+
+  const startService = useCallback(() => {
+    if (initialized) {
+      return;
+    }
+
+    try {
+      esbuild.initialize({
+        worker: true,
+        wasmURL: 'https://unpkg.com/esbuild-wasm@0.15.14/esbuild.wasm',
+      });
+      setInitialized(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
+    }
+  }, [initialized]);
+
+  // {...}
+};
+```
+
+This is exactly the same file, so it shouldn't have a difference, except the money thing. Instead of us hosting this file in our app, let Unpkg.com pays all the hosting fees.
+
+#### Code Execution inside a browser.
+
+**more content coming soon**
 
 Let's finish for today and we will continue in a next time. Those guys need a break , as am'I .
 
