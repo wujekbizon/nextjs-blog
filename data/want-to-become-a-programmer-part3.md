@@ -520,12 +520,196 @@ const PlaygroundPage = () => {
 
 This is exactly the same file, so it shouldn't have a difference, except the money thing. Instead of us hosting this file in our app, let Unpkg.com pays all the hosting fees.
 
-#### Code Execution inside a browser.
+#### 4. Code Execution inside a browser.
 
-**more content coming soon**
+At this point in time, we have allowed a user, to write out some really advanced Javascript syntax, like Async Await, JSX, stuff like that, and we are properly, transpiling it. We are also processing import statements for other Javascript files and we are getting these directly off of NPM. Users can also import stuff like CSS very easily.
 
-Let's finish for today and we will continue in a next time. Those guys need a break , as am'I .
+So now we're going to start to talk about code execution inside the browser.
+We have to figure out, how to take the output of that bundle and execute it safely. So let's start work on adding that feature.
 
-![This page is under construction](construction.png)
+One very easy way that we can execute arbitrary JavaScript, that is contained inside of a string, is by using the eval function, which is built into the browser. Unfortunately eval() is a dangerous function, which executes the code it's passed with the privileges of the caller. If you run eval() with a string that could be affected by a malicious party, you may end up running malicious code on the user's machine with the permissions of your webpage / extension.
 
-My names is Grzegorz Wolfinger, I want to become a programmer, but what I love the most is to create a cool stuff and learn a new things about programming.
+There might eventually be a couple of different challenges we run into as we start to think about running a user's code.
+
+**Considerations Around Code Execution**
+
+1. User-provided code might throw errors and cause our program to crash.
+2. User-provided code might mutate the DOM, causing our program to crash.
+3. A user might accidentally run code provided by another malicious user.
+
+The solution, that's going to address all three of these really big problems, is a HTML element - Iframe. We'll use Iframe to preview user code in separate window. Right now, we have the world of Javascript for the parent document, our next.js app and we've got the world of Javascript running inside the Iframe.
+Now, depending upon some different configuration settings that we're going to apply to this Iframe, we can enable some amount of communication between these two different context, and to be more specific we'll disallow that comunication.
+
+Let's create Iframe element inside my CodeInput.tsx file. Our component, will recive _iframeRef_ and _code_ arguments as a props, that's why we need to add theirs types. We also need to add this sandbox property, so we can disallow this comunication and only allow scripts to allows Javascript execution. We then take HTML and provide it to the iFrame as it's _srcDoc_ property to the contents of the iFrame.
+
+```tsx
+// CodeInput.tsx
+
+type CodeProps = {
+  code: string;
+  inputValue: string;
+  onClickHandler: () => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  iframeRef: React.LegacyRef<HTMLIFrameElement>;
+};
+
+const CodeInput = ({
+  code,
+  onClickHandler,
+  inputValue,
+  onChange,
+  iframeRef,
+}: CodeProps) => {
+  return (
+    <section style={{ padding: '3rem' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h1>Wolfpad</h1>
+      </div>
+      <textarea
+        style={{ width: '100%', height: '250px' }}
+        value={inputValue}
+        onChange={(e) => onChange(e)}
+      />
+      <div style={{ paddingBottom: '5px' }}>
+        <button onClick={onClickHandler}>Submit</button>
+      </div>
+
+      <iframe
+        title="preview"
+        ref={iframeRef}
+        sandbox="allow-scripts"
+        srcDoc={code}
+        width="100%"
+      />
+    </section>
+  );
+};
+export default CodeInput;
+```
+
+Now inside of index.tsx file let's first import useRef. We're going to
+get a reference to our iframe, then whenever we do bundling process and get some new code out, whenever this bundling process is complete, we're going to take that reference to the iframe and use it to emit a message down into the iframe. We going to communicate all of our bundled code through that post message thing.
+Let's create html and show kind of a skeleton of an HTML document. We're also going to write in a little bit of code inside there to start listening for events messages.
+
+Once user submit his code, we're going to bundle that. Then we're going to emit an event down into our iframe. Our Iframe should recive that event. Then event should contain all of our code. So to execute this code, we're going to use eval function. That's going to cause that code to be executed and we're going to see some result printed up.
+
+```tsx
+// index.tsx
+
+import { useState, useEffect, useCallback, useRef } from 'react';
+import * as esbuild from 'esbuild-wasm';
+import CodeInput from '../../components/CodeInputs/CodeInput';
+import { unpkgPathPlugin } from '../../plugins/unpkg-path-plugin';
+import { fetchPlugin } from '../../plugins/fetch-plugin';
+
+const PlaygroundPage = () => {
+  const [input, setInput] = useState('');
+  const [initialized, setInitialized] = useState(false);
+  const iframeRef = useRef<any>(null);
+
+  const startService = useCallback(() => {
+    if (initialized) {
+      return;
+    }
+
+    try {
+      esbuild.initialize({
+        worker: true,
+        wasmURL: 'https://unpkg.com/esbuild-wasm@0.15.14/esbuild.wasm',
+      });
+      setInitialized(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
+    }
+  }, [initialized]);
+
+  useEffect(() => {
+    startService();
+  }, [startService]);
+
+  const onClickHandler = async () => {
+    if (!initialized) {
+      return;
+    }
+
+    // reseting the contents of the iframe
+    iframeRef.current.srcdoc = html;
+
+    try {
+      const result = await esbuild.build({
+        entryPoints: ['index.js'],
+        bundle: true,
+        write: false,
+        plugins: [unpkgPathPlugin(), fetchPlugin(input)],
+      });
+
+      iframeRef.current.contentWindow.postMessage(
+        result.outputFiles[0].text,
+        '*'
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
+  const html = `
+    <html>
+      <head></head>
+      <body>
+        <div id="root"></div>
+        <script>
+          window.addEventListener('message', (event) => {
+            try {
+              eval(event.data)
+            } catch(error) {
+              const root = document.querySelector('#root');
+              root.innerHTML = '<div style="color:red"><h4>Runtime Error</h4>' +  error + '</div>'
+              console.error(error);
+            }
+            
+          }, false);
+        </script>
+      </body>
+    </html>
+  `;
+
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+  };
+
+  return (
+    <CodeInput
+      code={html}
+      onClickHandler={onClickHandler}
+      inputValue={input}
+      onChange={onChange}
+      iframeRef={iframeRef}
+    />
+  );
+};
+export default PlaygroundPage;
+```
+
+Let's test if it works? I want to try to create a react component and then render it out. I want to dispaly it inside of our iframe. Remenber inside that HTML snippet we had added in a div with ID root. That means we can create a react component in attempt to render it into that div right there. Let's also import some bootstrap css file.
+
+![It works!](works.png)
+
+It works! We can create a real component, while loading up React and React DOM directly from unpkg.com. We're bundling our code inside the browser and seeing the result right down in our iframe. And what's more, all this runs rather quickly.
+
+We also added some error handling in case, user will enter some invalid code, if that will happen, we will show error message to the user.
+
+![error message](message.png)
+
+# Summary
+
+And that will be the end of this part of our series I want to become a programmer. In the next part I want to work on the next major feature inside of our project, and that's going to be to replace our text editor which doesn't look great, with a real code editor. And more...
+
+My names is **Grzegorz Wolfinger**, I want to become a programmer, but what I love the most is to create a cool stuff and learn a new things about programming.
