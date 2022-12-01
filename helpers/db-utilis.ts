@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 
-type InsertedDocument<T> = {
-  [key: string]: T;
+type InsertedDocument<Document> = {
+  [key: string]: Document;
 };
 
 type ContactDocument = {
