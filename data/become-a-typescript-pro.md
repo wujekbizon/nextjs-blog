@@ -230,6 +230,10 @@ npx ts-node myMap.ts
 
 Everything seems to work nicely, **myMap** function return a new array with all numbers multiply by 10 and as a string, perfect.
 
-# 5. More TypeScript content comming soon..
+# 5. More TypeScript content coming soon..
 
 For now that's it, I will see you next time with more TypeScript content. Like always if you liked this, you can leave a star on my github account, link **[nextjs-blog](https://github.com/wujekbizon/nextjs-blog)**.
+
+### Grzegorz Wolfinger
+
+_React Developer | Software Engineer | Javascript Engineer_
