@@ -6,7 +6,7 @@ excerpt: NextJS is a the React framework for production - it makes building full
 isFeatured: false
 ---
 
-# NextJS is a _framework for ReactJS_.
+# 1. NextJS is a _framework for ReactJS_.
 
 Wait a second ... a "framework" for React? Isn't React itself already a framework for JavaScript?
 
@@ -29,5 +29,29 @@ In this article, we'll dive into the core concepts and features NextJS has to of
 # File-based Routing
 
 ![Create routes via your file + folder structure](nextjs-file-based-routing.png)
+
+# 2. Disable CSS Modules in Next.js project.
+
+Next.js turns on CSS Modules by default, and no switch is provided.
+If you don’t want it, you can modify the webpack configuration in **next.config.js:**
+
+```js
+// next.config.js
+
+const path = require('path');
+
+module.exports = {
+  webpack(config) {
+    // if not work, try `config.module.rules[2]...`
+    config.module.rules[3].oneOf.forEach((one) => {
+      if (!`${one.issuer?.and}`.includes('_app')) return;
+      one.issuer.and = [path.resolve(__dirname)];
+    });
+    return config;
+  },
+};
+```
+
+This is really helpful for those who prefers to use scss or css in normal way.
 
 ## More Content Coming Soon
