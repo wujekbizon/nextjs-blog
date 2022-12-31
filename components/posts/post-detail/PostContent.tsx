@@ -32,6 +32,7 @@ const PostContent = ({ post }: PostProps) => {
               width={600}
               height={400}
               style={{ width: '100%', height: 'auto' }}
+              priority
             />
           </div>
         );

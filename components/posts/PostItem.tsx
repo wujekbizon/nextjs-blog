@@ -24,6 +24,7 @@ const PostItem = (props: PostItemType) => {
             width={500}
             height={300}
             layout="responsive"
+            priority
           />
         </div>
         <div className={styles.content}>
