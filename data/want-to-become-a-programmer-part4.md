@@ -779,3 +779,9 @@ The journey to becoming a programmer is an exciting one. It takes dedication, ha
 Now that I’ve become a programmer, the possibilities are endless. I can continue to hone my skills and explore new technologies. I can use my programming knowledge to build applications that make life easier for people around the world. Or I can use my skills to create something entirely new and innovative.
 
 No matter what path I choose, becoming a programmer has opened up a world of opportunities for me. So I'll take this opportunity and make the most of it! Who knows what amazing things I’ll create next?
+
+Thanks to all. This series come to the end. It was an amazing experience
+
+![dev](dev.png)
+
+**Grzegorz Wolfinger** | **Nextjs**/**React Developer**
