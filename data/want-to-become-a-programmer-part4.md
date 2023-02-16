@@ -608,7 +608,7 @@ export const actionCreators = {
 };
 ```
 
-We can't forget to connect Redux to ours application.
+Let's not forget to connect Redux to React part of my application.
 
 ```ts
 // _app.tsx
@@ -628,3 +628,154 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 ```
+
+# 6. Custom hooks - makes life easier.
+
+Custom hooks in React are a great way to reuse logic and state across components. Writing our own custom hooks allows us to create powerful, reusable functions that can be used in any component, making our code more efficient and easier to maintain.
+
+Going this direction my application needed few hooks, so they there are.
+
+```ts
+// useActions.ts
+
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from '@reduxjs/toolkit';
+import { actionCreators } from '../state';
+import { useMemo } from 'react';
+
+export const useActions = () => {
+  const dispatch = useDispatch();
+
+  return useMemo(() => {
+    return bindActionCreators(actionCreators, dispatch);
+  }, [dispatch]);
+};
+```
+
+```ts
+// useTypedSelector
+
+import { useSelector, TypedUseSelectorHook } from 'react-redux';
+import { RootState } from '../state';
+
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+```ts
+//useCumulativeCode.ts
+
+import { useTypedSelector } from './useTypedSelector';
+
+export const useCumulativeCode = (cellId: string) => {
+  return useTypedSelector((state) => {
+    const { data, order } = state.cells;
+    const orderedCells = order.map((id) => data[id]);
+
+    const showFunc = `
+    import _React from 'react';
+    import _ReactDOM from 'react-dom/client';
+    var show = (value) => {
+      const root = document.querySelector('#root');
+
+      if (typeof value === 'object') {
+        if (value.$$typeof && value.props) {
+          _ReactDOM.createRoot(root).render(value);
+        } else {
+          root.innerHTML = JSON.stringify(value);
+        }
+      } else {
+        root.innerHTML = value;
+      }
+    };
+  `;
+
+    const showFuncNoop = 'var show = () => {}';
+
+    const cumulativeCode = [];
+
+    for (let c of orderedCells) {
+      if (c.type === 'code') {
+        if (c.id === cellId) {
+          cumulativeCode.push(showFunc);
+        } else {
+          cumulativeCode.push(showFuncNoop);
+        }
+        cumulativeCode.push(c.content);
+      }
+
+      if (c.id === cellId) {
+        break;
+      }
+    }
+    return cumulativeCode;
+  }).join('\n');
+};
+```
+
+# 7. Next.Js - custom 404 page.
+
+Next.js is a powerful framework for creating custom 404 pages. It provides an easy-to-use API that allows developers to create custom 404 pages with dynamic content, such as images, videos, and text. This makes it possible to create unique and engaging experiences for users when they encounter a page not found error.
+
+Wolfpad also got custom 404 page, first I created CustomError component:
+
+```tsx
+// CustomError.tsx
+
+const CustomError = () => {
+  return (
+    <div className="error_page">
+      <Image
+        src="/images/inprogress.png"
+        alt="coding"
+        width={500}
+        height={400}
+      />
+      <h2>
+        This part of application is under construction or will never
+        exist...{' '}
+      </h2>
+      <h2>Please come back later. Thank you</h2>
+
+      <p>
+        This project is made by Grzegorz Wolfinger | Next JS / React Developer
+      </p>
+    </div>
+  );
+};
+export default CustomError;
+```
+
+Now let's create 404.tsx page and import CustomError component.
+Let's import dynamically, which can help to reduce the amount of data that needs to be sent over the network.
+
+```tsx
+// 404.tsx
+import dynamic from 'next/dynamic';
+const DynamicCustomError = dynamic(
+  () => import('../components/CustomError/CustomError'),
+  {
+    loading: () => (
+      <div className="dynamic-loader">
+        <h1>404....</h1>
+      </div>
+    ),
+  }
+);
+
+const ErrorPage = () => {
+  return <DynamicCustomError />;
+};
+export default ErrorPage;
+```
+
+# 7. What did I learn during the whole process of creating Wolfpad ?
+
+I learned a lot during the process of creating Wolfpad. I learned how to use different features of Next.js and React, how to debug and troubleshoot code, and how to design a user interface. I also learned the importance of planning and organization when it comes to software development. Most importantly, I learned that creating an application is a long and difficult process that requires dedication and hard work. With each step of the process, I gained more knowledge and experience that will help me in future projects.
+
+# 8. It's time to say goodbye.
+
+The journey to becoming a programmer is an exciting one. It takes dedication, hard work, and a willingness to learn. But the rewards are worth it. I can create amazing things, solve complex problems, and make a difference in the world.
+
+Now that I’ve become a programmer, the possibilities are endless. I can continue to hone my skills and explore new technologies. I can use my programming knowledge to build applications that make life easier for people around the world. Or I can use my skills to create something entirely new and innovative.
+
+No matter what path I choose, becoming a programmer has opened up a world of opportunities for me. So I'll take this opportunity and make the most of it! Who knows what amazing things I’ll create next?
