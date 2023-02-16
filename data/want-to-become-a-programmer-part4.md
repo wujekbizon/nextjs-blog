@@ -1,6 +1,6 @@
 ---
 title: 'Want to become a Programmer part 4'
-excerpt: 'Wolfpad 2.0'
+excerpt: 'Wolfpad 2.0 - What did I learn during the whole process of creation.'
 image: 'wolfpad.png'
 isFeatured: true
 date: '2023-2-16'
