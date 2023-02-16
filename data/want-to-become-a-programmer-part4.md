@@ -283,3 +283,348 @@ const Hero = () => {
 
 export default Hero;
 ```
+
+# 5. Redux/Toolkit - My answer to managing the state of my application
+
+On my original [Wolfpad 1.3 version](https://www.npmjs.com/package/wolfpad), I used Redux to managing the state. This time I decided I will update it and I'll use Redux/Toolkit. The whole process was a little bit of a challenge, but thanks to the very good [documentation](https://redux-toolkit.js.org/introduction/getting-started) that folks from Redux provided , I done it.
+
+Inside my project, you can find a state folder which is where all the Redux logic are currently is.
+
+First inside actions folder I created index.ts file with all interfaces I'll need later.
+
+```ts
+// index.ts
+
+import { Cell, CellTypes } from '../cell';
+
+export type Direction = 'up' | 'down';
+
+export interface MoveCellAction {
+  id: string;
+  direction: Direction;
+}
+
+export interface InsertCellAfterAction {
+  id: string | null;
+  type: CellTypes;
+}
+
+export interface UpdateCellAction {
+  id: string;
+  content: string;
+}
+
+export interface BundleStartAction {
+  cellId: string;
+}
+
+export interface BundleCompleteAction {
+  cellId: string;
+  bundle: {
+    code: string;
+    err: string;
+  };
+}
+
+export interface FetchCellsCompleteAction {
+  payload: Cell[];
+}
+
+export interface FetchCellsErrorAction {
+  payload: string;
+}
+
+export interface SaveCellsErrorAction {
+  payload: string;
+}
+```
+
+Also inside of a state folder I created cell.ts file:
+
+```ts
+// cell.ts
+
+export type CellTypes = 'code' | 'text' | 'chatbot' | 'draw';
+
+export interface Cell {
+  id: string;
+  type: CellTypes;
+  content: string;
+}
+```
+
+Then, I created slices folder which holding a different slices, each for a different part of my application.
+
+```ts
+// cellsSlice.ts
+
+import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
+import { Cell } from '../cell';
+import {
+  SaveCellsErrorAction,
+  FetchCellsCompleteAction,
+  FetchCellsErrorAction,
+  UpdateCellAction,
+  MoveCellAction,
+  InsertCellAfterAction,
+} from '../actions';
+
+interface CellsState {
+  loading: boolean;
+  error: string | null;
+  order: string[];
+  data: {
+    [key: string]: Cell;
+  };
+}
+
+const initialState: CellsState = {
+  loading: false,
+  error: null,
+  order: [],
+  data: {},
+};
+
+const cellsSlice = createSlice({
+  name: 'cell',
+  initialState,
+  reducers: {
+    saveCellsError(
+      state: CellsState,
+      { payload: { payload } }: PayloadAction<SaveCellsErrorAction>
+    ) {
+      state.error = payload;
+    },
+    fetchCellsStart(state: CellsState) {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchCellsComplete(
+      state: CellsState,
+      { payload: { payload } }: PayloadAction<FetchCellsCompleteAction>
+    ) {
+      state.order = payload.map((cell) => cell.id);
+
+      state.data = payload.reduce((acc, cell) => {
+        acc[cell.id] = cell;
+        return acc;
+      }, {} as CellsState['data']);
+    },
+    fetchCellsError(
+      state: CellsState,
+      { payload: { payload } }: PayloadAction<FetchCellsErrorAction>
+    ) {
+      state.loading = false;
+      state.error = payload;
+    },
+    updateCell(
+      state: CellsState,
+      { payload }: PayloadAction<UpdateCellAction>
+    ) {
+      const { id, content } = payload;
+
+      state.data[id].content = content;
+    },
+    deleteCell(state: CellsState, { payload }: PayloadAction<string>) {
+      delete state.data[payload];
+      state.order = state.order.filter((id) => id !== payload);
+    },
+    moveCell(state: CellsState, { payload }: PayloadAction<MoveCellAction>) {
+      const { direction } = payload;
+      const index = state.order.findIndex((id) => id === payload.id);
+      const targetIndex = direction === 'up' ? index - 1 : index + 1;
+
+      if (targetIndex < 0 || targetIndex > state.order.length - 1) {
+        return state;
+      }
+      state.order[index] = state.order[targetIndex];
+      state.order[targetIndex] = payload.id;
+    },
+    insertCellAfter(
+      state: CellsState,
+      { payload }: PayloadAction<InsertCellAfterAction>
+    ) {
+      const cell: Cell = {
+        content: '',
+        type: payload.type,
+        id: nanoid(),
+      };
+
+      state.data[cell.id] = cell;
+
+      const foundIndex = state.order.findIndex((id) => id === payload.id);
+
+      if (foundIndex < 0) {
+        state.order.unshift(cell.id);
+      } else {
+        state.order.splice(foundIndex + 1, 0, cell.id);
+      }
+    },
+  },
+});
+
+export const {
+  saveCellsError,
+  fetchCellsStart,
+  fetchCellsComplete,
+  fetchCellsError,
+  updateCell,
+  moveCell,
+  insertCellAfter,
+  deleteCell,
+} = cellsSlice.actions;
+
+export const cellsReducer = cellsSlice.reducer;
+```
+
+```ts
+// bundlesSlice.ts
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BundleStartAction, BundleCompleteAction } from '../actions';
+
+interface BundlesState {
+  [key: string]:
+    | {
+        loading: boolean;
+        code: string;
+        err: string;
+      }
+    | undefined;
+}
+
+const initialState: BundlesState = {};
+
+const bundlesSlice = createSlice({
+  name: 'bundle',
+  initialState,
+  reducers: {
+    bundleStart(
+      state: BundlesState,
+      { payload }: PayloadAction<BundleStartAction>
+    ) {
+      state[payload.cellId] = {
+        loading: true,
+        code: '',
+        err: '',
+      };
+    },
+    bundleComplete(
+      state: BundlesState,
+      { payload }: PayloadAction<BundleCompleteAction>
+    ) {
+      state[payload.cellId] = {
+        loading: false,
+        code: payload.bundle.code,
+        err: payload.bundle.err,
+      };
+    },
+  },
+});
+
+export const { bundleStart, bundleComplete } = bundlesSlice.actions;
+
+export const bundlesReducer = bundlesSlice.reducer;
+```
+
+```ts
+// modalsSlice.ts
+
+import { createSlice } from '@reduxjs/toolkit';
+
+interface SideModalState {
+  isMenuOpen: boolean;
+}
+
+const initialState: SideModalState = {
+  isMenuOpen: false,
+};
+
+const modalsSlice = createSlice({
+  name: 'modal',
+  initialState,
+  reducers: {
+    openSideMenu(state: SideModalState) {
+      state.isMenuOpen = true;
+    },
+    closeSideMenu(state: SideModalState) {
+      state.isMenuOpen = false;
+    },
+  },
+});
+
+export const { openSideMenu, closeSideMenu } = modalsSlice.actions;
+
+export const modalsReducer = modalsSlice.reducer;
+```
+
+Redux/Toolkit is actually really nice and easy to use it.
+Last thing to do it's to connect all the pieces together inside index.ts file in main state folder.
+
+```ts
+// index.ts
+
+import { configureStore } from '@reduxjs/toolkit';
+import {
+  bundlesReducer,
+  bundleStart,
+  bundleComplete,
+} from './slices/bundlesSlice';
+import {
+  cellsReducer,
+  insertCellAfter,
+  deleteCell,
+  updateCell,
+  moveCell,
+} from './slices/cellsSlice';
+import {
+  modalsReducer,
+  openSideMenu,
+  closeSideMenu,
+} from './slices/modalsSlice';
+import { createBundle } from './apiCalls';
+
+export const store = configureStore({
+  reducer: {
+    bundles: bundlesReducer,
+    cells: cellsReducer,
+    modals: modalsReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export const actionCreators = {
+  bundleStart,
+  bundleComplete,
+  insertCellAfter,
+  deleteCell,
+  updateCell,
+  moveCell,
+  createBundle,
+  openSideMenu,
+  closeSideMenu,
+};
+```
+
+We can't forget to connect Redux to ours application.
+
+```ts
+// _app.tsx
+
+import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import { store } from '../state';
+import Layout from '../components/Layout/Layout';
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
+  );
+}
+```
