@@ -2,7 +2,7 @@
 title: 'Want to become a Programmer part 2'
 excerpt: 'Introductions to Programming to stand out from the crowd. My Tech Stack: React, NextJS and Typescript.'
 image: 'hero.jpeg'
-isFeatured: true
+isFeatured: false
 date: '2022-10-31'
 ---
 

@@ -3,7 +3,7 @@ title: 'Want to become a Programmer part 1'
 date: '2022-10-15'
 image: avatar.png
 excerpt: Everything you want to know about Reactive State Management System - built into React. React 18's New State Hook - useSyncExternalStore.
-isFeatured: true
+isFeatured: false
 ---
 
 # 1. Interaction with the User.

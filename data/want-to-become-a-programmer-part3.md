@@ -2,7 +2,7 @@
 title: 'Want to become a Programmer part 3'
 excerpt: 'Wolfpad - How I create my first interactive coding environment.'
 image: 'wolfpad.png'
-isFeatured: true
+isFeatured: false
 date: '2022-11-19'
 ---
 
