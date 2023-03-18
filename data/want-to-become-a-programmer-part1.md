@@ -10,29 +10,41 @@ isFeatured: false
 
 ![Basic](basic2.png)
 
-During the whole process of my learning, from taking first steps in BASIC almost 3 decades ago , till now , when I'm trying to tame my favorite programming language which is a Javascript. I found out myself, that the most I like in programming is interaction with the user.
+ During the whole process of my learning, from taking my first steps in BASIC almost 3 decades ago, till now when I'm trying to master my favorite programming language which is Javascript, I found out that the most I enjoy in programming is the interaction with the user. 
 
-So when I decided to start with my learning, I chose Front-end as the right direction to get the most possible interaction with the user. I discovered many useful tools , and one of them was React.js . As many of You might know, it's a JS framework , that is use to create a front-end applications. As soon as I made my first steps into this framework , I've fallen in love with it simplicity, and a way, how it's manage this interaction with the users.
+So when I decided to start my learning journey, I chose Front-end as the right direction to get the most possible interaction with the user. I discovered many useful tools and one of them was React.js. As many of you might know, it's a JS framework used to create front-end applications. As soon as I made my first steps into this framework, I fell in love with its simplicity and how it manages this interaction with users. I also found out that React.js is not only about creating a front-end applications, but also about understanding the whole concept of web development. I had to learn HTML, CSS and JavaScript in order to understand how React works. I'm still learning new things every day and I'm sure that this journey will never end. But I'm happy that I chose React as my starting point in web development because it gave me a great foundation for further learning
 
-With creating reusable components, passing props across the component tree, managing state... wait a minute state what's that ?
+With creating reusable components, passing props across the component tree, and managing state, I was able to create a dynamic and interactive applications.  
+Wait a minute state what's that ?
 
 # 2. So what is the state ?
 
 The definition of state says, that the state is a built-in React object that is used to contain data or information about the component. A component's state can change over time, whenever it changes, the component re-renders.
+State is used to store data that is needed for the component to render correctly. It can be used to store user input, API response, or any other data that needs to be accessed within the component. Examples of state include a user's name, an array of items in a shopping cart, or a boolean value indicating whether a modal is open or closed. State can also be used to store values that are calculated from other values, such as the total cost of items in a shopping cart or the number of items in the cart.
 
 This is a normal behavior of React to listen for any changes to our application and when the changes appear do that re-render of the whole application.
 
 # 3. Reactive State Management System - built into React.
 
-React has two hooks for creating state : useState and useReducer and got three hooks for monitoring state : useEffect , useMemo and useCallback. I don't want to deep dive into how really helpful they are and when used properly can significantly improve the whole overall work of application. I want to write about every one of them in separate article, so for now let's continue.
+React's two hooks for creating state, useState and useReducer, are invaluable tools for managing application state. When used correctly, they can drastically improve the performance of an application. Additionally, React provides three hooks for monitoring state: useEffect, useMemo and useCallback. These hooks allow developers to track changes in state and respond accordingly. By leveraging these hooks, developers can create powerful applications that are both efficient and reliable. 
+ 
+I want to write about every one of them in separate article, so for now let's continue.
 
 # 4. What is global state in React ?
 
 In React, originally, the state is held and modified within the same React component . In most applications, different components may need to access and update the same state. This is achieved by introducing the global states in your app.
 
-In other words, if we want only one component to know what state is then we can use useState hook , but if we got many components, our application getting bigger and we want many components to be able to communicate with our state, we should think about switching to a global state management tool.
+Global state in React is a way of managing data that is shared across multiple components in an application. It allows components to access and update data from a single source of truth, rather than having to pass data down through props or store it in local state. Global state can be managed using libraries such as Redux or MobX, or by using the Context API.
 
-There are many tools out there , but at least for me, one of the best and the most popular is - Redux.
+An example of global state would be a user's authentication status. This could be stored in global state and accessed by any component that needs to know if the user is logged in or not. Another example would be a shopping cart, which could store items that have been added to it and allow any component to access and update the cart's contents.
+
+Global state can help make applications more efficient by reducing the amount of code needed to pass data between components. It also makes it easier for developers to keep track of changes made to the application's data, as all changes are made from one source.
+
+In React, global state is typically managed using libraries such as Redux or MobX, which provide tools for creating and managing global state objects. These libraries also provide methods for updating the global state when changes are made, allowing components to stay up-to-date with the latest version of the data. Alternatively, developers can use React's Context API to create their own custom global state management system.
+
+Global state can also be used for storing application settings such as theme colors or font sizes, which can then be accessed by any component that needs them. This helps keep applications consistent across different pages and makes it easier for developers to make changes without having to update each component individually. 
+
+Overall, global state is an important tool for managing shared data in React applications and helps make applications more efficient and easier to maintain.
 
 # 5. React 18's New State Hook - useSyncExternalStore .
 
