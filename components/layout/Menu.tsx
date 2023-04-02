@@ -1,9 +1,12 @@
-import Link from 'next/link';
-import styles from './Menu.module.css';
+import Link from 'next/link'
+import styles from './Menu.module.css'
 
 const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
   return (
     <ul className={styles.list}>
+      <li onClick={() => closeMenu()}>
+        <Link href="/">Home</Link>
+      </li>
       <li onClick={() => closeMenu()}>
         <Link href="/posts">Posts</Link>
       </li>
@@ -16,6 +19,6 @@ const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
         </Link>
       </li>
     </ul>
-  );
-};
-export default Menu;
+  )
+}
+export default Menu

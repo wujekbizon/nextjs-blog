@@ -4,19 +4,33 @@
   margin: var(--size-8) auto;
   font-size: var(--size-5);
   line-height: var(--size-8);
-  background-color: green;
+  background-color: #273549;
   border-radius: 6px;
   padding: var(--size-4);
 }
 
 .content p {
-  color: #031b34;
+  color: #a8aeb4;
+}
+
+.content a {
+  color: #0a0b0e;
+  text-decoration: underline;
 }
 
 .content .image {
   margin: var(--size-4) auto;
   width: 100%;
   max-width: 600px;
+  /* border: 1px solid black; */
+  min-height: 340px;
+  border-radius: 10px;
+}
+
+.image img {
+  height: 300px;
+  width: 100%;
+  border-radius: 10px;
 }
 
 @media (min-width: 768px) {

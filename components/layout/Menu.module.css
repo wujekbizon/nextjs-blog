@@ -3,28 +3,26 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background: #031b34;
+  background: rgba(3, 27, 52, 0.95);
   padding: 2rem;
   position: absolute;
   top: 60px;
   right: -20px;
-  min-width: 200px;
-  border-radius: 5px;
+  border-radius: 25px;
   box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
   z-index: 99;
 }
 
 .list li {
-  padding: 15px;
+  margin: 0;
+  width: 100%;
+  padding: 20px 20px;
 }
 
 .list a {
   margin: 1rem 0;
   color: white;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 300;
-}
-
-.list a:hover {
-  color: #fa8231;
+  text-transform: uppercase;
 }

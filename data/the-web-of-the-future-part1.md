@@ -12,8 +12,8 @@ Today marks the dawn of a new era, and I'm thrilled to be able to share somethin
 
 ---
 
-> **Zamieście** - is a village in the administrative district of Gmina Tymbark, within Limanowa County, Lesser Poland Voivodeship, in southern Poland - this is where I live.
-> Living in a small village doesn't have to be a problem in today's world. With access to the internet, I can stay connected with the rest of the world and take advantage of all the opportunities that come with it. I'm an avid web user, using the internet for business, networking, and socializing. I share my network with many people from around the world, connecting with them for business meetings, catching up on life, and more.
+> _**Zamieście** - is a village in the administrative district of Gmina Tymbark, within Limanowa County, Lesser Poland Voivodeship, in southern Poland - this is where I live.
+> Living in a small village doesn't have to be a problem in today's world. With access to the internet, I can stay connected with the rest of the world and take advantage of all the opportunities that come with it. I'm an avid web user, using the internet for business, networking, and socializing. I share my network with many people from around the world, connecting with them for business meetings, catching up on life, and more._
 
 ---
 
@@ -21,13 +21,17 @@ The internet has become an integral part of our lives, and it is hard to imagine
 
 I decided to become a programmer because I wanted to make a positive change in my life and the world around me. Programming has always been something that I have enjoyed doing, and I believe that by becoming a programmer, I can help shape the future of our world. With programming, I can create innovative solutions to problems and help make the world a better place. Additionally, programming is an ever-evolving field with new technologies and challenges that keep me engaged and motivated.
 
-![Cloud - Costly and Complexity](cloud.png)
-
 Today's workflow for creating a modern, fully responsive app with client side and server side components, user authentication, and cloud-based data storage requires a comprehensive understanding of the technologies involved. We need to rely on servers and cloud infrastructure to store our data in an efficient and secure manner, while also ensuring that our application is optimized for all devices. Additionally, we must ensure that our user authentication system is secure and reliable.
+
+![Cloud - Costly and Complexity](cloud.png)
 
 Creating an app like that requires a tremendous amount of knowledge and experience, making it difficult for new programmers to get a hold of the entire process.
 
-> It is in our human nature to continuously learn and find creative solutions to any problem that arises.
+---
+
+> _It is in our human nature to continuously learn and find creative solutions to any problem that arises._
+
+---
 
 In today's world, the way we write apps is changing. We no longer need to follow the same old methods that have been used for years; instead, we can use a decentralized approach that puts the user experience first. By utilizing a peer-to-peer network, developers can take advantage of the potential that comes with this new approach and create apps that are more efficient and user-friendly.
 
@@ -39,11 +43,11 @@ During my journey as a programmer, I was fortunate enough to come across a group
 
 # Remember, remember the 1th of April.
 
-Early today, the one and only JS guru, [Kyle Simpson](https://www.linkedin.com/in/getify/) - a mentor of mine and someone I share visions with - spoke at the [CityJS Conferences](https://www.linkedin.com/company/cityjs-conferences/) in London about the future and past of decentralizing the web. You can watch his speech [here](https://www.youtube.com/watch?v=RdiXuoMPtUA&t=25014s), where he telling A Tale of Two Webs story.
+Early today, the one and only JS guru, **[Kyle Simpson](https://www.linkedin.com/in/getify/)** - a mentor of mine and someone I share visions with - spoke at the **[CityJS Conferences](https://www.linkedin.com/company/cityjs-conferences/)** in London about the future and past of decentralizing the web. You can watch his speech **[here](https://www.youtube.com/watch?v=RdiXuoMPtUA&t=25014s)**, where he telling A Tale of Two Webs story.
 
 # Conclusion.
 
-In conclusion, the decentralized era has begun and new ways of creating applications are being explored. The use of peer-to-peer networks and [Socket Runtime](https://sockets.sh/) as a wrappers for building modern and responsive applications is becoming increasingly popular.
+In conclusion, the decentralized era has begun and new ways of creating applications are being explored. The use of peer-to-peer networks and **[Socket Runtime](https://sockets.sh/)** as a wrappers for building modern and responsive applications is becoming increasingly popular.
 
 ![Web App Delivery Market Share ](graph.png)
 
@@ -58,7 +62,7 @@ I'm proud to inform that the dawn of the decentralized era has arrived, signalin
 
 > _Cross-Platform P2P App Developer | NextJs/React Developer | Junior Web Developer | JavaScript Engineer_
 
-![https://g-w.vercel.app/](blog.png)
+![https://g-w.vercel.app/](blog1.png)
 
 > [https://g-w.vercel.app/](https://g-w.vercel.app/)
 
