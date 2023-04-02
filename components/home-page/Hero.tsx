@@ -4,10 +4,10 @@ import Image from 'next/image'
 const Hero = () => {
   return (
     <section className={styles.hero}>
-      <h1 className="gradient__text">Grzegorz Wolfinger</h1>
       <div className={styles.image}>
         <Image src="/images/site/me.jpg" alt="Grzegorz Wolfinger" width={350} height={350} />
       </div>
+      <h1 className="gradient__text">Grzegorz Wolfinger</h1>
       <h3>React Developer | Junior Web Developer | JavaScript Engineer</h3>
       <p>&quot;I blog about programming - especially React.js, Next.js and Typescript&quot;</p>
     </section>

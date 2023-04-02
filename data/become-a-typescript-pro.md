@@ -3,7 +3,7 @@ title: 'Become a TypeScript Pro'
 date: '2022-12-11'
 image: ts.png
 excerpt: TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale. It is a strict syntactical superset of JavaScript and adds optional static typing to the language.
-isFeatured: true
+isFeatured: false
 ---
 
 # 1. What is TypeScript?
