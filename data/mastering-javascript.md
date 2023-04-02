@@ -19,5 +19,3 @@ function printBasics() {
 
 printBasics();
 ```
-
-## More Content Coming Soon

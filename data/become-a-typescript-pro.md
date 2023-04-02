@@ -64,27 +64,25 @@ First, let's create a Tuple, as React Engineer, I'm dealing, with one particular
 ```ts
 // generics.ts
 
-function simpleStringState(
-  initial: string
-): [() => string, (v: string) => void] {
-  let str: string = initial;
+function simpleStringState(initial: string): [() => string, (v: string) => void] {
+  let str: string = initial
   return [
     () => str,
     (v: string) => {
-      str = v;
-    },
-  ];
+      str = v
+    }
+  ]
 }
 
-const [str1getter, str1setter] = simpleStringState('winter');
-const [str2getter, str2setter] = simpleStringState('hohoho');
+const [str1getter, str1setter] = simpleStringState('winter')
+const [str2getter, str2setter] = simpleStringState('hohoho')
 
-console.log(str1getter()); // winter
-console.log(str2getter()); // hohoho
+console.log(str1getter()) // winter
+console.log(str2getter()) // hohoho
 
-str1setter('comming');
-console.log(str1getter()); // comming
-console.log(str2getter()); // hohohoh
+str1setter('comming')
+console.log(str1getter()) // comming
+console.log(str2getter()) // hohohoh
 ```
 
 We're going to capture initial state of the string and then as we change it, it's going to be tracked , so it's basically a piecie of stored state. Now let's use this and I'll give it the initial value of 'winter' and let's just _console.log_ the output of **str1getter**. Then I'll create a second one and give it the initial value of 'hohoho' and also _console.log_ the output. Then I'll use **str1setter** to set it and _console.log_ to make sure that we're getting the right value.
@@ -123,26 +121,26 @@ Let's continue and make this **simpleStringState** function a generic. I'll chan
 // console.log(str2getter()); // hohohoh
 
 function simpleState<T>(initial: T): [() => T, (v: T) => void] {
-  let val: T = initial;
+  let val: T = initial
   return [
     () => val,
     (v: T) => {
-      val = v;
-    },
-  ];
+      val = v
+    }
+  ]
 }
 
-const [st1getter, st1setter] = simpleState(2022);
+const [st1getter, st1setter] = simpleState(2022)
 
-console.log(st1getter()); // 2022
-st1setter(2023);
-console.log(st1getter()); //2023
+console.log(st1getter()) // 2022
+st1setter(2023)
+console.log(st1getter()) //2023
 
-const [st2getter, st2setter] = simpleState<string | null>(null);
+const [st2getter, st2setter] = simpleState<string | null>(null)
 
-console.log(st2getter()); // null
-st2setter('new year');
-console.log(st2getter()); // new year
+console.log(st2getter()) // null
+st2setter('new year')
+console.log(st2getter()) // new year
 ```
 
 I'll run this command again to expect this values.
@@ -161,14 +159,12 @@ First I'll start from implementing **myForEach** function.
 // myForEach.ts
 function myForEach<T>(items: T[], forEachFunc: (v: T) => void): void {
   items.reduce((a, v) => {
-    forEachFunc(v);
-    return undefined;
-  }, undefined);
+    forEachFunc(v)
+    return undefined
+  }, undefined)
 }
 
-myForEach(['awesome', 'useful', 'easy'], (v) =>
-  console.log(`TypeScript is ${v}!`)
-);
+myForEach(['awesome', 'useful', 'easy'], (v) => console.log(`TypeScript is ${v}!`))
 ```
 
 In a terminal I expect to see my console.logs:
@@ -188,10 +184,10 @@ Next let's implement **myFilter** function, which might be more challenging, but
 // myFilter.ts
 
 function myFilter<T>(items: T[], filterFunc: (v: T) => boolean): T[] {
-  return items.reduce((a: T[], v) => (filterFunc(v) ? [...a, v] : a), []);
+  return items.reduce((a: T[], v) => (filterFunc(v) ? [...a, v] : a), [])
 }
 
-console.log(myFilter([1, 2, 3, 4, 5, 6, 7, 8], (v) => v % 2 === 0));
+console.log(myFilter([1, 2, 3, 4, 5, 6, 7, 8], (v) => v % 2 === 0))
 ```
 
 In a terminal I expect to see my console.logs:
@@ -209,10 +205,10 @@ So, this is also working, nice. Now, the last to implement is **myMap** function
 // myMap.ts
 
 function myMap<T, K>(items: T[], mapFunc: (v: T) => K): K[] {
-  return items.reduce((a, v) => [...a, mapFunc(v)], [] as K[]);
+  return items.reduce((a, v) => [...a, mapFunc(v)], [] as K[])
 }
 
-console.log(myMap([1, 2, 3, 4, 5, 6, 7, 8], (v) => (v * 10).toString()));
+console.log(myMap([1, 2, 3, 4, 5, 6, 7, 8], (v) => (v * 10).toString()))
 ```
 
 In a terminal I expect to see my console.logs:
