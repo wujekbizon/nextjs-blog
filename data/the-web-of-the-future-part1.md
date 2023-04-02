@@ -10,8 +10,12 @@ date: '2023-4-1'
 
 Today marks the dawn of a new era, and I'm thrilled to be able to share something incredible with you.
 
+---
+
 > **Zamieście** - is a village in the administrative district of Gmina Tymbark, within Limanowa County, Lesser Poland Voivodeship, in southern Poland - this is where I live.
 > Living in a small village doesn't have to be a problem in today's world. With access to the internet, I can stay connected with the rest of the world and take advantage of all the opportunities that come with it. I'm an avid web user, using the internet for business, networking, and socializing. I share my network with many people from around the world, connecting with them for business meetings, catching up on life, and more.
+
+---
 
 The internet has become an integral part of our lives, and it is hard to imagine a world without it. It has revolutionized the way we communicate, shop, work, and even entertain ourselves. The web has made it easier for us to access information from all over the world, and it has enabled us to connect with people from different cultures and backgrounds. It has also opened up new opportunities for businesses to reach out to customers in different parts of the world. The web is an invaluable tool that helps us stay connected and informed about what is happening around us. - I'm pretty sure that we all know that and we can agree with that fact.
 
@@ -35,4 +39,27 @@ During my journey as a programmer, I was fortunate enough to come across a group
 
 # Remember, remember the 1th of April.
 
-Early today, the one and only JS guru, Kyle Simpson - a mentor of mine and someone I share visions with - spoke at the CityJS Conferences in London about the future and past of decentralizing the web. You can watch his speech here, where he telling A Tale of Two Webs story.
+Early today, the one and only JS guru, [Kyle Simpson](https://www.linkedin.com/in/getify/) - a mentor of mine and someone I share visions with - spoke at the [CityJS Conferences](https://www.linkedin.com/company/cityjs-conferences/) in London about the future and past of decentralizing the web. You can watch his speech [here](https://www.youtube.com/watch?v=RdiXuoMPtUA&t=25014s), where he telling A Tale of Two Webs story.
+
+# Conclusion.
+
+In conclusion, the decentralized era has begun and new ways of creating applications are being explored. The use of peer-to-peer networks and [Socket Runtime](https://sockets.sh/) as a wrappers for building modern and responsive applications is becoming increasingly popular.
+
+![Web App Delivery Market Share ](graph.png)
+
+This new approach to application development is more efficient, secure, and cost-effective than traditional methods. It also allows developers to create applications that are more user-friendly and accessible to a wider range of users. Furthermore, this approach can be used to create applications that are more secure, reliable, and scalable. Finally, this new approach to application development is paving the way for a new era of innovation in the tech industry. With the right tools and resources, developers can create powerful applications that can revolutionize the way we interact with technology.
+I'm proud to inform that the dawn of the decentralized era has arrived, signaling the start of a revolution.
+
+**_Stay tuned for the 2nd part, where—believe it or not—we will build our first fully cross-platform app using CSA (Create-Socket-App) provided to us by Socket Supply._**
+
+---
+
+> [Grzegorz Wolfinger](https://www.linkedin.com/in/grzegorz-wolfinger-b88856229/)
+
+> _Cross-Platform P2P App Developer | NextJs/React Developer | Junior Web Developer | JavaScript Engineer_
+
+![https://g-w.vercel.app/](blog.png)
+
+> [https://g-w.vercel.app/](https://g-w.vercel.app/)
+
+---

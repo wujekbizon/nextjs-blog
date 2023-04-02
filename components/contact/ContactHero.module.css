@@ -1,17 +1,44 @@
+.contact {
+  max-width: 1180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .title {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: grey;
-  padding: 80px;
+  padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .title h1 {
-  font-size: 36px;
-  font-family: 'Roboto-Condensed';
+  font-size: 28px;
+  color: white;
 }
 
 .title p {
+  color: white;
   font-size: 21px;
+  font-weight: 300;
+  line-height: 35px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    padding: 4rem;
+  }
+
+  .title h1 {
+    font-size: 50px;
+  }
+
+  .title p {
+    font-size: 24px;
+  }
 }

@@ -1,10 +1,10 @@
 .contact {
   margin: var(--size-8) auto;
-  border-radius: 6px;
-  border: 1px solid black;
-  background: linear-gradient(180deg, #431e3f, #1d1c25);
+  border-radius: 25px;
+  border: 1px solid #011627;
+  background: rgba(4, 12, 24, 1);
   width: 90%;
-  max-width: 50rem;
+  max-width: 1180px;
   padding: var(--size-4);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   font-size: var(--size-4);
@@ -14,9 +14,8 @@
   font-size: var(--size-6);
   margin: var(--size-4) 0;
   text-align: left;
-  font-family: 'Roboto-Condensed';
   font-weight: 600;
-  color: #040c18;
+  color: white;
 }
 
 .form label {

@@ -27,7 +27,7 @@
   font-weight: 500;
 }
 
-.header img {
+.image_container img {
   object-fit: cover;
   width: 200px;
   height: 120px;
