@@ -2,8 +2,8 @@
 title: Mastering JavaScript
 excerpt: JavaScript is the most important programming language for web development. You probably dont know it well enough!
 image: mastering-js-thumb.png
-isFeatured: false
-date: '2022-08-28'
+isFeatured: true
+date: '2023-2-28'
 ---
 
 JavaScript powers the web - it's **the** most important programming language you need to know as a web developer.
@@ -20,7 +20,7 @@ function printBasics() {
 printBasics();
 ```
 
-# 1. Values
+# 1. Values.
 
 The most fundamental unit of information in a program is a value.
 Values are data. They’re how the program maintains state. Values come in two forms in JS: primitive and object.
@@ -48,3 +48,62 @@ console.log('My name is ${ firstName }.')
 console.log(`My name is ${firstName}.`)
 // My name is Greg.
 ```
+
+#### Value Type Determination
+
+For distinguishing values, the typeof operator tells you its
+built-in type, if primitive, or "object" otherwise:
+
+```js
+
+typeof 42; // "number"
+typeof "abc"; // "string"
+typeof true; // "boolean"
+typeof undefined; // "undefined"
+typeof null; // "object" --bug! it's should be null 
+typeof { "a": 1 }; // "object"
+typeof [1,2,3]; // "object" 
+typeof function hello(){}; // "function"
+
+```
+
+# 2. Declaring and Using Variables.
+
+ Values in JavaScript programs can be literal or stored in variables. Variables are like containers for values and must be declared before they can be used. There are various syntax forms for declaring variables, each with its own implications. Each with different pros and cons.
+ 
+ ***
+ > - **Const**: Const is a keyword used to declare a constant variable. A constant variable is a variable that cannot be reassigned or redeclared. Pros: Prevents accidental reassignment of variables, provides better code readability. Cons: Cannot be reassigned or redeclared.
+ 
+ > - **Let**: Let is a keyword used to declare a block-scoped variable. Variables declared with let can be reassigned but not redeclared within the same scope. Pros: Prevents accidental reassignment of variables, provides better code readability, allows for dynamic changes in code within the same scope. Cons: Cannot be redeclared within the same scope.
+ 
+ > - **Var**: Var is a keyword used to declare a variable. Variables declared with var can be reassigned and redeclared. Pros: Allows for flexibility in coding, allows for dynamic changes in code. Cons: Can lead to unexpected results if not used carefully.
+ ***
+ 
+#### Besides var / let / const, there are other syntactic forms that declare identifiers (variables) in various scopes. For example:
+
+```js
+  function greet(timeOfDay,person) {
+    console.log(`Good ${timeOfDay}, ${person}`)
+  }
+  
+  greet('morning','Greg Wolf')
+  // Good morning, Greg Wolf
+```
+The identifier **greet** is created in the outer scope, and it’s also
+automatically associated so that it references the function. But
+the named parameters **timeOfDay** and **person** are created only inside the function,
+and thus are only accessible inside that function’s scope. **greet**,
+**timeOfDay** and **person** generally behave as var -declared.
+
+#### Another syntax that declares a variable is a catch clause:
+
+```js
+  try {
+    someFunction();
+  }
+  catch (err) {
+  console.log(err);
+  }
+``` 
+The **err** is a block-scoped variable that exists only inside the
+**catch** clause, as if it had been declared with **let**.
