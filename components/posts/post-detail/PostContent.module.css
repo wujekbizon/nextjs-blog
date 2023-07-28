@@ -10,12 +10,36 @@
 }
 
 .content p {
-  color: #a8aeb4;
+  color: #dfe3e7;
+  font-size: 18px;
+}
+
+.content li {
+  color: #dfe3e7;
+  padding: 0 15px;
+  list-style: inside;
+  list-style-type: square;
+  font-size: 18px;
+}
+
+.content h6 {
+  margin: 0 30px;
+  text-align: center;
+  font-size: 16px;
+  color: #00dbd8;
+  font-weight: 300;
 }
 
 .content a {
-  color: #0a0b0e;
-  text-decoration: underline;
+  color: #555f7c;
+  /* text-decoration: underline; */
+}
+
+.content a:hover {
+  background: linear-gradient(270deg, #00dbd8, #b133ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .content .image {

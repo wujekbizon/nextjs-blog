@@ -77,7 +77,7 @@ body {
   --size-40: 10rem;
   margin: 0;
   background: linear-gradient(90deg, rgba(4, 12, 24, 1) 0%, rgba(67, 43, 90, 1) 50%, rgba(1, 22, 39, 1) 100%);
-  color: #040c18;
+  color: #fcebd6;
   font-family: 'Eudoxus Sans', sans-serif;
 }
 
@@ -86,6 +86,10 @@ h2,
 h3 {
   font-family: 'Eudoxus Sans', sans-serif;
 }
+
+/* h4 {
+  color: rgb(88, 91, 95);
+} */
 
 a {
   text-decoration: none;
@@ -96,7 +100,8 @@ button {
   cursor: pointer;
 }
 
-ul {
+ul,
+li {
   margin: 0;
   padding: 0;
 }

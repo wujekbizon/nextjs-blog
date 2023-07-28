@@ -1,21 +1,21 @@
-import styles from './MainNavigation.module.css';
-import Logo from './Logo';
-import Link from 'next/link';
-import { useState } from 'react';
-import { MdClose } from 'react-icons/md';
-import { FiMenu } from 'react-icons/fi';
-import Menu from './Menu';
+import styles from './MainNavigation.module.css'
+import Logo from './Logo'
+import Link from 'next/link'
+import { useState } from 'react'
+import { MdClose } from 'react-icons/md'
+import { FiMenu } from 'react-icons/fi'
+import Menu from './Menu'
 
 const MainNavigation = () => {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false)
 
   const handleToggle = () => {
-    setNavbarOpen(!navbarOpen);
-  };
+    setNavbarOpen(!navbarOpen)
+  }
 
   const closeMenu = () => {
-    setNavbarOpen(false);
-  };
+    setNavbarOpen(false)
+  }
 
   return (
     <header className={styles.header}>
@@ -31,7 +31,7 @@ const MainNavigation = () => {
             <Link href="/contact">Contact</Link>
           </li>
           <li>
-            <Link href="https://g-w.vercel.app/" target="_blank">
+            <Link href="https://grzegorz-wolfinger-portfolio.vercel.app/" target="_blank">
               Portfolio
             </Link>
           </li>
@@ -39,11 +39,7 @@ const MainNavigation = () => {
       </nav>
       <div className={styles.navbar_btn}>
         <button onClick={handleToggle}>
-          {navbarOpen ? (
-            <MdClose className={styles.mdclose} />
-          ) : (
-            <FiMenu className={styles.fimenu} />
-          )}
+          {navbarOpen ? <MdClose className={styles.mdclose} /> : <FiMenu className={styles.fimenu} />}
         </button>
 
         {navbarOpen && (
@@ -53,6 +49,6 @@ const MainNavigation = () => {
         )}
       </div>
     </header>
-  );
-};
-export default MainNavigation;
+  )
+}
+export default MainNavigation

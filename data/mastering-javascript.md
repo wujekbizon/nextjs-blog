@@ -3,7 +3,7 @@ title: Mastering JavaScript
 excerpt: JavaScript is the most important programming language for web development. You probably dont know it well enough!
 image: mastering-js-thumb.png
 isFeatured: true
-date: '2023-2-28'
+date: '2023-02-28'
 ---
 
 JavaScript powers the web - it's **the** most important programming language you need to know as a web developer.
@@ -126,7 +126,7 @@ workshopEnrollment1 == workshopEnrollment2 // true
 workshopEnrollment1 === workshopEnrollment2 // true
 ```
 
-Here are example where the types are different, but it's still better to use **==** over **===**, because the code is shorter and better because is more readable. 
+Here are example where the types are different, but it's still better to use **==** over **===**, because the code is shorter and better because is more readable.
 
 ```js
 var workshop1 = {topic: null};
@@ -139,8 +139,8 @@ if(
   // ..
 }
 
-if ( 
-  workshop1.topic == null && 
+if (
+  workshop1.topic == null &&
   workshop2.topic == null
 )
 
@@ -148,14 +148,15 @@ if (
 
 #### Like every other operation, is coercion helpful in an equality comparison or not ?
 
->   - **==** is _not_ about comparisons with unknown types.
->   - **==** is about comparisons with known type(s), optionally where conversion are helpful.
+> - **==** is _not_ about comparisons with unknown types.
+> - **==** is about comparisons with known type(s), optionally where conversion are helpful.
 
-***
+---
 
->JavaScript has a (dynamic) type system, which uses various forms of coercion for value type conversion, including equality comparisons.
+> JavaScript has a (dynamic) type system, which uses various forms of coercion for value type conversion, including equality comparisons.
 
-> You simply cannot write quality JS programs without knowing the types involved in your operations. 
-***
+> You simply cannot write quality JS programs without knowing the types involved in your operations.
+
+---
 
 # 3. Scope / Closures

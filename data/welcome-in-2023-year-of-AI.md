@@ -3,7 +3,7 @@ title: 'Welcome in 2023 year of AI'
 excerpt: 'This Is Jarvis Chat Bot. Its using advanced communication with GPT 3 Model Api. You can ask him for help regarding Javascript, React or any other programming language. It will translate any giving code to another programming language and much more..'
 image: 'wolfai.png'
 isFeatured: true
-date: '2023-1-1'
+date: '2023-01-01'
 ---
 
 # HAPPY NEW YEAR 2023!!!
@@ -315,9 +315,9 @@ export const chatStripe = (
     <div class="wrapper ${isAi && 'ai'}">
       <div class="chat">
           <div class="profile">
-              <img  
-                src=${isAi ? '/bot.svg' : '/user.svg'} 
-                alt="${isAi ? 'bot' : 'user'}" 
+              <img
+                src=${isAi ? '/bot.svg' : '/user.svg'}
+                alt="${isAi ? 'bot' : 'user'}"
               />
           </div>
           <div class="message" id=${uniqueId}>${value}</div>
