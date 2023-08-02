@@ -2,7 +2,7 @@
 title: 'Welcome in 2023 year of AI'
 excerpt: 'This Is Jarvis Chat Bot. Its using advanced communication with GPT 3 Model Api. You can ask him for help regarding Javascript, React or any other programming language. It will translate any giving code to another programming language and much more..'
 image: 'wolfai.png'
-isFeatured: true
+isFeatured: false
 date: '2023-01-01'
 ---
 
