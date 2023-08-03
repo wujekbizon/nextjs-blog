@@ -29,7 +29,7 @@ const PostContent = ({ post }: PostProps) => {
             <Image
               src={`/images/posts/${post.slug}/${image.properties.src}`}
               alt={image.properties.alt}
-              width={600}
+              width={800}
               height={400}
               style={{ width: '100%', height: 'auto' }}
               priority
@@ -48,7 +48,7 @@ const PostContent = ({ post }: PostProps) => {
           {children}
         </SyntaxHighlighter>
       )
-    }
+    },
   }
 
   return (

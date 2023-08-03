@@ -188,9 +188,9 @@ Let's open security groups and click on **'launch-wizard-2'** group to open new 
 
 Here, we can find Inbound rules and Outbound rules. We can see that we have 1 permission entry in each. This is the SSH rule that was created by default when we set up our new instance, and it was applied to Port 22. Now, we need to add one more Inbound rule. Let's click on **'Edit inbound rules'** and then click on the **'Add rule'** button to add a new rule.
 
-- Add Custom TCP type rule, Port range 5100 and Source : Anywhere-IPv4
+Add Custom TCP type rule, Port range 5100 and Source : Anywhere-IPv4
 
-  ![Add New Rule](new_rule.png)
+![Add New Rule](new_rule.png)
 
 Let's **Save rules** and try again. This time, we will have a nice JSON response from our server. We can access our server from anywhere, whether it is a public or private network.
 
@@ -216,6 +216,8 @@ Setting up node.js server as a service with systemd is incredibly easy. First we
 ```js
 sudo vim /etc/systemd/system/server.service
 ```
+
+##### Not familiar with Vim?, nope problem : [Vim Cheat Sheet](https://vim.rtorr.com/)
 
 and paste this code snippet
 
@@ -248,4 +250,12 @@ sudo systemctl enable server.service
 sudo systemctl start server.service
 ```
 
+**Our systemd service is running, so now we can close our EC2 instance window and log out from AWS. However, even if we go to our server's IPv4 address, it will still run.**
+
 ![Systemd running](systemd.png)
+
+### 7. Summary - Navigating AWS EC2 with Confidence
+
+And there you have it! We've reached the end of this epic AWS EC2 adventure. With your newfound knowledge, you can confidently launch instances, connect to them like a pro, and even deploy your very own Node.js server on an EC2 instance. Remember, as you navigate the vast cloud environment, always keep your instance close and your SSH keys closer. AWS EC2 is like a magical playground where you can conjure up servers and spin them like a DJ spins records. So go forth, my friend, and let your creativity soar! Whether you're hosting a website, building a powerful application, or just having some EC2 fun, AWS has got your back. So keep exploring, keep launching, and keep being an EC2 master. Thank you for accompanying me on this AWS EC2 journey. Until we meet again, may your instances stay available, your server responses stay lightning fast, and your cloud dreams turn into reality! Happy cloud computing! 🚀
+
+## Stay tuned, for more AWS content coming soon!
