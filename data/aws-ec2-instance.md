@@ -254,6 +254,14 @@ sudo systemctl start server.service
 
 ![Systemd running](systemd.png)
 
+Right now, I have two instances running with the same Node.js server. This practice is highly recommended by AWS for several reasons:
+
+- Having multiple instances in different regions ensures high availability. If one server fails or experiences issues, the backup instance in another region can seamlessly take over and continue serving the application. This minimizes downtime and ensures that your app remains accessible to users.
+- Distributing the workload across multiple instances helps with scalability. As your user base grows or the demands on your application increase, you can easily distribute the load among the instances. This prevents a single server from becoming overwhelmed and ensures optimal performance.
+- Having instances in different regions can improve the responsiveness and user experience. By locating instances closer to your users, you can reduce latency and improve the overall performance of your application.
+
+So, running two or more instances with the same app in different regions provides high availability, scalability, and improved user experience. It is considered a good practice by AWS to ensure uninterrupted service and efficient performance.
+
 ### 7. Summary - Navigating AWS EC2 with Confidence
 
 And there you have it! We've reached the end of this epic AWS EC2 adventure. With your newfound knowledge, you can confidently launch instances, connect to them like a pro, and even deploy your very own Node.js server on an EC2 instance. Remember, as you navigate the vast cloud environment, always keep your instance close and your SSH keys closer. AWS EC2 is like a magical playground where you can conjure up servers and spin them like a DJ spins records. So go forth, my friend, and let your creativity soar! Whether you're hosting a website, building a powerful application, or just having some EC2 fun, AWS has got your back. So keep exploring, keep launching, and keep being an EC2 master. Thank you for accompanying me on this AWS EC2 journey. Until we meet again, may your instances stay available, your server responses stay lightning fast, and your cloud dreams turn into reality! Happy cloud computing! 🚀
