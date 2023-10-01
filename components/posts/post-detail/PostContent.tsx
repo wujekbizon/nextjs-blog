@@ -9,7 +9,9 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript'
 import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx'
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
+import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
 
+SyntaxHighlighter.registerLanguage('bash', bash)
 SyntaxHighlighter.registerLanguage('js', js)
 SyntaxHighlighter.registerLanguage('ts', ts)
 SyntaxHighlighter.registerLanguage('tsx', tsx)
