@@ -1045,3 +1045,339 @@ After installation, we can use it like that:
 ```
 
 It's not a real-time search, so even if you happen to delete some file, it will still be showing it if as long as you don't run **updatedb** command. So before you run the locate command, run **updateddb**, so you get right path or the existing data.
+
+## 5. Users & Groups.
+
+#### Important points related to users:
+
+- Users and groups are used to control access to files and resources
+- Users login to the system by supplying their username and password
+- Every file on the system is owned by a user and associated with a group
+- Every process has an owner and group affiliation, and can only access the resources its owner or group can access.
+- Every user of the system is assigned a unique use ID number (UID)
+- Users name and UID are stored in **/etc/passwd**
+- User's password is stored in **/etc/shadow** in encrypted form.
+- Users are assigned a home directory and a program that is run when they log in (Usually a shell)
+- Users cannot read, write or execute each other's files without permission.
+
+#### Types of user:
+
+![Type of user](table.png)
+
+---
+
+###### In Linux there are three types of users.
+
+1. Superuser or root user - superuser or root user is the most powerful user. He is the administrator user.
+2. Systems user - system users are the users created by the softwares or applications. For example if we install Apache it will create a user apache. These kinds of users are known as system users.
+3. Normal user - normal user are the users created by root user. They are normal users like Greg, John etc. Only root user has the permission to create or remove a user.
+
+---
+
+###### Whenever a user is created in Linux, things are created by default:
+
+1. A home directory - /home/username
+2. A mailbox - /var/spool/mail
+3. Unique UID & GID are given to user
+
+---
+
+#### Passwd file
+
+**/etc/passwd**
+
+```bash
+[root@centos9 ~]# head -2 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+[root@centos9 ~]#
+```
+
+The above fields are:
+
+- root=name
+- x=link to password file i.e. /etc/shadow
+- 0 or 1 = UID (user id)
+- 0 or 1 = GID (group id)
+- root or bin = comment (brief information about the user)
+- /root or /bin = home directory of the user
+- /bin/bash or /sbin/nologin = shell
+
+#### Group file
+
+**/etc/group**
+
+The file /etc/group stores group information. Each line in this file stores one group entry:
+
+- group name
+- group password
+- GID
+- group members
+
+```bash
+[root@centos9 ~]# head -2 /etc/group
+root:x:0:
+bin:x:1:
+[root@centos9 ~]#
+```
+
+##### Add user, set password and switch to user
+
+If you logged in as a root user, you can add new user assign a new password for that user, and log in as that user without entering a password.
+
+```bash
+[root@centos9 ~]# whoami
+root
+[root@centos9 ~]# useradd aws
+[root@centos9 ~]# passwd aws
+Changing password for user aws.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@centos9 ~]# su - aws
+[aws@centos9 ~]$ id
+uid=1003(aws) gid=1003(aws) groups=1003(aws) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[aws@centos9 ~]$
+```
+
+Lets login in as a aws user and lets try to add new user:
+
+```bash
+[root@centos9 ~]# su - aws
+Last login: Tue Oct  3 12:17:05 UTC 2023 on pts/0
+[aws@centos9 ~]$ useradd jenkins
+useradd: Permission denied.
+useradd: cannot lock /etc/passwd; try again later.
+[aws@centos9 ~]$
+```
+
+Like you can see permission denied. In order to add or delete a user you need to be a root user :
+
+```bash
+[aws@centos9 ~]$ exit
+logout
+[root@centos9 ~]# whoami
+root
+[root@centos9 ~]# useradd jenkins
+[root@centos9 ~]# passwd
+Changing password for user root.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@centos9 ~]#
+```
+
+Let's log in as aws which is a normal user and then try to log in as jenkins user and see what happens. Remember when you are a root user you can log in to every account without entering a password.
+
+```bash
+[aws@centos9 ~]$ whoami
+aws
+[aws@centos9 ~]$ pwd
+/home/aws
+[aws@centos9 ~]$ id
+uid=1003(aws) gid=1003(aws) groups=1003(aws) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[aws@centos9 ~]$ su - jenkins
+Password:
+su: Authentication failure
+[aws@centos9 ~]$
+```
+
+And we got authentication failure, as a normal user we need to enter a password if we want to log in to another user account.
+Let's try one more time this time we will enter a valid password:
+
+```bash
+[aws@centos9 ~]$ su - jenkins
+Password:
+Last failed login: Tue Oct  3 12:31:15 UTC 2023 on pts/0
+There were 1 failed login attempt since the last successful login.
+[jenkins@centos9 ~]$ whoami
+jenkins
+[jenkins@centos9 ~]$ id
+uid=1004(jenkins) gid=1005(jenkins) groups=1005(jenkins) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[jenkins@centos9 ~]$
+```
+
+This time we successfully log in, there is also message about 1 failed login attempt.
+
+Now let's go back to root user and quickly delete a user, and if we use -r option it will also remove home dir:
+
+```bash
+[jenkins@centos9 ~]$ exit
+logout
+[aws@centos9 ~]$ exit
+logout
+[root@centos9 ~]# userdel -r jenkins
+[root@centos9 ~]# id jenkins
+id: ‘jenkins’: no such user
+[root@centos9 ~]# tail -4 /etc/passwd
+vagrant:x:1000:1000::/home/vagrant:/bin/bash
+vboxadd:x:983:1::/var/run/vboxadd:/bin/false
+ansible:x:1001:1001::/home/ansible:/bin/bash
+aws:x:1003:1003::/home/aws:/bin/bash
+[root@centos9 ~]#
+```
+
+Jenkins is gone, but as a root user we can also add groups, add users to the groups and delete groups. Let's see all of that now. I want to check the last 10 groups and add new devops group:
+
+```bash
+[root@centos9 ~]# tail /etc/group
+chrony:x:987:
+slocate:x:21:
+tcpdump:x:72:
+sgx:x:986:
+systemd-oom:x:985:
+systemd-resolve:x:984:
+vagrant:x:1000:
+vboxsf:x:983:
+ansible:x:1001:
+aws:x:1003:
+[root@centos9 ~]#
+[root@centos9 ~]# groupadd devops
+[root@centos9 ~]# grep devops /etc/group
+devops:x:1004:
+[root@centos9 ~]# tail -4 /etc/group
+vboxsf:x:983:
+ansible:x:1001:
+aws:x:1003:
+devops:x:1004:
+[root@centos9 ~]#
+```
+
+As you can see, we created new group, let'd add aws user to our new devops group:
+
+```bash
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1003(aws) groups=1003(aws)
+[root@centos9 ~]# usermod -G devops aws
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1003(aws) groups=1003(aws),1004(devops)
+[root@centos9 ~]# grep aws /etc/group
+aws:x:1003:
+devops:x:1004:aws
+[root@centos9 ~]#
+```
+
+Now aws user belongs into two groups. Note that we used -G option, which add user to secondary group. We can use -g option if we want to add/change user primary group. Example for that:
+
+```bash
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1003(aws) groups=1003(aws),1004(devops)
+[root@centos9 ~]# groupadd opsadmin
+[root@centos9 ~]# tail -4 /etc/group
+ansible:x:1001:
+aws:x:1003:
+devops:x:1004:aws
+opsadmin:x:1005:
+[root@centos9 ~]# usermod -g opsadmin aws
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1005(opsadmin) groups=1005(opsadmin),1004(devops)
+[root@centos9 ~]#
+```
+
+Similar to deleting user, we can delete a group:
+
+```bash
+[root@centos9 ~]# grep devops /etc/group
+devops:x:1004:aws
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1005(opsadmin) groups=1005(opsadmin),1004(devops)
+[root@centos9 ~]# groupdel devops
+[root@centos9 ~]# grep devops /etc/group
+[root@centos9 ~]# id aws
+uid=1003(aws) gid=1005(opsadmin) groups=1005(opsadmin)
+[root@centos9 ~]#
+```
+
+##### The /etc/shadow file
+
+This file stores users password and password related information. Just like /etc/passwd file, this file also uses an individual line for each entry.
+
+1. Username
+2. Encrypted password
+3. Number of days when password was last changed
+4. Number of days before password can be changed
+5. Number of days after password must be changed
+6. Number of days before password expiry date to display the warning message
+7. Number of days to disable the account after the password expiry
+8. Number of days since the account is disabled
+9. Reserved field
+
+```bash
+[root@centos9 ~]# head /etc/shadow
+root:$6$vfUe7sC97mh55WT6$93JvBCM92/zW3ppjLtvezkCNpDMAbFKmgb4bLHUWyQHGYiwO9TieleszQ0ek.B4FbSn2kTxf04g4dy5qeL7LJ0:19633:0:99999:7:::
+bin:*:18849:0:99999:7:::
+daemon:*:18849:0:99999:7:::
+adm:*:18849:0:99999:7:::
+lp:*:18849:0:99999:7:::
+sync:*:18849:0:99999:7:::
+shutdown:*:18849:0:99999:7:::
+halt:*:18849:0:99999:7:::
+mail:*:18849:0:99999:7:::
+operator:*:18849:0:99999:7:::
+[root@centos9 ~]#
+```
+
+There is a few useful commands, for example whoami(will show username) or who (it will show who is logged into system) :
+
+```bash
+[root@centos9 ~]# whoami
+root
+[root@centos9 ~]# who
+vagrant  pts/0        2023-10-03 09:10 (10.0.2.2)
+[root@centos9 ~]#
+```
+
+**last** command - it'll show last login in system :
+
+```bash
+[root@centos9 ~]# last
+vagrant  pts/0        10.0.2.2         Tue Oct  3 09:10   still logged in
+reboot   system boot  5.14.0-366.el9.x Tue Oct  3 09:09   still running
+vagrant  pts/1        10.0.2.2         Mon Oct  2 16:12 - 19:32  (03:20)
+vagrant  pts/0        10.0.2.2         Mon Oct  2 13:39 - 19:32  (05:53)
+reboot   system boot  5.14.0-366.el9.x Mon Oct  2 13:38 - 19:32  (05:54)
+vagrant  pts/0        10.0.2.2         Sun Oct  1 16:39 - crash  (20:59)
+vagrant  pts/0        10.0.2.2         Sun Oct  1 16:37 - 16:38  (00:01)
+vagrant  pts/0        10.0.2.2         Sun Oct  1 15:51 - 16:37  (00:45)
+reboot   system boot  5.14.0-366.el9.x Sun Oct  1 15:46 - 19:32 (1+03:46)
+vagrant  pts/0        10.0.2.2         Sun Oct  1 11:31 - 15:44  (04:12)
+reboot   system boot  5.14.0-366.el9.x Sun Oct  1 11:30 - 15:45  (04:15)
+vagrant  pts/0        10.0.2.2         Sat Sep 30 18:21 - 18:21  (00:00)
+reboot   system boot  5.14.0-366.el9.x Sat Sep 30 18:20 - 18:22  (00:02)
+reboot   system boot  5.14.0-366.el9.x Mon Sep 18 17:44 - 18:06  (00:22)
+reboot   system boot  5.14.0-34.el9.x8 Mon Sep 18 17:29 - 17:45  (00:16)
+
+wtmp begins Mon Sep 18 17:29:02 2023
+[root@centos9 ~]#
+```
+
+There is also **lsof** command, that you might have to install if it's not already in your system.
+
+```bash
+yum install lsof -y
+```
+
+This command is really handy if you want to list files opened by the specific user who is logged in or what user is logged in and doing what, for example:
+
+```bash
+[root@centos9 ~]# lsof -u vagrant
+COMMAND   PID    USER   FD      TYPE             DEVICE SIZE/OFF       NODE NAME
+systemd  2598 vagrant  cwd       DIR                8,2      262        128 /
+systemd  2598 vagrant  rtd       DIR                8,2      262        128 /
+systemd  2598 vagrant  txt       REG                8,2   102120  201589522 /usr/lib/systemd/systemd
+systemd  2598 vagrant  mem       REG                8,2   582072  134686216 /etc/selinux/targeted/contexts/files/file_contexts.bin
+systemd  2598 vagrant  mem       REG                8,2   904672       1323 /usr/lib64/libm.so.6
+systemd  2598 vagrant  mem       REG                8,2   882376      42846 /usr/lib64/libzstd.so.1.5.1
+systemd  2598 vagrant  mem       REG                8,2  4483280      86230 /usr/lib64/libcrypto.so.3.0.7
+systemd  2598 vagrant  mem       REG                8,2    44784      16738 /usr/lib64/libffi.so.8.1.0
+systemd  2598 vagrant  mem       REG                8,2   153600      58634 /u
+...
+ev/pts/0
+[root@centos9 ~]#
+```
+
+#### Users & Groups cheat sheet.
+
+![User/Group Commands](table2.png)
+
+## 6. File permissions.
