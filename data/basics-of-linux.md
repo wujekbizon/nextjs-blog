@@ -1606,9 +1606,6 @@ drwxr-xr-x. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
 [root@centos9 ~]# chmod 444 /opt/awsservice/
 [root@centos9 ~]# ls -ld /opt/awsservice/
 dr--r--r--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
-[root@centos9 ~]# chmod ugo+wx
-chmod: missing operand after ‘ugo+wx’
-Try 'chmod --help' for more information.
 [root@centos9 ~]# chmod ugo+wx /opt/awsservice/
 [root@centos9 ~]# ls -ld /opt/awsservice/
 drwxrwxrwx. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
