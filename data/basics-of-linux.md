@@ -1376,8 +1376,244 @@ ev/pts/0
 [root@centos9 ~]#
 ```
 
-#### Users & Groups cheat sheet.
+#### Users & Group cheat sheet.
 
 ![User/Group Commands](table2.png)
 
 ## 6. File permissions.
+
+#### Viewing Permissions from the Command-Line.
+
+File permissions may be viewed using ls -l:
+
+```bash
+-rw-------. 1 root root 2058 Oct  2 15:39 anaconda-ks.cfg
+drwxr-xr-x. 2 root root   54 Oct  2 13:53 devopsdir
+lrwxrwxrwx. 1 root root   16 Oct  2 17:23 info -> /tmp/sysinfo.txt
+-rw-------. 1 root root 1388 Sep 18 17:30 original-ks.cfg
+-rw-r--r--. 1 root root   31 Oct  2 17:10 samplefile.txt
+
+```
+
+Four symbols are used when displaying permissions:
+
+- r : permission to read a file or list a directory's contents
+- w : permission to write to a file or create and remove files from a directory
+- x : permission to execute a program or change into a directory and do a long listing of the directory
+- -: no permission(in place of r, w or x)
+
+#### Changing File Ownership
+
+Only root can change a file's owner.
+
+Only root or the owner can change a file's group.
+
+Ownership is changed with **chown**:
+
+1. chown [-R] user_name file|directory ...
+
+Group ownership is changed with **chgrp**:
+
+2. chgrp [-R] group_name file|directory ...
+
+Let's practice that by creating a new directory, a new group and four users. Then let's add user1, user2 and user3 to that newly created group:
+
+```bash
+[root@centos9 ~]# mkdir /opt/awsservice
+[root@centos9 ~]# ls -l /opt
+total 0
+drwxr-xr-x. 2 root    root     6 Oct  3 15:48 awsservice
+drwxr-xr-x. 3 root    root    17 Oct  1 16:23 dev
+drwxrwx---. 2 ansible devops  25 Oct  3 14:52 devopsdir
+drwxr-xr-x. 8 root    root   136 Sep 18 17:48 VBoxGuestAdditions-6.1.46
+drwxr-xr--. 2 aws     devops   6 Oct  3 14:55 webdata
+[root@centos9 ~]# groupadd admins
+[root@centos9 ~]# useradd user1
+[root@centos9 ~]# useradd user2
+[root@centos9 ~]# useradd user3
+[root@centos9 ~]# useradd greg
+[root@centos9 ~]# usermod -G admins user1
+[root@centos9 ~]# usermod -G admins user2
+[root@centos9 ~]# usermod -G admins user3
+[root@centos9 ~]#
+```
+
+So, we added user1, user2 and user3 to admins group. Different way of adding is to use Vim editor to add all of them in a same time.
+
+So I have created /opt/awsservice directory, you can check the permission of directory by using ls -ld command:
+
+```bash
+[root@centos9 ~]# ls -ld /opt/awsservice
+drwxr-xr-x. 2 root root 6 Oct  3 15:48 /opt/awsservice
+[root@centos9 ~]#
+```
+
+Now, I want to change the ownership to user1 and to admins group, we can use chown command, I'm using here -R(recursively) so it will also apply changes to subdirectories and to all files inside:
+
+```bash
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr-x. 2 root root 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]# chown -R user1:admins /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr-x. 2 user1 admins 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]#
+```
+
+So, let's change some permissions, user1 got all permissions, but I want to add write permission to admins group and remove read and execute from others.
+
+We got two methods for changing permissions :
+
+- Symbolic Method
+- Numeric Method
+
+#### Changing Permissions - Symbolic Method
+
+To change access modes:
+
+- chmod [-OPTION] ... mode[,mode] file directory ...
+
+Mode includes:
+
+1. u, g or o for user, group and other
+2. +, - or = for grant, deny or set
+3. r, w or x for read, write and execute
+
+Options include:
+
+1.  -R Recursive
+2.  -v Verbose
+3.  --reference : Reference another file for its mode
+
+Examples:
+
+1.  chmod ugo+r file: Grant read access to all for file
+2.  chmod o-wx dir: Deny write and execute to others for dir
+
+In practice, it will look like that:
+
+```bash
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr-x. 2 user1 admins 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]# chmod g+w /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwxr-x. 2 user1 admins 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]# chmod o-r /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwx--x. 2 user1 admins 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]# chmod o-x /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwx---. 2 user1 admins 6 Oct  3 15:48 /opt/awsservice/
+[root@centos9 ~]#
+```
+
+So, now it's how I wanted it to be, user1 has full permission to read, write and execute also admins group has full permissions to read, write and execute and others have no permission whatsoever.
+
+Now I'll switch to greg, which is others user for this file, it shouldn't have permissions. Let's test it:
+
+```bash
+[root@centos9 ~]# su - greg
+[greg@centos9 ~]$ whoami
+greg
+[greg@centos9 ~]$ cd /opt/awsservice/
+-bash: cd: /opt/awsservice/: Permission denied
+[greg@centos9 ~]$ ls /opt/awsservice/
+ls: cannot open directory '/opt/awsservice/': Permission denied
+[greg@centos9 ~]$ touch /opt/awsservice/newfile.txt
+touch: cannot touch '/opt/awsservice/newfile.txt': Permission denied
+[greg@centos9 ~]$
+```
+
+If we switch to user3 then we should have full permissions, let's test it:
+
+```bash
+[greg@centos9 ~]$ exit
+logout
+[root@centos9 ~]# su - user3
+[user3@centos9 ~]$ id user3
+uid=1008(user3) gid=1011(user3) groups=1011(user3),1008(admins)
+[user3@centos9 ~]$ cd /opt/awsservice
+[user3@centos9 awsservice]$ ls -l
+total 0
+[user3@centos9 awsservice]$ touch newfile.txt
+[user3@centos9 awsservice]$ ls -l
+total 0
+-rw-r--r--. 1 user3 user3 0 Oct  3 17:40 newfile.txt
+[user3@centos9 awsservice]$
+[user3@centos9 ~]$ exit
+logout
+[root@centos9 ~]#
+```
+
+Like you can see user3 got all permissions because it's belongs to admins group.
+
+There is another method I mention before - Numeric.
+
+#### Changing Permissions - Numeric Method
+
+Uses a three-digit mode number
+
+1. First digit specifies owner's permissions
+2. Second digit specifies group permissions
+3. Third digit represents others' permissions
+
+Permissions are calculated by adding:
+
+1. 4 (for read)
+2. 2 (for write)
+3. 1 (for execute)
+
+Example:
+
+1. chmod 640 myfile
+
+Let's say that I want to keep the user1 full permission, but remove write permission for the admins group, and add read permission for others. I'll use numeric method this time and add -R option for Recursive:
+
+```bash
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwx---. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod -R 754 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]#
+```
+
+So, first digit is a user it has full permission (4 + 2 + 1 = 7), then second digit is admins group it has only read and execute permissions (4 + 1 = 5) and others have read permission (4).
+Numeric method is easy or quick way to give permission for user, group and others at the same time.
+
+Exercise:
+
+```bash
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwx---. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod 754 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod +x /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr-x. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod 660 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drw-rw----. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod +x /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwx--x. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod 444 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+dr--r--r--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod +wx /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr-x. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod 444 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+dr--r--r--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod ugo+wx
+chmod: missing operand after ‘ugo+wx’
+Try 'chmod --help' for more information.
+[root@centos9 ~]# chmod ugo+wx /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxrwxrwx. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]# chmod 754 /opt/awsservice/
+[root@centos9 ~]# ls -ld /opt/awsservice/
+drwxr-xr--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
+[root@centos9 ~]#
+```

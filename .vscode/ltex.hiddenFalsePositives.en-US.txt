@@ -1,0 +1,1 @@
+{"rule":"PRP_MD_NN","sentence":"^\\QWe can simple, check if we added them :\\E$"}
