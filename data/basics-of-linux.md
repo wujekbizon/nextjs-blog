@@ -1614,3 +1614,522 @@ drwxrwxrwx. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
 drwxr-xr--. 2 user1 admins 25 Oct  3 17:40 /opt/awsservice/
 [root@centos9 ~]#
 ```
+
+## 7. Sudo
+
+Sudo gives power to a normal user to execute commands which is owned by root user.
+When we log in as vagrant user we know that vagrant user already has privilege to do sudo, can do **sudo -i** that will switch to root user, or we can install git when used with sudo prefix:
+
+```bash
+[vagrant@centos9 ~]$ sudo yum install git -y
+Last metadata expiration check: 0:14:11 ago on Wed 04 Oct 2023 09:53:05 AM UTC.
+Dependencies resolved.
+=======================================================================================
+ Package                     Arch        Version                  Repository      Size
+=======================================================================================
+Installing:
+ git                         x86_64      2.39.3-1.el9             appstream       62 k
+
+Complete!
+[vagrant@centos9 ~]$
+```
+
+If we not include sudo prefix, then we can expect to see error :
+
+```bash
+[vagrant@centos9 ~]$ yum install git -y
+Error: This command has to be run with superuser privileges (under the root user on most systems).
+[vagrant@centos9 ~]$
+//or
+[vagrant@centos9 ~]$ useradd test
+useradd: Permission denied.
+useradd: cannot lock /etc/passwd; try again later.
+[vagrant@centos9 ~]$
+
+```
+
+So, now let's switch to root user and let's log in as a aws user. Then we can try to use sudo command to add a new user and see if we can.
+
+```bash
+[vagrant@centos9 ~]$ sudo -i
+[root@centos9 ~]# su - aws
+Last login: Wed Oct  4 10:14:52 UTC 2023 on pts/0
+[aws@centos9 ~]$ sudo useradd test12
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+  #1) Respect the privacy of others.
+  #2) Think before you type.
+  #3) With great power comes great responsibility.
+
+[sudo] password for aws:
+aws is not in the sudoers file.  This incident will be reported.
+[aws@centos9 ~]$
+```
+
+It asked for a password, but even when entered a valid one, we can't add a new user. It's saying that we not in the sudoers file. What are the sudoers file and how we can add user? Let's switch back to root user and check the /etc/sudoers file:
+
+```bash
+[aws@centos9 ~]$ exit
+logout
+[root@centos9 ~]# ls -l /etc/sudoers
+-r--r-----. 1 root root 4328 Jan 19  2023 /etc/sudoers
+[root@centos9 ~]#
+```
+
+This file has only read permissions for our root user and cannot be access with vim for example. The only way to access is with visudo command. This command will open sudoers file in the write mode in vim.
+
+```bash
+[root@centos9 ~]# visudo
+```
+
+Inside we can search for /root user and then cp that line and then add new user :
+
+```bash
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL   // copy this line beneath
+aws    ALL=(ALL)       ALL   // add the the name of the user
+```
+
+Now, lets login aws user and see if it has sudo privilege:
+
+```bash
+[root@centos9 ~]# su - aws
+Last login: Wed Oct  4 10:15:33 UTC 2023 on pts/0
+[aws@centos9 ~]$ sudo -i
+[sudo] password for aws:
+[root@centos9 ~]#
+```
+
+Well it does have a sudo privilege, but it's interactive, it's asking me password for my user login, if you don't want that, we can change this in sudoers file.
+
+```bash
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+aws    ALL=(ALL)       NOPASSWD: ALL // add here this NOPASSWD:
+
+[root@centos9 ~]# su - aws
+Last login: Wed Oct  4 11:04:41 UTC 2023 on pts/0
+[aws@centos9 ~]$ sudo -i
+[root@centos9 ~]#
+
+```
+
+No password being asked for the aws user this time.
+What if you will make some error inside sudoers file, let's see an example :
+
+```bash
+[root@centos9 ~]# ls -l /etc/sudoers
+-r--r-----. 1 root root 4365 Oct  4 11:08 /etc/sudoers
+[root@centos9 ~]# visudo
+/etc/sudoers:9:18: syntax error
+asdasdasdasdasdas
+                 ^
+What now? e
+[root@centos9 ~]#
+```
+
+I had some typo in line 9 of the sudoers file, and because of that I had to press e(edit) and come back and fix the typo in line 9 then save and exit vim editor (:wq).
+So you see there is a chance of human error in that file, and that will lead to a non-functional sudoers files, so sudo command will not work then. You will be stuck if you don't have the root password, which most of the servers will not have the root password set for security purpose. You will have normal user login, like we have vagrant user. We will have any other normal user login and then that can be switched to root user, by using sudo. So if you want to fix that file, it will be a problem because the sudo will not work, and you don't have the root password. Sure, there are some other methods, but that will lead to more problems.
+
+So the better solution is instead of editing that sudoers file, you can go to: /etc/sudoers.d/ and here you can create your own file. There is already a file vagrant that contain vagrant user :
+
+```bash
+[root@centos9 ~]# cd /etc/sudoers.d
+[root@centos9 sudoers.d]# ls
+vagrant
+[root@centos9 sudoers.d]# cat vagrant
+%vagrant ALL=(ALL) NOPASSWD: ALL
+[root@centos9 sudoers.d]#
+```
+
+We can copy this file, edit and add our admins group:
+
+```bash
+[root@centos9 sudoers.d]# cat vagrant
+%vagrant ALL=(ALL) NOPASSWD: ALL
+[root@centos9 sudoers.d]# cp vagrant devops
+[root@centos9 sudoers.d]# vim devops
+[root@centos9 sudoers.d]# cat devops
+%admins ALL=(ALL) NOPASSWD: ALL
+[root@centos9 sudoers.d]#
+```
+
+And now any user which belongs to admins group can do sudo. Note, that you can add also a username there instead of the group. So this is much safer option compare to directly editing the sudoers file.
+
+```bash
+[root@centos9 sudoers.d]# cat *
+%admins ALL=(ALL) NOPASSWD: ALL
+%vagrant ALL=(ALL) NOPASSWD: ALL
+[root@centos9 sudoers.d]# tail -4 /etc/passwd
+user1:x:1006:1009::/home/user1:/bin/bash
+user2:x:1007:1010::/home/user2:/bin/bash
+user3:x:1008:1011::/home/user3:/bin/bash
+greg:x:1009:1012::/home/greg:/bin/bash
+[root@centos9 sudoers.d]# id user3
+uid=1008(user3) gid=1011(user3) groups=1011(user3),1008(admins)
+[root@centos9 sudoers.d]# su - user3
+Last login: Tue Oct  3 17:40:01 UTC 2023 on pts/0
+[user3@centos9 ~]$ sudo -i
+[root@centos9 ~]#
+```
+
+There are many more options in the sudoers file, you can give special commands for a particular user to execute. For now, we are not going to talk about them the most important is to now how to use a sudo or where to go to get sudo privilege.
+
+## 8. Software Management.
+
+#### For CentOS
+
+In Linux there are very different methods of installing or setting up a package or software, let's start with the very basic, very manual approach first.
+You can search for the package on the internet, download it and install using  
+**curl** command and the url of the package, you have to use -o option to take the output of this link and save it to a file. You can give a name to that file:
+
+```bash
+[root@centos9 ~]# curl https://rpmfind.net/linux/centos-stream/9-stream/BaseOS/x86_64/os/Packages/tree-1.8.0-10.el9.x86_64.rpm -o tree-1.8.0-10.el9.x86_64.rpm
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 56943  100 56943    0     0   147k      0 --:--:-- --:--:-- --:--:--  147k
+[root@centos9 ~]# ls
+anaconda-ks.cfg                info             tree-1.8.0-10.el9.x86_64.rpm
+devopsdir                      original-ks.cfg  samplefile.txt
+[root@centos9 ~]#
+```
+
+![Curl Command](table4.png)
+
+To install it, we have the command **rpm** -i option is used for install, -v for verbose which means printing it, -h is for human readable, so print in a human readable format when you're installing it:
+
+```bash
+[root@centos9 ~]# rpm -ivh tree-1.8.0-10.el9.x86_64.rpm
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+Updating / installing...
+   1:tree-1.8.0-10.el9                ################################# [100%]
+[root@centos9 ~]#
+```
+
+It was really a small package, and installation was very fast. Now we can use it our newly installed package:
+
+```bash
+[root@centos9 ~]# tree
+.
+├── anaconda-ks.cfg
+├── devopsdir
+│   ├── anaconda-ks.cfg
+│   └── mybootingfile.cfg
+├── info -> /tmp/sysinfo.txt
+├── original-ks.cfg
+├── samplefile.txt
+└── tree-1.8.0-10.el9.x86_64.rpm
+
+1 directory, 7 files
+[root@centos9 ~]#
+```
+
+Let's try to find one more package called httpd and install it.
+
+```bash
+[root@centos9 ~]# curl https://rpmfind.net/linux/centos-stream/9-stream/AppStream/x86_64/os/Packages/httpd-2.4.57-3.el9.x86_64.rpm -o httpd-2.4.57-3.el9.x86_64.rpm
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+100 49437  100 49437    0     0   131k      0 --:--:-- --:--:-- --:--:--  130k
+[root@centos9 ~]# ls
+anaconda-ks.cfg                info             tree-1.8.0-10.el9.x86_64.rpm
+devopsdir                      original-ks.cfg
+httpd-2.4.57-3.el9.x86_64.rpm  samplefile.txt
+[root@centos9 ~]# rpm -ivh httpd-2.4.57-3.el9.x86_64.rpm
+error: Failed dependencies:
+       httpd-core = 0:2.4.57-3.el9 is needed by httpd-2.4.57-3.el9.x86_64
+       system-logos-httpd is needed by httpd-2.4.57-3.el9.x86_64
+[root@centos9 ~]#
+```
+
+It does not work, It says failed dependencies. It's saying that you need to install these other RPM's: **httpd-core** and **system-logos-httpd**, and once you install this, then only you can install httpd. So there is a dependecy. Now there is just 2 dependency. You can really find those, download and install them, and then you can install httpd.
+
+But what if you have hundreds of dependencies? Yeah, and that's the case so many times because in Linux principle, we have small single purpose programs that are chained together to perform complex operations.
+So, you will very regularly hit this dependencies problem and that can be solved very easily.
+Like we have rpm, which can install the package, or it can even uninstall package.
+
+---
+
+###### RedHat RPM commands:
+
+![Rpm Command](table3.png)
+
+---
+
+You have other package managers also like **yum** for RedHat. So as we go on the internet, search for rpm, download and install, instead of that, you can use **yum**, which will do all that for you. It will automate the process of package installation or management. So, it does that by using some configuration file:
+
+```bash
+[root@centos9 ~]# cd /etc/yum.repos.d/
+[root@centos9 yum.repos.d]# ls
+centos-addons.repo  centos.repo  jenkins.repo
+[root@centos9 yum.repos.d]#
+```
+
+You see some files, these files points to some repositories on the internet. All the files will have some repository information, from where yum can search for the software, download and install with all dependencies. Now we can try install htppd using yum this time:
+
+```bash
+[root@centos9 ~]# yum install httpd
+Last metadata expiration check: 1:39:30 ago on Wed 04 Oct 2023 01:43:45 PM UTC.
+Dependencies resolved.
+=======================================================================================
+ Package                   Architecture  Version                Repository        Size
+=======================================================================================
+Installing:
+ httpd                     x86_64        2.4.57-5.el9           appstream         47 k
+Installing dependencies:
+ apr                       x86_64        1.7.0-11.el9           appstream        123 k
+ apr-util                  x86_64        1.6.1-23.el9           appstream         95 k
+ apr-util-bdb              x86_64        1.6.1-23.el9           appstream         13 k
+ centos-logos-httpd        noarch        90.4-1.el9             appstream        252 k
+ httpd-core                x86_64        2.4.57-5.el9           appstream        1.4 M
+ httpd-filesystem          noarch        2.4.57-5.el9           appstream         14 k
+ httpd-tools               x86_64        2.4.57-5.el9           appstream         81 k
+Installing weak dependencies:
+ apr-util-openssl          x86_64        1.6.1-23.el9           appstream         15 k
+ mod_http2                 x86_64        1.15.19-5.el9          appstream        149 k
+ mod_lua                   x86_64        2.4.57-5.el9           appstream         61 k
+
+Transaction Summary
+=======================================================================================
+Install  11 Packages
+
+Total download size: 2.2 M
+Installed size: 6.4 M
+Is this ok [y/N]: y
+
+```
+
+It asks me if this is ok to install all the dependencies, there is an option -y it will not ask anymore.
+
+```bash
+Downloading Packages:
+(1/11): apr-util-bdb-1.6.1-23.el9.x86_64.rpm            96 kB/s |  13 kB     00:00
+(2/11): apr-util-openssl-1.6.1-23.el9.x86_64.rpm       349 kB/s |  15 kB     00:00
+(3/11): apr-util-1.6.1-23.el9.x86_64.rpm               414 kB/s |  95 kB     00:00
+(4/11): apr-1.7.0-11.el9.x86_64.rpm                    512 kB/s | 123 kB     00:00
+(5/11): httpd-2.4.57-5.el9.x86_64.rpm                  1.0 MB/s |  47 kB     00:00
+(6/11): httpd-filesystem-2.4.57-5.el9.noarch.rpm       372 kB/s |  14 kB     00:00
+(7/11): centos-logos-httpd-90.4-1.el9.noarch.rpm       1.7 MB/s | 252 kB     00:00
+(8/11): httpd-tools-2.4.57-5.el9.x86_64.rpm            1.5 MB/s |  81 kB     00:00
+(9/11): mod_http2-1.15.19-5.el9.x86_64.rpm             2.9 MB/s | 149 kB     00:00
+(10/11): httpd-core-2.4.57-5.el9.x86_64.rpm            7.5 MB/s | 1.4 MB     00:00
+(11/11): mod_lua-2.4.57-5.el9.x86_64.rpm               1.1 MB/s |  61 kB     00:00
+---------------------------------------------------------------------------------------
+Total                                                  1.6 MB/s | 2.2 MB     00:01
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                               1/1
+  Installing       : apr-1.7.0-11.el9.x86_64                                      1/11
+  Installing       : apr-util-bdb-1.6.1-23.el9.x86_64                             2/11
+  Installing       : apr-util-openssl-1.6.1-23.el9.x86_64                         3/11
+  Installing       : apr-util-1.6.1-23.el9.x86_64                                 4/11
+  Installing       : httpd-tools-2.4.57-5.el9.x86_64                              5/11
+  Running scriptlet: httpd-filesystem-2.4.57-5.el9.noarch                         6/11
+  Installing       : httpd-filesystem-2.4.57-5.el9.noarch                         6/11
+  Installing       : httpd-core-2.4.57-5.el9.x86_64                               7/11
+  Installing       : mod_lua-2.4.57-5.el9.x86_64                                  8/11
+  Installing       : centos-logos-httpd-90.4-1.el9.noarch                         9/11
+  Installing       : mod_http2-1.15.19-5.el9.x86_64                              10/11
+  Installing       : httpd-2.4.57-5.el9.x86_64                                   11/11
+  Running scriptlet: httpd-2.4.57-5.el9.x86_64                                   11/11
+  Verifying        : apr-1.7.0-11.el9.x86_64                                      1/11
+  Verifying        : apr-util-1.6.1-23.el9.x86_64                                 2/11
+  Verifying        : apr-util-bdb-1.6.1-23.el9.x86_64                             3/11
+  Verifying        : apr-util-openssl-1.6.1-23.el9.x86_64                         4/11
+  Verifying        : centos-logos-httpd-90.4-1.el9.noarch                         5/11
+  Verifying        : httpd-2.4.57-5.el9.x86_64                                    6/11
+  Verifying        : httpd-core-2.4.57-5.el9.x86_64                               7/11
+  Verifying        : httpd-filesystem-2.4.57-5.el9.noarch                         8/11
+  Verifying        : httpd-tools-2.4.57-5.el9.x86_64                              9/11
+  Verifying        : mod_http2-1.15.19-5.el9.x86_64                              10/11
+  Verifying        : mod_lua-2.4.57-5.el9.x86_64                                 11/11
+
+Installed:
+  apr-1.7.0-11.el9.x86_64                    apr-util-1.6.1-23.el9.x86_64
+  apr-util-bdb-1.6.1-23.el9.x86_64           apr-util-openssl-1.6.1-23.el9.x86_64
+  centos-logos-httpd-90.4-1.el9.noarch       httpd-2.4.57-5.el9.x86_64
+  httpd-core-2.4.57-5.el9.x86_64             httpd-filesystem-2.4.57-5.el9.noarch
+  httpd-tools-2.4.57-5.el9.x86_64            mod_http2-1.15.19-5.el9.x86_64
+  mod_lua-2.4.57-5.el9.x86_64
+
+Complete!
+[root@centos9 ~]#
+```
+
+So like you can see, yum doing all the heavy work for us, we can install or remove package. Let's now remove httpd package and install again using -y option and maybe instead of see the output we can redirect it to /dev/null :
+
+```bash
+[root@centos9 ~]# yum remove httpd
+Dependencies resolved.
+=======================================================================================
+ Package                   Architecture  Version               Repository         Size
+=======================================================================================
+Removing:
+ httpd                     x86_64        2.4.57-5.el9          @appstream         59 k
+Removing unused dependencies:
+ apr                       x86_64        1.7.0-11.el9          @appstream        289 k
+ apr-util                  x86_64        1.6.1-23.el9          @appstream        211 k
+ apr-util-bdb              x86_64        1.6.1-23.el9          @appstream         15 k
+ apr-util-openssl          x86_64        1.6.1-23.el9          @appstream         23 k
+ centos-logos-httpd        noarch        90.4-1.el9            @appstream        450 k
+ httpd-core                x86_64        2.4.57-5.el9          @appstream        4.6 M
+ httpd-filesystem          noarch        2.4.57-5.el9          @appstream        400
+ httpd-tools               x86_64        2.4.57-5.el9          @appstream        198 k
+ mod_http2                 x86_64        1.15.19-5.el9         @appstream        385 k
+ mod_lua                   x86_64        2.4.57-5.el9          @appstream        142 k
+
+Transaction Summary
+=======================================================================================
+Remove  11 Packages
+
+Freed space: 6.4 M
+Is this ok [y/N]: y
+```
+
+Package removed, now let's install again with -y:
+
+```bash
+[root@centos9 ~]# yum install httpd -y > /dev/null
+[root@centos9 ~]# rpm -qa | grep httpd
+httpd-tools-2.4.57-5.el9.x86_64
+httpd-filesystem-2.4.57-5.el9.noarch
+httpd-core-2.4.57-5.el9.x86_64
+centos-logos-httpd-90.4-1.el9.noarch
+httpd-2.4.57-5.el9.x86_64  // our package
+[root@centos9 ~]#
+```
+
+Sometimes you want to install some package with yum, for example Jenkins, so let's try it:
+
+```bash
+[root@centos9 yum.repos.d]# yum install jenkins
+Last metadata expiration check: 2:01:07 ago on Wed 04 Oct 2023 01:43:45 PM UTC.
+No match for argument: jenkins
+Error: Unable to find a match: jenkins
+[root@centos9 yum.repos.d]#
+```
+
+And it'll show and error that it has nothing to do because Jenkins package is not available in any of the repositories that are in yum configuration file:
+
+```bash
+[root@centos9 yum.repos.d]# ls
+centos-addons.repo  centos.repo
+[root@centos9 yum.repos.d]#
+```
+
+So if it's not there, then you can always search for it one the internet, you should find the vendor documentation where, they'll mention the steps to install a particular package.
+
+So, official Jenkins documentation it's giving us this steps to install Jenkins through **yum** on RedHat Linux:
+
+```bash
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum upgrade
+# Add required dependencies for the jenkins package
+sudo yum install fontconfig java-17-openjdk
+sudo yum install jenkins
+sudo systemctl daemon-reload
+```
+
+Let's do line by line and see what will happen.
+First we need to install **wget**, wget is going to working like curl.
+Note, that wget should be already install in your system, it was in mine. I just removed it, so I can install it to show you the whole process.
+
+```bash
+[root@centos9 yum.repos.d]# yum install wget -y
+...
+...
+Complete!
+[root@centos9 yum.repos.d]# cd
+```
+
+Step1:
+
+```bash
+[root@centos9 ~]#  wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+--2023-10-04 16:08:44--  https://pkg.jenkins.io/redhat-stable/jenkins.repo
+Resolving pkg.jenkins.io (pkg.jenkins.io)... 146.75.122.133, 2a04:4e42:8e::645
+Connecting to pkg.jenkins.io (pkg.jenkins.io)|146.75.122.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 85
+Saving to: ‘/etc/yum.repos.d/jenkins.repo’
+
+/etc/yum.repos.d/jenk 100%[========================>]      85  --.-KB/s    in 0s
+
+2023-10-04 16:08:44 (2.33 MB/s) - ‘/etc/yum.repos.d/jenkins.repo’ saved [85/85]
+
+[root@centos9 ~]#
+
+```
+
+Note: \ backward slash means that you can give command in two lines.
+This first command created a file with the repository details.
+
+```bash
+[root@centos9 ~]# cat /etc/yum.repos.d/jenkins.repo
+[jenkins]
+name=Jenkins-stable
+baseurl=http://pkg.jenkins.io/redhat-stable
+gpgcheck=1
+[root@centos9 ~]#
+```
+
+Step2:
+Sometimes you will have a key for a repository, you may have rpm --import command and a link. So this key will provide access to this repository.
+
+```bash
+[root@centos9 ~]# rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+[root@centos9 ~]#
+```
+
+Step3:
+
+```bash
+[root@centos9 ~]# yum install fontconfig java-17-openjdk jenkins -y
+...
+...
+...
+Complete!
+[root@centos9 ~]#
+```
+
+And it's done, we successfully installed Jenkins with all the dependencies, so you see, it's easy to do it with yum, if yum has access to the right repository.
+
+Step: 4
+
+```bash
+[root@centos9 ~]# yum upgrade
+Last metadata expiration check: 2:56:37 ago on Wed 04 Oct 2023 01:43:45 PM UTC.
+Dependencies resolved.
+Nothing to do.
+Complete!
+[root@centos9 ~]#
+```
+
+**yum upgrade** it's going to read all your packages and match it with the latest packages, basically it will update all packages. Like you can see I have everything up to date, but it is always preferred to update all your packages because it may have security vulnerability or performance issue that can be fixed by this new patches.
+
+---
+
+###### YUM Commands
+
+![YUM Commands](table5.png)
+
+---
+
+#### For systems with Ubuntu
+
+---
+
+###### APT Commands
+
+![APT Commands](table6.png)
+
+---
