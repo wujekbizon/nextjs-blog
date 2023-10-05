@@ -2514,7 +2514,7 @@ apache      4277    4273  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 ```
 
 It's killed parent process with all the child processes.
-I'm running centOS9, but sometimes especially in older version this might only kill the parent process living the child process as orphans. So there is better way of using kill with -9 option:
+I'm running centOS9, but sometimes especially in older version this might only kill the parent process living the child process as orphans. So there is a better way of using kill with -9 option:
 
 ```bash
 [root@centos9 ~]# systemctl start httpd
@@ -2552,3 +2552,112 @@ Nowadays, the systems are smart. This orphan process will get cleared automatica
 ---
 
 Orphan process will not serve much purpose, but it will still consume the resources. So it's ideal to clear the orphan processes.
+
+## 11. Archive.
+
+To archive a file we use **tar** command, let's archive devopsdir/ :
+
+```bash
+[root@centos9 ~]# ls
+anaconda-ks.cfg  info             samplefile.txt
+devopsdir        original-ks.cfg  tree-1.8.0-10.el9.x86_64.rpm
+[root@centos9 ~]# ls devopsdir/
+anaconda-ks.cfg  mybootingfile.cfg
+[root@centos9 ~]# tar -czvf devops_05102023.tar.gz devopsdir/
+devopsdir/
+devopsdir/anaconda-ks.cfg
+devopsdir/mybootingfile.cfg
+[root@centos9 ~]# ls
+anaconda-ks.cfg         devopsdir  original-ks.cfg  tree-1.8.0-10.el9.x86_64.rpm
+devops_05102023.tar.gz  info       samplefile.txt
+[root@centos9 ~]# file devops_05102023.tar.gz
+devops_05102023.tar.gz: gzip compressed data, from Unix, original size modulo 2^32 10240
+[root@centos9 ~]#
+```
+
+We can run file command to see that **devops_05102023.tar.gz** is gun zipped compressed data. Let's see how we can unarchive it, so let's move it to /tmp/ dir and run tar -xzvf and -x is for extraction :
+
+```bash
+[root@centos9 ~]# mv devops_05102023.tar.gz /tmp/
+[root@centos9 ~]# cd /tmp/
+[root@centos9 tmp]# ls
+devops_05102023.tar.gz
+error.log
+hsperfdata_root
+sysinfo.txt
+systemd-private-8a2953906d5b44b780211c3820873dbd-chronyd.service-NXm2Hg
+systemd-private-8a2953906d5b44b780211c3820873dbd-dbus-broker.service-3r5kK1
+systemd-private-8a2953906d5b44b780211c3820873dbd-httpd.service-QSw0qt
+systemd-private-8a2953906d5b44b780211c3820873dbd-kdump.service-aIQN8o
+systemd-private-8a2953906d5b44b780211c3820873dbd-systemd-logind.service-w9StUb
+[root@centos9 tmp]# tar -xzvf devops_05102023.tar.gz
+devopsdir/
+devopsdir/anaconda-ks.cfg
+devopsdir/mybootingfile.cfg
+[root@centos9 tmp]# ls
+devops_05102023.tar.gz
+devopsdir
+error.log
+hsperfdata_root
+sysinfo.txt
+systemd-private-8a2953906d5b44b780211c3820873dbd-chronyd.service-NXm2Hg
+systemd-private-8a2953906d5b44b780211c3820873dbd-dbus-broker.service-3r5kK1
+systemd-private-8a2953906d5b44b780211c3820873dbd-httpd.service-QSw0qt
+systemd-private-8a2953906d5b44b780211c3820873dbd-kdump.service-aIQN8o
+systemd-private-8a2953906d5b44b780211c3820873dbd-systemd-logind.service-w9StUb
+[root@centos9 tmp]#
+```
+
+If we can extract somewhere else we need add -C option and directory where to extract.
+
+```bash
+[root@centos9 tmp]# tar -xzvf devops_05102023.tar.gz -C /opt/
+devopsdir/
+devopsdir/anaconda-ks.cfg
+devopsdir/mybootingfile.cfg
+[root@centos9 tmp]# ls /opt/
+awsservice  dev  devopsdir  VBoxGuestAdditions-6.1.46  webdata
+[root@centos9 tmp]#
+```
+
+So, **tar** is legacy or old archiving command of Linux, and it is still used. There are a lot of options for it. Run it with --help flag to see them all.
+
+```bash
+[root@centos9 tmp]# tar --help
+```
+
+But much more simpler is a zip command. So let's do the same thing with zip command, zip command might not be available in your system then you need to use yum to install it. So, let's use it:
+
+```bash
+[root@centos9 ~]# zip -r devops_05102023.zip devopsdir/
+  adding: devopsdir/ (stored 0%)
+  adding: devopsdir/anaconda-ks.cfg (deflated 50%)
+  adding: devopsdir/mybootingfile.cfg (deflated 50%)
+[root@centos9 ~]# ls -ltr devops*
+-rw-r--r--. 1 root root 2590 Oct  5 14:47 devops_05102023.zip
+
+devopsdir:
+total 8
+-rw-------. 1 root root 2058 Oct  2 13:52 anaconda-ks.cfg
+-rw-------. 1 root root 2058 Oct  2 13:53 mybootingfile.cfg
+[root@centos9 ~]#
+```
+
+we can move it to /opt/ and unzip it:
+
+```bash
+[root@centos9 opt]# ls
+awsservice  dev  devops_05102023.zip  VBoxGuestAdditions-6.1.46  webdata
+[root@centos9 opt]# unzip devops_05102023.zip
+Archive:  devops_05102023.zip
+   creating: devopsdir/
+  inflating: devopsdir/anaconda-ks.cfg
+  inflating: devopsdir/mybootingfile.cfg
+[root@centos9 opt]# ls
+awsservice  dev  devops_05102023.zip  devopsdir  VBoxGuestAdditions-6.1.46  webdata
+[root@centos9 opt]#
+```
+
+So we have two general method for archiving, **tar** and **zip** we can use both of them depends on need.
+
+---
