@@ -1868,7 +1868,7 @@ centos-addons.repo  centos.repo  jenkins.repo
 [root@centos9 yum.repos.d]#
 ```
 
-You see some files, these files points to some repositories on the internet. All the files will have some repository information, from where yum can search for the software, download and install with all dependencies. Now we can try install htppd using yum this time:
+You see some files, these files points to some repositories on the internet. All the files will have some repository information, from where yum can search for the software, download and install with all dependencies. Now, we can try to install htppd using yum this time:
 
 ```bash
 [root@centos9 ~]# yum install httpd
@@ -2140,7 +2140,7 @@ Complete!
 
 ![Services](table7.png)
 
-Let's play a little with all systemctl commands on our httpd service that we install with yum last time. First we can check status of httpd service:
+Let's play a little with systemctl command on our httpd service that we install with yum last time. First we can check status of httpd service:
 
 ```bash
 [root@centos9 ~]# systemctl status httpd
@@ -2276,4 +2276,279 @@ Oct 04 19:54:26 centos9.devops.in httpd[562]: Server configured, listening on: p
 [root@centos9 ~]#
 ```
 
-The logs will show how many times was reloaded or restarted.
+The logs will show how many times service was reloaded or restarted.
+The systemctl works based on its configuration file and for **httpd**, there should be a configuration file which got created when we installed httpd.
+
+```bash
+[root@centos9 ~]# cat /etc/systemd/system/multi-user.target.wants/httpd.service
+#       [Service]
+#       Environment=OPTIONS=-DMY_DEFINE
+
+[Unit]
+Description=The Apache HTTP Server
+Wants=httpd-init.service
+After=network.target remote-fs.target nss-lookup.target httpd-init.service
+Documentation=man:httpd.service(8)
+
+[Service]
+Type=notify
+Environment=LANG=C
+
+ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND
+ExecReload=/usr/sbin/httpd $OPTIONS -k graceful
+# Send SIGWINCH for graceful stop
+KillSignal=SIGWINCH
+KillMode=mixed
+PrivateTmp=true
+OOMPolicy=continue
+
+[Install]
+WantedBy=multi-user.target
+[root@centos9 ~]#
+```
+
+When we run **sytemctl** start httpd, it's going to read the httpd configuration file, see ExecStart line for how to start, and the same thing for how stop or reload, etc.
+
+## 10. Processes.
+
+There are so many processes you will see running in the Linux system, running or sleeping. There is one command **top** which will show all the dynamic processes based on their consumption of CPU and RAM.
+
+```bash
+[root@centos9 ~]# top
+top - 06:07:59 up 42 min,  1 user,  load average: 0.07, 0.02, 0.00
+Tasks: 104 total,   1 running, 103 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.3 hi,  0.0 si,  0.0 st
+MiB Mem :    757.5 total,    379.1 free,    287.1 used,    216.0 buff/cache
+MiB Swap:   1024.0 total,   1024.0 free,      0.0 used.    470.3 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   3973 apache    20   0 1210620  15220   5916 S   0.7   2.0   0:00.12 httpd
+   4218 root      20   0   10540   3984   3348 R   0.7   0.5   0:00.07 top
+     11 root      20   0       0      0      0 I   0.3   0.0   0:00.90 kworker/u2:1-e+
+      1 root      20   0  106844  16464  10824 S   0.0   2.1   0:02.12 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 slub_flushwq
+      6 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns
+      8 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-e+
+     10 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq
+     12 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_kthre
+     13 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_rude_
+     14 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_trace
+     15 root      20   0       0      0      0 S   0.0   0.0   0:00.09 ksoftirqd/0
+     16 root      20   0       0      0      0 S   0.0   0.0   0:00.13 pr/ttyS0
+     17 root      20   0       0      0      0 S   0.0   0.0   0:00.21 pr/tty0
+     18 root      20   0       0      0      0 I   0.0   0.0   0:00.10 rcu_preempt
+     19 root      rt   0       0      0      0 S   0.0   0.0   0:00.00 migration/0
+     20 root     -51   0       0      0      0 S   0.0   0.0   0:00.00 idle_inject/0
+     22 root      20   0       0      0      0 S   0.0   0.0   0:00.00 cpuhp/0
+...
+# q
+[root@centos9 ~]#
+```
+
+It's similar to task manager on Windows, and it's a very helpful command, it's shows a lot of information. Like :
+
+- uptime
+- number of users log in
+- load average(Load Average is CPU wait time, it is different from CPU utilization.)
+- how many tasks(processes) in total
+- how many is running
+- how many currently sleeping
+- number of stopped state processes
+- number of zombie processes
+- CPU utilization
+- RAM and swap detail(better to see through **free -m** command)
+- process id (PID)
+- user who's running that process
+- RAM and CPU consumption
+- status of the process
+- process name
+
+If you want to get out of this command press q.
+
+---
+
+###### Zombie process is a process that has completed its task(it's dead), but still it shows an entry in a process table.
+
+---
+
+Zombie process it is not consuming resources, but it may create some problems.
+The best way to clear zombie process is to reboot your machine, but there are some other ways to refresh process table also.
+
+Another command is **ps aux** is show similar information as a **top** command, but it displays information on the screen, and just quits.
+
+```bash
+[root@centos9 ~]# ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  2.1 106844 16472 ?        Ss   05:25   0:02 /usr/lib/systemd/sys
+root           2  0.0  0.0      0     0 ?        S    05:25   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   05:25   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   05:25   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   05:25   0:00 [slub_flushwq]
+root           6  0.0  0.0      0     0 ?        I<   05:25   0:00 [netns]
+root           8  0.0  0.0      0     0 ?        I<   05:25   0:00 [kworker/0:0H-events
+root          10  0.0  0.0      0     0 ?        I<   05:25   0:00 [mm_percpu_wq]
+root          11  0.0  0.0      0     0 ?        I    05:25   0:00 [kworker/u2:1-events
+root          12  0.0  0.0      0     0 ?        I    05:25   0:00 [rcu_tasks_kthre]
+root          13  0.0  0.0      0     0 ?        I    05:25   0:00 [rcu_tasks_rude_]
+root          14  0.0  0.0      0     0 ?        I    05:25   0:00 [rcu_tasks_trace]
+root          15  0.0  0.0      0     0 ?        S    05:25   0:00 [ksoftirqd/0]
+root          16  0.0  0.0      0     0 ?        S    05:25   0:00 [pr/ttyS0]
+root          17  0.0  0.0      0     0 ?        S    05:25   0:00 [pr/tty0]
+root          18  0.0  0.0      0     0 ?        I    05:25   0:00 [rcu_preempt]
+root          19  0.0  0.0      0     0 ?        S    05:25   0:00 [migration/0]
+root          20  0.0  0.0      0     0 ?        S    05:25   0:00 [idle_inject/0]
+...
+root        3160  0.0  1.4  18988 11564 ?        Ss   05:26   0:00 sshd: vagrant [priv]
+vagrant     3164  0.0  1.7  22388 13672 ?        Ss   05:26   0:00 /usr/lib/systemd/systemd --user
+vagrant     3166  0.0  0.6 107696  5404 ?        S    05:26   0:00 (sd-pam)
+vagrant     3174  0.0  0.9  19348  7316 ?        S    05:26   0:00 sshd: vagrant@pts/0
+vagrant     3175  0.0  0.7   8688  5520 pts/0    Ss   05:26   0:00 -bash
+root        3200  0.0  1.1  19464  8728 pts/0    S    05:26   0:00 sudo -i
+root        3202  0.0  0.7   8840  5672 pts/0    S    05:26   0:00 -bash
+root        3727  0.0  0.0      0     0 ?        I    05:55   0:00 [kworker/u2:0-events_unbound]
+root        3964  0.0  0.0      0     0 ?        I    05:57   0:01 [kworker/0:0-events]
+root        3970  0.0  1.5  20340 11652 ?        Ss   05:58   0:00 /usr/sbin/httpd -DFOREGROUND
+apache      3971  0.0  0.9  21676  7448 ?        S    05:58   0:00 /usr/sbin/httpd -DFOREGROUND
+apache      3972  0.0  1.4 1079484 11128 ?       Sl   05:58   0:00 /usr/sbin/httpd -DFOREGROUND
+apache      3973  0.0  1.9 1210620 15220 ?       Sl   05:58   0:00 /usr/sbin/httpd -DFOREGROUND
+apache      3974  0.0  1.4 1079484 11128 ?       Sl   05:58   0:00 /usr/sbin/httpd -DFOREGROUND
+root        4208  0.0  0.2   5592  1804 ?        Ss   06:01   0:00 /usr/sbin/anacron -s
+root        4222  0.0  0.0      0     0 ?        I<   06:14   0:00 [tls-strp]
+root        4228  0.0  0.0      0     0 ?        I    06:14   0:00 [kworker/u2:3]
+root        4230  0.0  0.0      0     0 ?        I    06:21   0:00 [kworker/0:1]
+root        4234  0.0  0.4  10084  3372 pts/0    R+   06:43   0:00 ps aux
+[root@centos9 ~]#
+```
+
+PID 1 is the first process which in new systems is **systemd** in older Linux systems it's **init**, but in Ubuntu it's still **init**. That's the first process in the Linux, and this process is going to start many other processes and will also handle many other child processes as well.
+The process in a square bracket, for example [migration/0], these are kernel threads.
+We can see also some normal processes like httpd process : **/usr/sbin/httpd -DFOREGROUND**, because httpd is running.
+
+Another command, **ps -ef**, which is going to show all the processes again. But it's going to show you, not the utilization, but the parent process.
+
+```bash
+[root@centos9 ~]# ps -ef
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           1       0  0 05:25 ?        00:00:02 /usr/lib/systemd/systemd --switched-root --system --deseria
+root           2       0  0 05:25 ?        00:00:00 [kthreadd]
+root           3       2  0 05:25 ?        00:00:00 [rcu_gp]
+root           4       2  0 05:25 ?        00:00:00 [rcu_par_gp]
+root           5       2  0 05:25 ?        00:00:00 [slub_flushwq]
+...
+root        3970       1  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3971    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3972    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3973    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3974    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+root        4222       2  0 06:14 ?        00:00:00 [tls-strp]
+root        4228       2  0 06:14 ?        00:00:00 [kworker/u2:3]
+root        4230       2  0 06:21 ?        00:00:00 [kworker/0:1-mm_percpu_wq]
+root        4237       2  0 06:45 ?        00:00:00 [kworker/0:2]
+root        4239    3202  0 06:49 pts/0    00:00:00 ps -ef
+[root@centos9 ~]#
+```
+
+PPID, that is parent process ID, which shows which process started this PID process. For example:
+
+```bash
+root        3970       1  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3971    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3972    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3973    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3974    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+```
+
+We can also terminate a process or kill it using **kill** command :
+
+Let's look for all httpd processes first:
+
+```bash
+[root@centos9 ~]# ps -ef | grep httpd
+root        3970       1  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3971    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3972    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3973    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3974    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+root        4252    3202  0 07:21 pts/0    00:00:00 grep --color=auto httpd
+[root@centos9 ~]#
+```
+
+maybe not include grep itself :
+
+```bash
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+root        3970       1  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3971    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3972    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3973    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      3974    3970  0 05:58 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+[root@centos9 ~]#
+```
+
+let's use kill command to now:
+
+```bash
+[root@centos9 ~]# kill 3970
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+[root@centos9 ~]#
+```
+
+And now we shouldn't see those httpd processes. Kill it might sound harsh, but it's actually more of asking this process, Hey can you please close your operation? So, this process will first close all the child operations, and then it will close itself.
+
+Sometimes processes becomes adamant, they do not listen, and you have to forcefully kill them.
+
+```bash
+[root@centos9 ~]# systemctl start httpd
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+root        4273       1  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4274    4273  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4275    4273  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4276    4273  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4277    4273  0 07:32 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+[root@centos9 ~]# kill -9 4273
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+[root@centos9 ~]#
+```
+
+It's killed parent process with all the child processes.
+I'm running centOS9, but sometimes especially in older version this might only kill the parent process living the child process as orphans. So there is better way of using kill with -9 option:
+
+```bash
+[root@centos9 ~]# systemctl start httpd
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+root        4502       1  0 07:40 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4503    4502  0 07:40 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4504    4502  0 07:40 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4505    4502  0 07:40 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache      4506    4502  0 07:40 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep' | awk '{print$2}'
+4502
+4503
+4504
+4505
+4506
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep' | awk '{print $2}'| xargs kill -9
+[root@centos9 ~]# ps -ef | grep httpd | grep -v 'grep'
+[root@centos9 ~]#
+```
+
+What I did here in steps:
+
+- start httpd process
+- searched for that process
+- I used **awk** to extract PID's from second column of the processes
+- **xargs** will take the PID and provide them to kill -9 command as arguments
+
+Sometimes this is very handy, when there is a lot of orphans child processes left alone, and you want to remove them all, because these processes are adopted by the systemd process, the first process and these are orphan process.
+Nowadays, the systems are smart. This orphan process will get cleared automatically. But if it does not get cleared, and you have to kill all these processes, this command will come really handy.
+
+---
+
+###### A child process that remains running even after its parent process is terminated or completed without waiting for the child process execution is called an Orphan process.
+
+---
+
+Orphan process will not serve much purpose, but it will still consume the resources. So it's ideal to clear the orphan processes.
