@@ -1,1 +1,4 @@
 {"rule":"PRP_MD_NN","sentence":"^\\QWe can simple, check if we added them :\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QReact's two hooks for creating state, useState and useReducer, are invaluable tools for managing application state.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QAdditionally, React provides three hooks for monitoring state: useEffect, useMemo and useCallback.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QSo let's create our app , this time I will use Vite, I'm going to call it csr and use a React template because I want to do react.\\E$"}

@@ -78,12 +78,12 @@ Resource tags:
 Resource types
 
 - The resource type on which the tag will be created when an instance is launched from the launch template.
-- We got few options here: Instances , Volumes, Elastic Graphics, Spot instance requests, Network interfaces
+- We got few options here: Instances, Volumes, Elastic Graphics, Spot instance requests, Network interfaces
 
 Next, let's choose our AMI (Amazon Machine Image). By default, it is _Amazon Linux AWS_.
 You can find out more about what an AMI is by pressing the Info icon again. You will discover that an AMI contains the software configuration, including the operating system (OS), application server, and applications required to launch your instance.
 
-I'll keep the default settings. Here, we have the option to choose from a few operating systems. I'll go with the latest **Amazon Linux 2023 AMI**, but feel free to explore. Just keep in mind to look only for Free tier eligible options. One thing to notice is that there are a few AWS tutorials out there where people were using **Amazon Linux 2 AMI**, and it also worked. Last but not least chose the architecure, I'll go with **64-bit(x86)**.
+I'll keep the default settings. Here, we have the option to choose from a few operating systems. I'll go with the latest **Amazon Linux 2023 AMI**, but feel free to explore. Just keep in mind to look only for Free tier eligible options. One thing to notice is that there are a few AWS tutorials out there where people were using **Amazon Linux 2 AMI**, and it also worked. Last but not the least chose the architecture, I'll go with **64-bit(x86)**.
 
 ![Step 2](inst2.png)
 
@@ -108,7 +108,7 @@ ED25519 is a more recent algorithm based on elliptic curve cryptography. It offe
 
 In terms of security, both RSA and ED25519 are considered secure algorithms. However, ED25519 is generally considered more secure due to its shorter key length and stronger cryptographic properties. Additionally, the ED25519 algorithm has certain built-in protections against certain types of attacks that RSA lacks. Ultimately, the choice between RSA and ED25519 depends on compatibility and personal preference. If you have older systems or applications that only support RSA, then it may be a better choice. However, if compatibility is not a concern, ED25519 is generally recommended due to its superior security and performance characteristics.
 
-As you can see, no matter what we choose here, it will be safe. I'll stick with the tried-and-true algorithm from my buddy Adleman - **RSA**, but you can go with either one. Regarding the key file format, I'll go with the **.perm** format, as I'm not a PuTTY user. However, if you use PuTTY, just go with the **.ppk** format. The choice of format is relevant because we can connect to our EC2 instance using SSH authentication, either from our EC2 Instance dashboard or from our local computer using our bash terminal or PuTTY. There is plenty of documentation available on how to set up the connection, and we will cover that here as well. Let's press the **Create key pair** button, and voila! We have successfully created a key pair which was instantly downloaded into our machine. Now, we can select our key pair. In my case, the key pair is named **node-server** because that's what I named it.
+As you can see, no matter what we choose here, it will be safe. I'll stick with the tried-and-true algorithm from my buddy Adleman - **RSA**, but you can go with either one. Regarding the key file format, I'll go with the **.perm** format, as I'm not a PuTTY user. However, if you use PuTTY, just go with the **.ppk** format. The choice of format is relevant because we can connect to our EC2 instance using SSH authentication, either from our EC2 Instance dashboard or from our local computer using our bash terminal or PuTTY. There is plenty of documentation available on how to set up the connection, and we will cover that here as well. Let's press the **Create key pair** button, and voilà! We have successfully created a key pair which was instantly downloaded into our machine. Now, we can select our key pair. In my case, the key pair is named **node-server** because that's what I named it.
 
 ---
 
@@ -128,7 +128,7 @@ The last step is to configure the storage space, and once again, I recommend sti
 
 There are also advanced details that we will not touch on today, at least. All I can say is that when creating an EC2 instance on AWS, you have the option to configure advanced details to further customize your setup. This includes options like setting user data to automate instance configuration, enabling detailed monitoring for enhanced performance metrics, configuring instance shutdown behavior, and defining IAM roles for secure access management. Additionally, you can specify instance tags for easy identification and categorization, and allocate Elastic IP addresses for static public IP associations. These advanced details provide flexibility and control over your EC2 instance deployment on AWS. You can apply advanced detail changes to an EC2 instance even after it has been created. AWS allows you to modify various settings and configurations post-launch.
 
-Finally, we can launch our instance by pressing **Launch instance** button. This should take a few seconds and we can successfully initiated launch of instance
+Finally, we can launch our instance by pressing **Launch instance** button. This should take a few seconds, and we can successfully initiate launch of instance
 
 ![Successfully launched instance](success_launch.png)
 
@@ -138,7 +138,7 @@ Now, we can go back to our EC2 Dashboard or directly to the Instances section, w
 
 ![New Instance](dashboard.png)
 
-In my case I've got two instances , one that I created before, which is already up and running with Node.js server for my React Native Application. And the other one that we created today **My Node Server** you can see that Instance status is running , which is good , instance type is the one we chose.
+In my case I've got two instances , one that I created before, which is already up and running with Node.js server for my React Native Application. And the other one that we created today **My Node Server** you can see that Instance status is running, which is good, instance type is the one we chose.
 
 In the Instance details and summary, you can find a plethora of information about your EC2 instance.
 
@@ -154,6 +154,9 @@ In the Instance details and summary, you can find a plethora of information abou
 
 ---
 
-### These are just some of the juicy details you can expect to find, and if you like what I'm doing here for us and the community, just follow me on my LinkedIn profile [LinkedIn](https://www.linkedin.com/in/grzegorz-wolfinger-b88856229/). We will continue in the next episode, where we will actually be connecting to our EC2 instance and setting up the Node.js server. So stay tuned!
+### These are just some juicy details you can expect to find, and if you like what I'm doing here for us and the community, just follow me on my LinkedIn profile [LinkedIn](https://www.linkedin.com/in/grzegorz-wolfinger-b88856229/). We will continue in the next episode, where we will actually be connecting to our EC2 instance and setting up the Node.js server. So stay tuned!
 
 ---
+
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)

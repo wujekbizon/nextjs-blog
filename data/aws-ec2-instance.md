@@ -51,7 +51,7 @@ ssh -i "~/.ssh/node-server.pem" ec2-user@ec2-3-67-136-189.eu-central-1.compute.a
 
 You might be asked if you are sure to continue the connection. Just type 'yes', and you should be successfully connected to your instance.
 
-Great! In my case, I want to go back and try one more connection using the default EC2 Instance Connection with the browser-based client. Let's go back to the console, select EC2 Instance Connect, keep the default user name as 'ec2-user', and press the Connect button. This should establish a connection with our instance in less than a minute and open new tab.
+Great! In my case, I want to go back and try one more connection using the default EC2 Instance Connection with the browser-based client. Let's go back to the console, select EC2 Instance Connect, keep the default username as 'ec2-user', and press the Connect button. This should establish a connection with our instance in less than a minute and open new tab.
 
 ### 3. Installing and Setting Up Node.js on Your EC2 Instance
 
@@ -267,3 +267,6 @@ So, running two or more instances with the same app in different regions provide
 And there you have it! We've reached the end of this epic AWS EC2 adventure. With your newfound knowledge, you can confidently launch instances, connect to them like a pro, and even deploy your very own Node.js server on an EC2 instance. Remember, as you navigate the vast cloud environment, always keep your instance close and your SSH keys closer. AWS EC2 is like a magical playground where you can conjure up servers and spin them like a DJ spins records. So go forth, my friend, and let your creativity soar! Whether you're hosting a website, building a powerful application, or just having some EC2 fun, AWS has got your back. So keep exploring, keep launching, and keep being an EC2 master. Thank you for accompanying me on this AWS EC2 journey. Until we meet again, may your instances stay available, your server responses stay lightning fast, and your cloud dreams turn into reality! Happy cloud computing! 🚀
 
 ## Stay tuned, for more AWS content coming soon!
+
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)

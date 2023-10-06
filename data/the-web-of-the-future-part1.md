@@ -56,6 +56,9 @@ I'm proud to inform that the dawn of the decentralized era has arrived, signalin
 
 **_Stay tuned for the 2nd part, where—believe it or not—we will build our first fully cross-platform app using CSA (Create-Socket-App) provided to us by Socket Supply._**
 
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)
+
 ---
 
 > [Grzegorz Wolfinger](https://www.linkedin.com/in/grzegorz-wolfinger-b88856229/)

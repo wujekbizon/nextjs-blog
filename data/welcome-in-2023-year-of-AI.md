@@ -24,7 +24,7 @@ Hello guys in this new year edition blog article about AI. In today post I will 
 4. Web 3.0
 5. and more...
 
-We will see many of this technologies being adopted in 2023 , but today I want to focus on only one - Artificial Intelligence (AI).
+We will see many of this technologies being adopted in 2023, but today I want to focus on only one - Artificial Intelligence (AI).
 
 # 2. What's GPT 3 ?
 
@@ -32,11 +32,11 @@ So I decided to ask Jarvis this question? And yes, I'm calling him Jarvis, but y
 
 ![What's GPT3 ? ](whatsGPT3.png)
 
-As you can see we do have full, definition answer and we also know what GPT 3 is all about.
+As you can see we do have full, definition answer, and we also know what GPT 3 is all about.
 
 # 3. Jarvis Chat Bot - The Creation.
 
-To creating this chat bot I'll use my favorite Tech Stack: Next.js/React and Typescript. This time I'll not guide you step by step , but instead I'll give you the content of each and every file and do the explanation as we progress. Ok, so let's begin.
+To creating this chatbot I'll use my favorite Tech Stack: Next.js/React and Typescript. This time I'll not guide you step by step, but instead I'll give you the content of each and every file and do the explanation as we progress. Ok, so let's begin.
 
 Like I mentioned before, I'll create Nexj.js app with Typescript.
 
@@ -44,11 +44,11 @@ Like I mentioned before, I'll create Nexj.js app with Typescript.
 npx create-next-app@latest --typescript
 ```
 
-This is a file structure of finished project. We got a components folder that inlcudes a few React Components we'll use in our application. There is also a helpers folder , where I created a few helpers function, in 3 seperate files, but we'll get to that later, and also pages folder with our routes.
+This is a file structure of finished project. We got a components' folder that includes a few React Components we'll use in our application. There is also a helpers' folder, where I created a few helpers function, in 3 separate files, but we'll get to that later, and also pages folder with our routes.
 
 ![Files structure](files.png)
 
-Let's start from HomePage, so inside my pages folder I'll create a index.tsx.
+Let's start from HomePage, so inside my pages folder I'll create index.tsx.
 
 ```tsx
 // pages/index.tsx
@@ -93,9 +93,9 @@ const Home = () => {
 export default Home;
 ```
 
-Like you can see, there is nothing unordinary here. We returning a simple Jsx, where we have Nextjs Image Component, our title and a button which is a Link to our chat page.
+Like you can see, there is nothing unordinary here. We are returning a simple JSX, where we have Next.js Image Component, our title and a button which is a Link to our chat page.
 
-I'll not include here a css files, but if you want them, and also if you want a svgs and images from my public folder, you can get them on my github [here](https://github.com/wujekbizon/nextjs-openai-bot/tree/main/public).
+I'll not include here a CSS files, but if you want them, and also if you want a svgs and images from my public folder, you can get them on my GitHub [here](https://github.com/wujekbizon/nextjs-openai-bot/tree/main/public).
 
 Next, let's take care of ChatPage.
 
@@ -227,7 +227,7 @@ This file is, where all the logic it's been cumulative and where we are making a
 
 I know that's a lot of stuff happening here, so let's start one by one. First let's focus on what we are returning in JSX.
 
-We returning a header element, where we'll be render content, depending on, if our bot is online, or is initializing.
+We are returning a header element, where we'll be render content, depending on, if our bot is online, or is initializing.
 Then section element, where we'll render actual chat, and InputForm Component that will hold our form element with input field.
 
 ```tsx
@@ -264,9 +264,9 @@ const InputForm = ({ onHandleSubmit, formRef }: InputFormProps) => {
 export default InputForm;
 ```
 
-In this Component we accepting two props, onHandleSubmit, which is a form submit handler function and formRef which is a reference to this form. We also have button with a Link, that can take user back to home page, and a submit button. There is one more thing which is very important, textarea element has name attribute set to 'prompt', this will be relevant later, when we'll try to send a fetch request to our /api endpoint.
+In this Component we are accepting two props, onHandleSubmit, which is a form submit handler function and formRef which is a reference to this form. We also have button with a Link, that can take user back to home page, and a submit button. There is one more thing which is very important, textarea element has name attribute set to 'prompt', this will be relevant later, when we'll try to send a fetch request to our /api endpoint.
 
-Before we come back to Chat component, where we have our logic, let me check handler folder and I'll go over all the functions we have there.
+Before we come back to Chat component, where we have our logic, let me check handler folder, and I'll go over all the functions we have there.
 
 ```ts
 // helpers/helpers.ts
@@ -327,13 +327,13 @@ export const chatStripe = (
 };
 ```
 
-First we have a **loader** function, which is responsible for rendering _dots_, when we are fetching an answer(bot thinking). It's expecting two arguments that will be pass to it. An element inside which, our dots we'll be render, and variable where we can capture this created interval, so we can clear it later.
+First we have a **loader** function, which is responsible for rendering _dots_, when we are fetching an answer(bot thinking). It's expecting two arguments that will be pass to it. An element inside which, our dots we'll be rendered, and variable where we can capture this created interval, so we can clear it later.
 
-**generateUniqueId** it's a function to generate a unique Id.
+**generateUniqueId** it's a function to generate a unique ID.
 
-**typeText** is a function, that will make sure that when we get back the answer from API, instead of immediately seeing this message, each letter will be typed one by one, so it'll look, like a bot has been typing, in a real time. This function expects two arguments, an html element, where it'll render text, and data, that it'll get back from API.
+**typeText** is a function, that will make sure that when we get back the answer from API, instead of immediately seeing this message, each letter will be typed one by one, so it'll look, like a bot has been typing, in a real time. This function expects two arguments, an HTML element, where it'll render text, and data, that it'll get back from API.
 
-And the last function inside this file is a **chatStripe** fn , it's responsible for generating html snippet. It's accepting 3 arguments . First argument is boolean that will tell us, which css class has to be apply for given element, and generate an image of user or bot. It'll also receive uniqueId and a value.
+And the last function inside this file is a **chatStripe** function, it's responsible for generating HTML snippet. It's accepting 3 arguments. First argument is boolean that will tell us, which CSS class has to be applied for given element, and generate an image of user or bot. It'll also receive uniqueId and a value.
 
 ```ts
 // helpers/apiCalls.ts
@@ -375,13 +375,13 @@ const fetchOpenAiApi = async (
 export default fetchOpenAiApi;
 ```
 
-**fetchOpenAIAPI** it's a _async_ function, it's expecting 3 arguments, _data_ which is our form, _interval_ which is our loader interval and html _element_ where message will be render. Inside this function we can make a fetch request to **/api** soon we'll create that endpoint, and because we using nextJs it's very simple. I'll host my application over Vercel, thanks to that, later I'll change this url into **vercel_domain/api**.
+**fetchOpenAIAPI** it's an _async_ function, it's expecting 3 arguments, _data_ which is our form, _interval_ which is our loader interval and HTML _element_ where message will be rendered. Inside this function we can make a fetch request to **/api** soon we'll create that endpoint, and because we using nextJs it's very simple. I'll host my application over Vercel, thanks to that, later I'll change this URL into **vercel_domain/api**.
 
-So the method will be POST, in that body object we'll access that textarea element by that name attribute, and we'll send whatever value was there, when the form was submitted. Next, I'll clean that loader interval function, because we no longer need those dots inside this element and we are ready to render a message. As soon as response has status ok, we'll await our json , trim our data, then we'll pass parsedData to typeText function. In case of any error we'll show user, that something went wrong. Finally I want to return that response from this function.
+So the method will be POST, in that body object we'll access that textarea element by that name attribute, and we'll send whatever value was there, when the form was submitted. Next, I'll clean that loader interval function, because we no longer need those dots inside this element, and we are ready to render a message. As soon as response has status ok, we'll await our json, trim our data, then we'll pass parsedData to typeText function. In case of any error we'll show user, that something went wrong. Finally, I want to return that response from this function.
 
 Let's go back to Chat component, where I'll import and use these helpers functions.
 First, I'll declare loadInterval variable on top of my file.
-Now, lets create two reference, one for our form element, and second for container, which will hold our questions or answers. I'll also add some piece of state to store my isInitializing boolean.
+Now, let's create two reference, one for our form element, and second for container, which will hold our questions or answers. I'll also add some piece of state to store my isInitializing boolean.
 
 ```tsx
 // components/Chat.tsx
@@ -446,9 +446,9 @@ const Chat = () => {
 // {...}
 ```
 
-Finally, let's create this handleSubmit function, to be precise let's create callback version of this function and as a argument to useCallback hook I'll provide an actuall handler function which will be async. This handler function will accept argument, which will be that event object , and then I'll prevent that default behavior of the form. Inside should be straight forward, first we need to check if we got html elements, if not, then we don't want to continue with further execution of our code.
-Then we'll create our formData, and call chatStripe to generate user chatstripe by passing false to first argument, second argument is, whatever user's entered in textarea, and third,an empty string, as we don't need to pass uniqueId here. Then we'll clear textarea input field. To generate bot chatstripe, let's generate a uniqueId and pass it as a third argument to chatStripe function, but this time as a first argument we need to pass true, and as a second argument just a string with the space inside.
-Now let's target a specific message div, where we want to show loader with dots and then later, a bot answer. Finally, let's call our fetchOpenAiApi function which will return our response. If response will have status ok, that will change our state, which will trigger re-render, and that will cause to change our ai.
+Finally, let's create this handleSubmit function, to be precise let's create callback version of this function and as an argument to useCallback hook I'll provide an actual handler function which will be async. This handler function will accept argument, which will be that event object, and then I'll prevent that default behavior of the form. Inside should be straight forward, first we need to check if we got HTML elements, if not, then we don't want to continue with further execution of our code.
+Then we'll create our formData, and call chatStripe to generate user chatstripe by passing false to first argument, second argument is, whatever user's entered in textarea, and third, an empty string, as we don't need to pass uniqueId here. Then we'll clear textarea input field. To generate bot chatstripe, let's generate a uniqueId and pass it as a third argument to chatStripe function, but this time as a first argument we need to pass true, and as a second argument just a string with the space inside.
+Now let's target a specific message div, where we want to show loader with dots and then later, a bot answer. Finally, let's call our fetchOpenAiApi function which will return our response. If response have status ok, that will change our state, which will trigger re-render, and that will cause to change our UI.
 
 ```tsx
 // components/Chat.tsx
@@ -536,7 +536,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default handler;
 ```
 
-Inside we need to imports types for req and res, also import cors and runMiddleware from our helpers folder, and I think we didn't create that function yet , so let's do it now.
+Inside we need to imports types for req and res, also import cors and runMiddleware from our helpers' folder, and I think we didn't create that function yet , so let's do it now.
 
 ```ts
 // helpers/middleware.ts
@@ -565,13 +565,13 @@ export default runMiddleware;
 
 Let's also import this Configuration and OpenAIApi classes from openai.
 
-Let's create this special function I called it handler, but you can call it whatever you want, it's important, that we export default it, because Nextjs will look for this export.
+Let's create this special function I called it handler, but you can call it whatever you want, it's important, that we export default it, because Next.js will look for this export.
 
-Then inside, we can have a few checks, and base on different method we'll send different message to the user. The most important will be POST method where we'll need to write logic for creating a connection with our OpenAI Api.
+Then inside, we can have a few checks, and base on different method we'll send different message to the user. The most important will be POST method where we'll need to write logic for creating a connection with our OpenAI API.
 
-In order to do that, first we need to get api secret key. I will provide you with a documentation on that [here](https://beta.openai.com/docs/introduction). In short, you need to register for a free account, and generate a new secret key. We don't want ever to show ours secret keys, that's why we should always use _.env _.
+In order to do that, first we need to get API secret key. I will provide you with a documentation on that [here](https://beta.openai.com/docs/introduction). In short, you need to register for a free account, and generate a new secret key. We don't want ever to show ours secret keys, that's why we should always use _.env _.
 
-Let's create configuration, where we pass an object with this secret key, and then create a new instance of this OpenAIApi, and pass this configuration params. In try catch block, we can destructuring prompt out of req.body and create completion, where we need to pass an configuration object. You can read more about this configuration object by visiting a link, I provided above. Finally let's respond with status 200, and let's send our response. In case of any errors let's respond with status 500 and that error message.
+Let's create configuration, where we pass an object with this secret key, and then create a new instance of this OpenAIApi, and pass this configuration params. In try catch block, we can destructuring prompt out of req.body and create completion, where we need to pass an configuration object. You can read more about this configuration object by visiting a link, I provided above. Finally, let's respond with status 200, and let's send our response. In case of any errors let's respond with status 500 and that error message.
 
 I think we finished, I know that there is a room for optimization, so feel free to do it.
 We successfully created chatbot application, so let's deploy this project now. I'll use Vercel for that, but you can use different provider.
@@ -585,3 +585,5 @@ Thank you Jarvis, now you are fired!
 _Grzegorz Wolfinger_
 
 _Nextjs/React Developer | Software Engineer | Javascript Engineer_
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)

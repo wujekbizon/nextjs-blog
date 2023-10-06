@@ -6,19 +6,19 @@ excerpt: NextJS is a the React framework for production - it makes building full
 isFeatured: false
 ---
 
-# 1. NextJS is a _framework for ReactJS_.
+# 1. Next.js is a _framework for ReactJS_.
 
 Wait a second ... a "framework" for React? Isn't React itself already a framework for JavaScript?
 
-Well ... first of all, React is a "library" for JavaScript. That seems to be important for some people.
+Well ... first, React is a "library" for JavaScript. That seems to be important for some people.
 
 Not for me, but still, there is a valid point: React already is a framework / library for JavaScript. So it's already an extra layer on top of JS.
 
-# Why would we then need NextJS?
+# Why would we then need Next.js?
 
-Because NextJS makes building React apps easier - especially React apps that should have server-side rendering (though it does way more than just take care of that).
+Because Next.js makes building React apps easier - especially React apps that should have server-side rendering (though it does way more than just take care of that).
 
-In this article, we'll dive into the core concepts and features NextJS has to offer:
+In this article, we'll dive into the core concepts and features Next.js has to offer:
 
 1. File-based Routing
 2. Built-in Page Pre-rendering
@@ -52,6 +52,9 @@ module.exports = {
 };
 ```
 
-This is really helpful for those who prefers to use scss or css in normal way.
+This is really helpful for those who prefers to use SCSS or CSS in normal way.
 
 ## More Content Coming Soon
+
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)

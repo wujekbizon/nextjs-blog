@@ -9,7 +9,7 @@ isFeatured: false
 # 1. What is TypeScript?
 
 TypeScript is a programming language first developed by Microsoft in 2012. Its main ambition is to improve the productivity of developing complex applications.
-TypeScript was released to the public in October 2012, with version 0.8, after two years of internal development at Microsoft. On November 15th we recived a stable release.
+TypeScript was released to the public in October 2012, with version 0.8, after two years of internal development at Microsoft. On November 15th we received a stable release.
 
 According to Wikipedia, TypeScript is a free and open source programming language developed and maintained by Microsoft. It is a strict syntactical superset of JavaScript and adds optional static typing to the language. It is designed for the development of large applications and transpiles to JavaScript. As it is a superset of JavaScript, existing JavaScript programs are also valid TypeScript programs.
 
@@ -44,7 +44,7 @@ TypeScript is a language extension that adds features to ECMAScript 6. Additiona
 8. **Tuples**
 9. **Async/await**
 
-The following features are backported from ECMAScript 2015:
+The following features are back ported from ECMAScript 2015:
 
 10. **Classes**
 11. **Modules**
@@ -85,7 +85,7 @@ console.log(str1getter()) // comming
 console.log(str2getter()) // hohohoh
 ```
 
-We're going to capture initial state of the string and then as we change it, it's going to be tracked , so it's basically a piecie of stored state. Now let's use this and I'll give it the initial value of 'winter' and let's just _console.log_ the output of **str1getter**. Then I'll create a second one and give it the initial value of 'hohoho' and also _console.log_ the output. Then I'll use **str1setter** to set it and _console.log_ to make sure that we're getting the right value.
+We're going to capture initial state of the string and then as we change it, it's going to be tracked, so it's basically a piece of stored state. Now let's use this, and I'll give it the initial value of 'winter' and let's just _console.log_ the output of **str1getter**. Then I'll create a second one and give it the initial value of 'hohoho' and also _console.log_ the output. Then I'll use **str1setter** to set it and _console.log_ to make sure that we're getting the right value.
 
 I'll run this in a terminal to see those console logs.
 
@@ -228,8 +228,10 @@ Everything seems to work nicely, **myMap** function return a new array with all 
 
 # 5. More TypeScript content coming soon..
 
-For now that's it, I will see you next time with more TypeScript content. Like always if you liked this, you can leave a star on my github account, link **[nextjs-blog](https://github.com/wujekbizon/nextjs-blog)**.
+For now that's it, I will see you next time with more TypeScript content. Like always if you liked this, you can leave a star on my GitHub account, link **[nextjs-blog](https://github.com/wujekbizon/nextjs-blog)**.
 
 ### Grzegorz Wolfinger
 
 _React Developer | Software Engineer | Javascript Engineer_
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)

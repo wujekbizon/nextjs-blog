@@ -2661,3 +2661,8 @@ awsservice  dev  devops_05102023.zip  devopsdir  VBoxGuestAdditions-6.1.46  webd
 So we have two general method for archiving, **tar** and **zip** we can use both of them depends on need.
 
 ---
+
+### Great, we finally have some basic understanding of Linux Systems. Now we can move to more advanced topics. Coming next Vagrant & Linux Systems.
+
+If you found this blog helpful, and you want to support my work, you can:
+[BuyMeACoffee](https://www.buymeacoffee.com/grzegorzwolfinger)
