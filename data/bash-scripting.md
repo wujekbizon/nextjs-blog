@@ -210,7 +210,7 @@ Great, our first script is working. It is good practice to make the output of ou
 ## 3. Setting up a simple website with scripts.
 
 Let's check the case whereas DevOps we need to set up website. Of course, we can do it manually, but we will be working on a sample use case where we need to execute a series of commands to set up a website. Instead of manually running each command, we will write a script to automate the process for us.
-Let's create a file 2_websitesetup.sh and edit using vim editor. Inside let's write step-by-step instructions to how we
+Let's create a file 2_websitesetup.sh and edit using vim editor. Inside let's write step-by-step instructions on how to set up the website.
 
 ```bash
 [root@scriptbox scripts]# vim 2_websitesetup.sh
