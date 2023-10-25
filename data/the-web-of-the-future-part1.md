@@ -2,7 +2,7 @@
 title: 'The Web of the Future: Decentralizing the Internet - part 1'
 excerpt: 'The dawn of the decentralized era has arrived, signaling the start of a revolution.'
 image: 'map.png'
-isFeatured: true
+isFeatured: false
 date: '2023-04-01'
 ---
 
