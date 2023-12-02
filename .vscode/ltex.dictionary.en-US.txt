@@ -10,3 +10,11 @@ transpiling
 Async
 memoized
 BuyMeACoffee
+game-chalange
+deallocated
+deallocate
+nullptr
+const
+ptrdiff
+ptr
+RAII

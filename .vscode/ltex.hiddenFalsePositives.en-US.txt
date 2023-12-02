@@ -2,3 +2,13 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QReact's two hooks for creating state, useState and useReducer, are invaluable tools for managing application state.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QAdditionally, React provides three hooks for monitoring state: useEffect, useMemo and useCallback.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QSo let's create our app , this time I will use Vite, I'm going to call it csr and use a React template because I want to do react.\\E$"}
+{"rule":"EXTREME_ADJECTIVES","sentence":"^\\QThis way, we can avoid really bad situations where we try to modify a char array that is const, which will result in failure.\\E$"}
+{"rule":"ARROWS","sentence":"^\\QWhen comparing pointers using logical operators such as \">, <, >=, <=, ==, !=\", the comparison is made based on the memory addresses stored in the pointers.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qstd::ptrdiff_t is a special, signed integer type in C++ that is specifically designed to store the difference between two pointers.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QNon-const pointer to int: Pointer that can modify the integer value it points to.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qconst pointer to non-const data: Pointer that cannot modify the data it points to, but can be modified to point to different data.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qconst pointer to const data: Pointer that cannot modify the data it points to and cannot be modified to point to different data.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Qconst pointer to non-const data: Pointer that cannot modify the data it points to, but can be modified to point to different data.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QFortunately, we have tools like the try-catch block and the std::nothrow keyword to protect against such exceptions.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QRAII (Resource Acquisition Is Initialization): Employ RAII to acquire resources upon object creation and release them upon destruction, ensuring proper resource management.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QPractice #5: Merge two arrays.\\E$"}

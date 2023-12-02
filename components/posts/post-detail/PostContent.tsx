@@ -5,17 +5,20 @@ import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 import duotoneSpace from 'react-syntax-highlighter/dist/cjs/styles/prism/duotone-space'
+import nightOwl from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl'
 import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript'
 import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx'
 import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
 import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash'
+import cpp from 'react-syntax-highlighter/dist/cjs/languages/prism/cpp'
 
 SyntaxHighlighter.registerLanguage('bash', bash)
 SyntaxHighlighter.registerLanguage('js', js)
 SyntaxHighlighter.registerLanguage('ts', ts)
 SyntaxHighlighter.registerLanguage('tsx', tsx)
 SyntaxHighlighter.registerLanguage('jsx', jsx)
+SyntaxHighlighter.registerLanguage('cpp', cpp)
 
 const PostContent = ({ post }: PostProps) => {
   const imagePath = `/images/posts/${post.slug}/${post.data.image}`
@@ -45,8 +48,9 @@ const PostContent = ({ post }: PostProps) => {
     code(code: any) {
       const { className, children } = code
       const language = className.split('-')[1] // className is something like language-js => We need the "js" part here
+
       return (
-        <SyntaxHighlighter style={duotoneSpace} language={language}>
+        <SyntaxHighlighter style={language == 'cpp' ? nightOwl : duotoneSpace} language={language}>
           {children}
         </SyntaxHighlighter>
       )
