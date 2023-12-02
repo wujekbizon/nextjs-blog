@@ -1,9 +1,9 @@
 ---
 title: 'Defining Algorithms: Powering Problem-solving with Precision'
-date: '2023-10-09'
+date: '2023-11-30'
 image: transforrmers.png
 excerpt:  "Welcome to an exploration into the realm of algorithm design. Whether you're a beginner or someone seeking to deepen your understanding, this article is your gateway to comprehending the art of writing algorithms. In this engaging read, I will demystify the process, share valuable insights, and shed light on the world of algorithms."
-isFeatured: false
+isFeatured: true
 ---
 
 ## 1. What is an algorithm ?

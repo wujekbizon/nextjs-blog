@@ -1,6 +1,6 @@
 ---
 title: 'C++ Mastery: Unveiling the Power of Pointers.'
-date: '2023-11-29'
+date: '2023-12-02'
 image: point.jpg
 excerpt:  "From the fundamentals of C++ to the more advanced concept of pointers, this comprehensive guide will steer you through the basics and beyond, providing you with a solid foundation to unleash your programming skills."
 isFeatured: true
