@@ -409,7 +409,7 @@ int *const pNumber7 {&var2};    // Const pointer to non const data
 I just want to show quickly how we can prevent modifying an array of pointers to const char. It may sometimes be handy to fully understand how this works. Let's write an example below.
 
 ```cpp
-  const char * const favoriteBooks[]{
+  const char *const favoriteBooks[]{
       "Witcher",
       "Quo Vadis",
       "Mr Car",
