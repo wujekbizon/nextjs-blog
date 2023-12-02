@@ -194,7 +194,8 @@ int main()
   // # Method 1
   // Initialize a 2-dimensional character array called 'jokes' to store a list of jokes.
   // Each joke is represented as a C-string with a fixed length of 100 characters.
-  // As a result, we are allocating more memory than necessary for some jokes and not having enough space for stings that are longer than 100.
+  // As a result, we are allocating more memory than necessary for some jokes and not having
+  // enough space for strings that are longer than 100.
   // This inefficient allocation of memory can be improved.
   char jokes[][100]{
       "Why are Assembly programmers always soaking wet? They work below C-level.",
