@@ -274,6 +274,55 @@ int main()
   result = nullptr;
 ```
 
+#### Dynamically Allocating and Manipulating Character Arrays.
+
+```cpp
+#include <iostream>
+#include <cstring>
+
+int main()
+{
+  // Define four constant character arrays containing different text fragments
+  const char src1[]{"Whether you need a responsive website"};
+  const char src2[]{"we have the expertise to meet your unique requirements"};
+  const char src3[]{"and deliver tailored solutions"};
+  const char src4[]{"our aim is to empower businesses and private individuals"};
+
+  // Declare a pointer named result to store a dynamically allocated character array
+  char *result;
+
+  // Allocate space for 5 characters and initialize all elements to null characters
+  result = new char[5]{};
+
+  // Copy character from src1 to result and add a null terminator
+  std::strncpy(result, &src1[0], 1);
+
+  // Copy character from src2 to result and add a null terminator
+  std::strncpy(result + 1, &src2[6], 1);
+
+  // Copy character from src3 to result and add a null terminator
+  std::strncpy(result + 2, &src3[21], 1);
+
+  // Copy  character from src4 to result and add a null terminator
+  std::strncpy(result + 3, &src4[4], 1);
+
+  // Iterate through the result array and convert each character to uppercase
+  for (size_t i = 0; i < std::strlen(result); i++)
+  {
+    *(result + i) = std::toupper(*(result + i));
+  }
+
+  // Print the result string to the console
+  std::cout << "We are " << result;
+
+  delete[] result; // Deallocate the memory allocated for the result array
+
+  result = nullptr; // Set the result pointer to nullptr
+
+  return 0;
+}
+```
+
 ## 3. C++ Simple algorithms:
 
 #### Swapping data between two arrays.
