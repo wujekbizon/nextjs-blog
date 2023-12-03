@@ -16,7 +16,265 @@ Mastering the art of algorithmic thinking equips you with a powerful tool for no
 
 Now that we've established the significance of algorithms and how they empower problem-solving, it's time to delve into the practical aspects. Starting from the basics, let's explore the step-by-step process of creating simple algorithms and gradually progress to more advanced techniques. By understanding the foundational principles and building upon them, we'll navigate the intricacies of algorithm design with confidence and finesse. So, let's embark on this journey of discovery and elevate our algorithmic thinking to new heights.
 
-## 2. C++ Simple algorithms:
+---
+
+###### Practice solutions for pointers are available at the bottom of this page.
+
+---
+
+## 2. C-String Manipulation:
+
+#### Find and print the indices of all blank characters in a character array.
+
+```cpp
+// This code snippet counts the number of blank characters in a character array
+  char message[]{"This characters array name `message` should contain 9 blank characters."};
+
+  // Print message
+  std::cout << "message : " << message << std::endl;
+
+  // Initialize a counter to track the number of blank characters
+  size_t blankCount{};
+
+  // Iterate through the character array
+  for (size_t i{0}; i < std::size(message); i++)
+  {
+    // Check if the current character is a blank character
+    if (std::isblank(message[i]))
+    {
+      // Increment the counter if it is a blank character
+      blankCount++;
+      // Output the index of the blank character
+      std::cout << "Found a blank character at index: [" << i << "]" << std::endl;
+    }
+  }
+  // Print the total number of blank characters found
+  std::cout << "In total we found " << blankCount << " blank characters." << std::endl;
+```
+
+#### Check whether each character in the given string is lowercase or uppercase.
+
+```cpp
+// This code snippet counts the number of lowercase and uppercase characters in a string
+  char thought[]{"The C++ Programming Language is one of the most used on the Planet"};
+
+  // Initialize counters for lowercase and uppercase characters
+  size_t lowercaseCount{};
+  size_t uppercaseCount{};
+
+  // Print the original string for reference
+  std::cout << "Original string: " << thought << std::endl;
+
+  // Iterate through each character in the string
+  for (auto character : thought)
+  {
+    // Check if the character is lowercase
+    if (std::islower(character))
+    {
+      // Print the lowercase character
+      std::cout << " " << character;
+      // Increment the lowercase counter
+      lowercaseCount++;
+    }
+
+    // Check if the character is uppercase
+    if (std::isupper(character))
+    {
+      // Print the uppercase character
+      std::cout << " " << character;
+      // Increment the uppercase counter
+      uppercaseCount++;
+    }
+  }
+
+  // Print the total number of lowercase and uppercase characters found
+  std::cout << std::endl;
+  std::cout << "Found " << lowercaseCount << " lowercase characters and "
+            << uppercaseCount << " uppercase characters." << std::endl;
+```
+
+#### Check if a character in the given char array is a digit.
+
+```cpp
+// Check if a character in given char array is a digit
+
+  char statement[]{"Chuck Norris can speak 37 different languages. He fluently speaks 3. And he can code in any programming language known to man, using only binary 0s and 1s."};
+
+  // Print the statement string
+  std::cout << "statement : " << statement << std::endl;
+
+  // Initialize a variable to count the digits
+  size_t digitCount{};
+
+  // Iterate through each character in the statement string
+  for (auto character : statement)
+  {
+
+    // Check if the current character is a digit
+    if (std::isdigit(character))
+    {
+
+      // Print the found digit
+      std::cout << "Found digit : " << character << std::endl;
+
+      // Increment the digit count
+      digitCount++;
+    }
+  }
+
+  // Print the total number of digits found
+  std::cout << "Found " << digitCount << " digits in the statement string" << std::endl;
+
+```
+
+#### Converts string to uppercase (only even characters), then to lowercase, and finally capitalizes the first character and characters following periods.
+
+```cpp
+ #include <iostream>
+
+int main()
+{
+  // Declare the original string
+  char originalStr[]{"Chuck Norris can count to infinity. Twice. But only Chuck Norris knows what comes after infinity."};
+
+  // Declare the destination string with the same size as the original string
+  char destStr[std::size(originalStr)];
+
+  // Convert characters to uppercase based on even or odd index
+  for (size_t i{}; i < std::size(originalStr); i++)
+  {
+    // If the index is even, convert the character to uppercase,
+    // if the index is odd, keep the character as is
+    (i % 2 == 0) ? destStr[i] = std::toupper(originalStr[i]) : destStr[i] = originalStr[i];
+  }
+  // Print the uppercase string
+
+  std::cout << "Original string : " << originalStr << std::endl;
+  std::cout << "Uppercase string : " << destStr << std::endl;
+
+  // Convert all characters to lowercase
+  for (size_t i{}; i < std::size(originalStr); i++)
+  {
+    destStr[i] = std::tolower(originalStr[i]);
+  }
+
+  // Capitalize characters after spaces
+  for (size_t i{}; i < std::size(originalStr); i++)
+  {
+    // Capitalize the first character
+    if (i == 0)
+    {
+      destStr[i] = std::toupper(originalStr[i]);
+    }
+
+    // Capitalize characters following periods
+    if (destStr[i] == '.')
+    {
+      // Check for out-of-bounds index
+      if (i < std::size(originalStr) - 2)
+      {
+        // Capitalize the character two positions after the period
+        destStr[i + 2] = std::toupper(originalStr[i + 2]);
+      }
+    }
+  }
+
+  // Print the lowercase string with capitalized characters
+  std::cout << "Lowercase string : " << destStr << std::endl;
+  return 0;
+}
+```
+
+#### Count vowels and consonants in given C-string.
+
+```cpp
+#include <iostream>
+
+int main()
+{
+  // Declare a character array named 'data' and initialize it with a string
+  char data[]{"** Chuck Norris can speak 37 different languages. Fluently!! **"};
+
+  // Declare an unsigned integer variable named 'vowelCount' and initialize it to 0
+  unsigned int vowelCount{};
+  // Declare an unsigned integer variable named 'consonantCount' and initialize it to 0
+  unsigned int consonantCount{};
+
+  // Iterate over each character in the 'data' array
+  for (size_t i = 0; i < std::size(data); i++)
+  {
+    // Check if the current character is a punctuation mark, whitespace, digit, or null terminator
+    if (std::ispunct(data[i]) || data[i] == ' ' || std::isdigit(data[i]) || data[i] == '\0')
+    {
+      // Skip the current character if it is any of the above
+      continue;
+    }
+    // Check if the current character is a vowel (a, e, i, o, or u)
+    if (std::tolower(data[i]) == 'a' || std::tolower(data[i]) == 'e' || std::tolower(data[i]) == 'i' || std::tolower(data[i]) == 'o' || std::tolower(data[i]) == 'u')
+    {
+      // Increment the vowel count
+      vowelCount++;
+    }
+    else
+    {
+      // If the current character is not a vowel then it must be consonant
+      // Increment the consonant count
+      consonantCount++;
+    }
+  }
+  // Print the vowel and consonant counts to the console
+  std::cout << "The string contains " << vowelCount << " vowels and " << consonantCount << " consonants";
+  return 0;
+}
+```
+
+#### Replace whitespace characters with underscores in given string.
+
+```cpp
+ // Declare a character array named 'data' and initialize it with a string
+  char data[]{"Chuck Norris once karate chopped a mountain in half. The other half is now known as California."};
+  // Get the length of the 'data' array
+  unsigned int size = std::size(data);
+  // Allocate memory for a new character array named 'result' of the same size as 'data'
+  char *result{new (std::nothrow) char[size]{}};
+
+  // Iterate over each character in the 'data' array
+  for (size_t i = 0; i < size; i++)
+  {
+    // Check if the current character is a space
+    if (data[i] == ' ')
+    {
+      // Replace the current character with an underscore using pointer arithmetic
+      *(result + i) = '_';
+    }
+    else // If the current character is not a space
+    {
+      // Copy the current character to the 'result' array
+      *(result + i) = data[i];
+    }
+  }
+  // Print a message to indicate the start of the modified string
+  std::cout << "After replacing the spaces, we get: ";
+
+  // Iterate over each character in the 'result' array
+  for (size_t i = 0; i < size; i++)
+  {
+    // Check if the current character is the null terminator
+    if (*(result + i) == '\0')
+    {
+      continue; // Skip the null terminator
+    }
+
+    // Print the current character to the console
+    std::cout << *(result + i);
+  }
+
+  // Deallocate the memory allocated for the 'result' array
+  delete[] result;
+  result = nullptr;
+```
+
+## 3. C++ Simple algorithms:
 
 #### Swapping data between two arrays.
 
@@ -90,7 +348,9 @@ int main()
 }
 ```
 
-## 3. Assignments Solutions.
+## Assignments Solutions.
+
+---
 
 #### Practice #2: Finding the Maximum Element and its Address in an Integer Array.
 
