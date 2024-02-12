@@ -3,7 +3,7 @@ title: 'Introduction to Linux'
 date: '2023-10-01'
 image: linux.png
 excerpt:  "Are you interested in gaining a better understanding of the DevOps workflow? If so, mastering Linux is essential. In this blog post, we will take a deep dive into the fundamentals of Linux, providing you with the necessary knowledge to excel in the world of DevOps."
-isFeatured: true
+isFeatured: false
 ---
 
 ## 1. Linux Introduction.
