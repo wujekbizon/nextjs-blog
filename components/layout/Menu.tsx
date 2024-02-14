@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import styles from './Menu.module.css'
+import Link from 'next/link'
 
 const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
   return (

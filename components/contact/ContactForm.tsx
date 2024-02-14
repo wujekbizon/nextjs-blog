@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './ContactForm.module.css'
 import { useState, useContext } from 'react'
 import NotificationContext from '../../store/notificationContext'
@@ -13,8 +15,8 @@ const sendContactData = async (contactDetails: ContactDetails) => {
     method: 'POST',
     body: JSON.stringify(contactDetails),
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-type': 'application/json',
+    },
   })
 
   const data = await response.json()
@@ -46,7 +48,7 @@ const ContactForm = () => {
       notificationCtx.showNotification({
         title: 'Error!',
         message: 'Invalid Input!',
-        status: 'error'
+        status: 'error',
       })
       return
     }
@@ -54,13 +56,13 @@ const ContactForm = () => {
     const message = {
       email: enteredEmail,
       name: enteredName,
-      message: enteredMessage
+      message: enteredMessage,
     }
 
     notificationCtx.showNotification({
       title: 'Sending...',
       message: 'Your message is currently being added.',
-      status: 'pending'
+      status: 'pending',
     })
 
     try {
@@ -68,7 +70,7 @@ const ContactForm = () => {
       notificationCtx.showNotification({
         title: 'Success!',
         message: 'Successfully send a message!',
-        status: 'success'
+        status: 'success',
       })
       setEnteredEmail('')
       setEnteredName('')
@@ -78,7 +80,7 @@ const ContactForm = () => {
         notificationCtx.showNotification({
           title: 'Error!',
           message: error.message || 'Something went wrong!',
-          status: 'error'
+          status: 'error',
         })
       } else {
         throw new Error('Something went wrong')

@@ -2,6 +2,8 @@
   width: 90%;
   max-width: 60rem;
   margin: var(--size-8) auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .posts h1 {

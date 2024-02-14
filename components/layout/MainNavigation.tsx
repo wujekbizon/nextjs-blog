@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './MainNavigation.module.css'
 import Logo from './Logo'
 import Link from 'next/link'
@@ -5,6 +7,8 @@ import { useState } from 'react'
 import { MdClose } from 'react-icons/md'
 import { FiMenu } from 'react-icons/fi'
 import Menu from './Menu'
+import { links } from '@/constants/links'
+import NavLink from '../ui/NavLink'
 
 const MainNavigation = () => {
   const [navbarOpen, setNavbarOpen] = useState(false)
@@ -19,25 +23,20 @@ const MainNavigation = () => {
 
   return (
     <header className={styles.header}>
+      <div className={`${styles.navbar_gradient} gradient_1`}></div>
       <Link href="/">
         <Logo />
       </Link>
       <nav>
-        <ul>
-          <li>
-            <Link href="/posts">Posts</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link href="https://grzegorz-wolfinger-portfolio.vercel.app/" target="_blank">
-              Portfolio
-            </Link>
-          </li>
+        <ul className={styles.links}>
+          {links.map((item) => (
+            <NavLink key={item.title} href={item.href}>
+              {item.title}
+            </NavLink>
+          ))}
         </ul>
       </nav>
-      <div className={styles.navbar_btn}>
+      <aside className={styles.navbar_btn}>
         <button onClick={handleToggle}>
           {navbarOpen ? <MdClose className={styles.mdclose} /> : <FiMenu className={styles.fimenu} />}
         </button>
@@ -47,7 +46,7 @@ const MainNavigation = () => {
             <Menu closeMenu={closeMenu} />
           </div>
         )}
-      </div>
+      </aside>
     </header>
   )
 }

@@ -2,7 +2,7 @@
 title: 'The DevOps Tool Box: Bash Scripting'
 date: '2023-10-19'
 image: bash.png
-excerpt:  "Bash scripting is the vital ingredient in DevOps, enabling efficiency and automation. By mastering Bash scripting, you can streamline tasks, increase productivity, and empower your team to focus on more strategic initiatives. Let's dive deeper into scripts and learn how to write them."
+excerpt:  "Bash scripting is the vital ingredient in DevOps, enabling efficiency and automation. By mastering Bash scripting, you can streamline tasks, increase productivity, and empower your team to focus on more strategic initiatives."
 isFeatured: false
 ---
 

@@ -1,53 +1,45 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+'use server'
 
-type Post = {
-  data: {
-    [key: string]: string;
-  };
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import { Post } from '@/types/postsTypes'
 
-  content: string;
-  slug: string;
-};
-
-const dataDirectory = path.join(process.cwd(), 'data');
+const dataDirectory = path.join(process.cwd(), 'data')
 
 export const getPostsFile = () => {
-  return fs.readdirSync(dataDirectory);
-};
+  return fs.readdirSync(dataDirectory)
+}
 
 export const getPostData = (postIdentifier: string): Post => {
-  const postSlug = postIdentifier.replace(/\.md$/, '');
-  const filePath = path.join(dataDirectory, `${postSlug}.md`);
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(fileContent);
+  const postSlug = postIdentifier.replace(/\.md$/, '')
+  const filePath = path.join(dataDirectory, `${postSlug}.md`)
+  const fileContent = fs.readFileSync(filePath, 'utf-8')
+  const { data, content } = matter(fileContent)
 
   const postData = {
     slug: postSlug,
     data: { ...data },
     content,
-  };
+  }
 
-  return postData;
-};
+  return postData
+}
 
 export const getAllPosts = () => {
-  const postsFiles = getPostsFile();
+  const postsFiles = getPostsFile()
   const allPosts = postsFiles.map((postFile) => {
-    return getPostData(postFile);
-  });
+    return getPostData(postFile)
+  })
 
-  const sortedPosts = allPosts.sort((postA, postB) =>
-    postA.data.date > postB.data.date ? -1 : 1
-  );
+  const sortedPosts = allPosts.sort((postA, postB) => (postA.data.date > postB.data.date ? -1 : 1))
 
-  return sortedPosts;
-};
+  return sortedPosts
+}
 
 export const getFeaturedPosts = () => {
-  const allPosts = getAllPosts();
+  const allPosts = getAllPosts()
 
-  const featuredPosts = allPosts.filter((post) => post.data.isFeatured);
-  return featuredPosts;
-};
+  const featuredPosts = allPosts.filter((post) => post.data.isFeatured)
+  return featuredPosts
+}

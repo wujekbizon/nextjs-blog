@@ -1,14 +1,14 @@
-import styles from './AllPosts.module.css';
-import PostGrid from './PostGrid';
-import { PostsProps } from '../../types/postsTypes';
+import styles from './AllPosts.module.css'
+import PostGrid from '@/components/posts/PostGrid'
+import { Post } from '@/types/postsTypes'
 
-const AllPosts = ({ posts }: PostsProps) => {
+const AllPosts: React.FC<Post[]> = (posts) => {
   return (
     <section className={styles.posts}>
       <h1>All Posts</h1>
       <PostGrid posts={posts} />
     </section>
-  );
-};
+  )
+}
 
-export default AllPosts;
+export default AllPosts

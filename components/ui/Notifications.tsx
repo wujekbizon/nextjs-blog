@@ -1,35 +1,35 @@
-import styles from './Notifications.module.css';
-import { NotificationDataType } from '../../types/contextTypes';
-import { useContext } from 'react';
-import ReactDOM from 'react-dom';
-import NotificationContext from '../../store/notificationContext';
+'use client'
+
+import styles from './Notifications.module.css'
+import { useContext } from 'react'
+import { NotificationDataType } from '@/types/contextTypes'
+import NotificationContext from '@/store/notificationContext'
 
 const Notifications = (props: NotificationDataType) => {
-  const { title, status, message } = props;
+  const { title, status, message } = props
 
-  const notificationCtx = useContext(NotificationContext);
+  const notificationCtx = useContext(NotificationContext)
 
-  let statusClasses = '';
+  let statusClasses = ''
 
   if (status === 'success') {
-    statusClasses = styles.success;
+    statusClasses = styles.success
   }
 
   if (status === 'error') {
-    statusClasses = styles.error;
+    statusClasses = styles.error
   }
 
   if (status === 'pending') {
-    statusClasses = styles.pending;
+    statusClasses = styles.pending
   }
 
-  const cssClasses = `${styles.notification} ${statusClasses}`;
-  return ReactDOM.createPortal(
+  const cssClasses = `${styles.notification} ${statusClasses}`
+  return (
     <div className={cssClasses} onClick={notificationCtx.hideNotification}>
       <h2>{title}</h2>
       <p>{message}</p>
-    </div>,
-    document.getElementById('notifications')!
-  );
-};
-export default Notifications;
+    </div>
+  )
+}
+export default Notifications
