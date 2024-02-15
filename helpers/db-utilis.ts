@@ -1,9 +1,5 @@
 import { MongoClient } from 'mongodb'
 
-type InsertedDocument<Document> = {
-  [key: string]: Document
-}
-
 export type ContactDocument = {
   email: string
   name: string

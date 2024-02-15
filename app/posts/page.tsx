@@ -15,7 +15,7 @@ const Posts = async () => {
   return <AllPosts {...fetchedPosts} />
 }
 
-const AllPostsPage: React.FC<Post[]> = () => {
+const AllPostsPage = () => {
   return (
     <Suspense fallback={<p>Fetching posts...</p>}>
       <Posts />
