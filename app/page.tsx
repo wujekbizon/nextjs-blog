@@ -9,7 +9,7 @@ const HomePage: React.FC<Post[]> = () => {
   return (
     <>
       <FeaturedPosts {...fetchedPosts} />
-      <Hero />
+      {/* <Hero /> */}
     </>
   )
 }
