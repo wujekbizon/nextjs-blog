@@ -11,9 +11,6 @@ const nextConfig = {
     MONGODB_USERNAME: process.env.MONGODB_USERNAME,
     MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
   },
-  experimental: {
-    largePageDataBytes: 128 * 2000, // 128KB by default
-  },
 }
 
 module.exports = nextConfig

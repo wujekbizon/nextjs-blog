@@ -6,7 +6,7 @@ const AllPosts: React.FC<Post[]> = (posts) => {
   return (
     <section className={styles.posts}>
       <h1>All Posts</h1>
-      <PostGrid posts={posts} />
+      <PostGrid posts={posts} isFeatured />
     </section>
   )
 }

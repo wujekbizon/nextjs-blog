@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { Post } from '@/types/postsTypes'
 import { getAllPosts } from '@/helpers/archiveUtils'
@@ -8,10 +9,18 @@ export const metadata: Metadata = {
   description: 'A list of posts about programming.',
 }
 
-const AllPostsPage: React.FC<Post[]> = () => {
-  const fetchedPosts = getAllPosts()
+const Posts = async () => {
+  const fetchedPosts = await getAllPosts()
 
   return <AllPosts {...fetchedPosts} />
+}
+
+const AllPostsPage: React.FC<Post[]> = () => {
+  return (
+    <Suspense fallback={<p>Fetching posts...</p>}>
+      <Posts />
+    </Suspense>
+  )
 }
 
 export default AllPostsPage
