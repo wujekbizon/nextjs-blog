@@ -1,9 +1,11 @@
 .posts {
-  width: 90%;
-  max-width: 60rem;
-  margin: var(--size-8) auto;
+  width: 100%;
+  /* max-width: 1440px;
+  margin: var(--size-8) auto; */
   display: flex;
   flex-direction: column;
+  background-color: #07070c;
+  padding: 6rem 4rem;
 }
 
 .posts h1 {

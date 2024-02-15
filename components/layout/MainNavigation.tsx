@@ -24,9 +24,7 @@ const MainNavigation = () => {
   return (
     <header className={styles.header}>
       <div className={`${styles.navbar_gradient} gradient_1`}></div>
-      <Link href="/">
-        <Logo />
-      </Link>
+      <Logo />
       <nav>
         <ul className={styles.links}>
           {links.map((item) => (

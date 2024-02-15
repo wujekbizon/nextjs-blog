@@ -1,10 +1,14 @@
 .post {
-  width: 430px;
+  width: 100%;
   height: 560px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 12px;
   backdrop-filter: blur(20px);
+  border: 1px solid #07070c;
+  -webkit-box-shadow: 4px 8px 8px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 8px 8px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 8px 8px 0px rgba(0, 0, 0, 0.4);
 }
 
 .container {
@@ -16,7 +20,7 @@
 }
 
 .special {
-  margin-bottom: 80px;
+  margin-bottom: 0px;
 }
 
 .post a {
@@ -58,4 +62,16 @@
   line-height: var(--size-6);
   color: #ababab;
   text-align: center;
+}
+
+@media (min-width: 991px) {
+  .special {
+    margin-bottom: 80px;
+  }
+}
+
+@media (min-width: 480px) {
+  .post {
+    width: 420px;
+  }
 }

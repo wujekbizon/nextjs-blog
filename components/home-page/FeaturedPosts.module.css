@@ -1,9 +1,5 @@
 .latest {
   position: relative;
-  /* max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto; */
-  /* padding: 64px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,19 +41,21 @@
 }
 
 .custom_button {
-  width: 421px;
-  height: 114px;
+  width: 410px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   font-size: 28px;
   font-weight: 500;
   border-radius: 20px;
-  /* background: rgba(255, 68, 18, 0.2); */
   background: linear-gradient(89.97deg, rgba(255, 68, 18, 0.4), rgba(62, 0, 0, 0.4) 102.67%);
   backdrop-filter: blur(10px);
-  -webkit-box-shadow: 0px 10px 4px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 10px 4px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 10px 4px 0px rgba(0, 0, 0, 0.4);
-  border: none;
+  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(62, 0, 0, 0.6);
 }
 
 @media (min-width: 768px) {

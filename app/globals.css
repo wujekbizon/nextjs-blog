@@ -74,6 +74,12 @@ li {
   filter: blur(250px);
 }
 
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .gradient__text {
   background: linear-gradient(270deg, #00dbd8, #b133ff);
   background-clip: text;
@@ -123,3 +129,39 @@ li {
     transform: scale(1);
   }
 }
+
+/* 
+Border linear gradient 
+
+.custom_button::before,
+.custom_button::after {
+  content: '';
+  position: absolute;
+  inset: -0.2rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    rgba(249, 207, 150, 1),
+    rgba(255, 238, 216, 1),
+    rgba(242, 75, 34, 1),
+    rgba(249, 207, 150, 1),
+    rgba(255, 238, 216, 1)
+  );
+  animation: rotation 20s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.custom_button::after {
+  filter: blur(0.2rem);
+}
+
+*/
