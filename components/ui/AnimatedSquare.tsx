@@ -1,11 +1,12 @@
 'use client'
 import styles from './AnimatedSquare.module.css'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const AnimatedSquare = ({ children }: { children: React.ReactNode }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const squareRef = useRef(null)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
 
   // Animation configuration (adjustable parameters)
   const ANIMATION_DURATION = 50 // Seconds
@@ -23,25 +24,47 @@ const AnimatedSquare = ({ children }: { children: React.ReactNode }) => {
 
   const BORDER_RADIUS = [2, 25, 50, 500, 50, 25, 10, 2]
 
+  useEffect(() => {
+    const matchMedia = window.matchMedia('(max-width: 1024px)')
+
+    const mediaMatchChangeHandler = () => {
+      setIsSmallScreen(matchMedia.matches)
+    }
+
+    matchMedia.addListener(mediaMatchChangeHandler)
+
+    mediaMatchChangeHandler() // Check on initial render
+
+    return () => {
+      matchMedia.removeListener(mediaMatchChangeHandler)
+    }
+  }, [])
+
   return (
     <div className={styles.pad_container} ref={containerRef}>
-      <motion.div
-        ref={squareRef}
-        className={styles.pad}
-        animate={{
-          x: ['2vw', '66vw', '2vw', '66vw', '2vw'],
-          height: [500, 500, 500, 300, 500],
-          borderRadius: BORDER_RADIUS,
-          boxShadow: CUSTOM_SHADOWS,
-        }}
-        transition={{
-          duration: ANIMATION_DURATION,
-          repeat: Infinity,
-          repeatType: 'loop',
-        }}
-      >
-        <div className={styles.content}>{children}</div>
-      </motion.div>
+      {isSmallScreen ? (
+        <div className={styles.pad}>
+          <div className={styles.content}>{children}</div>
+        </div>
+      ) : (
+        <motion.div
+          ref={squareRef}
+          className={styles.pad}
+          animate={{
+            x: ['0vw', '66vw', '0vw', '66vw', '0vw'],
+            height: [500, 500, 500, 300, 500],
+            borderRadius: BORDER_RADIUS,
+            boxShadow: CUSTOM_SHADOWS,
+          }}
+          transition={{
+            duration: ANIMATION_DURATION,
+            repeat: Infinity,
+            repeatType: 'loop',
+          }}
+        >
+          <div className={styles.content}>{children}</div>
+        </motion.div>
+      )}
     </div>
   )
 }

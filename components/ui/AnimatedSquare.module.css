@@ -6,6 +6,7 @@
 
 .pad {
   position: relative;
+  height: 100%;
   width: 500px;
   background-color: rgb(2, 2, 2);
   background-image: url('/assets/images/logo_m.png');
@@ -46,4 +47,16 @@
   font-weight: 500;
   font-size: 16px;
   text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .pad_container {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .content h1 {
+    padding: 0 15px 30px 15px;
+  }
 }
