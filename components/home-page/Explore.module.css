@@ -1,0 +1,10 @@
+.explore {
+  padding: 3rem 0;
+  background-color: #000c;
+  overflow: hidden;
+}
+
+.explore_title {
+  font-size: 34px;
+  text-align: center;
+}

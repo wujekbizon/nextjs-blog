@@ -1,0 +1,49 @@
+.pad_container {
+  height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.pad {
+  position: relative;
+  width: 500px;
+  background-color: rgb(2, 2, 2);
+  background-image: url('/assets/images/logo_m.png');
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+}
+
+.content h1 {
+  text-align: center;
+  padding-bottom: 30px;
+  color: wheat;
+}
+
+.content p {
+  text-align: center;
+  padding: 0 25px;
+  font-weight: 500;
+  color: rgb(193, 186, 186);
+  font-size: 18px;
+}
+
+.content p:last-child {
+  color: #c5ff25c3;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+}
