@@ -1,7 +1,7 @@
 import { getFeaturedPosts } from '@/helpers/archiveUtils'
-import Hero from '@/components/home-page/Hero'
 import FeaturedPosts from '@/components/home-page/FeaturedPosts'
 import Explore from '@/components/home-page/Explore'
+import Footer from '@/components/layout/Footer'
 
 const HomePage = () => {
   const fetchedPosts = getFeaturedPosts()
@@ -10,7 +10,7 @@ const HomePage = () => {
     <>
       <FeaturedPosts {...fetchedPosts} />
       <Explore />
-      <Hero />
+      <Footer />
     </>
   )
 }

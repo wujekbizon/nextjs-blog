@@ -1,0 +1,97 @@
+.footer {
+  min-height: 55vh;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  background: #000;
+  background-image: url('/assets/images/aiGlobe.png');
+  background-position: top;
+}
+
+.footer_title h2 {
+  font-size: 45px;
+  background: linear-gradient(
+    145deg,
+    rgba(7, 7, 12, 1) 0%,
+    rgba(62, 0, 0, 1) 24%,
+    rgba(255, 68, 18, 1) 36%,
+    rgba(242, 245, 62, 1) 48%,
+    rgba(235, 157, 56, 1) 64%,
+    rgba(255, 68, 18, 1) 72%,
+    rgba(62, 0, 0, 1) 84%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.footer_title p {
+  color: #ababab;
+  font-size: 15px;
+}
+
+.link {
+  padding: 0 5px;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #838181;
+}
+
+.submit_btn {
+  width: 250px;
+  height: 60px;
+  border: none;
+  background-color: #07070c;
+  color: #fff;
+  font-size: 22px;
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  transition: color 0.2s ease-in-out;
+}
+
+.submit_btn:hover {
+  color: rgba(255, 68, 18, 0.5);
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 25px;
+}
+
+.input {
+  width: 90%;
+  height: 60px;
+  border: none;
+  background: linear-gradient(89.97deg, rgba(255, 68, 18, 0.5), rgba(62, 0, 0, 0.5) 102.67%);
+  backdrop-filter: blur(10px);
+  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 0 25px;
+  font-size: 20px;
+  outline: none;
+  border-bottom: 1px solid #07070c;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.input::placeholder {
+  color: #ababab;
+  font-size: 15px;
+}

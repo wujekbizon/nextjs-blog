@@ -100,12 +100,6 @@ li {
   filter: blur(250px);
 }
 
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 .gradient__text {
   background: linear-gradient(270deg, #00dbd8, #b133ff);
   background-clip: text;
@@ -155,39 +149,3 @@ li {
     transform: scale(1);
   }
 }
-
-/* .pad::before,
-.pad::after {
-  content: '';
-  position: absolute;
-  inset: -0.2rem;
-  z-index: -1;
-  border-radius: inherit;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    #000 0%,
-    #07070c 13%,
-    #3e0000 24%,
-    #ff4412 36%,
-    #f2f53e 48%,
-    #eb9d38 64%,
-    #ff4412 72%,
-    #3e0000 84%,
-    #07070c 96%,
-    #000 110%
-  );
-  animation: rotation 20s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    --gradient-angle: 0deg;
-  }
-  100% {
-    --gradient-angle: 360deg;
-  }
-}
-
-.custom_button::after {
-  filter: blur(120px);
-} */
