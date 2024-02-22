@@ -1,7 +1,12 @@
 .explore {
-  padding: 3rem 0;
-  background-color: #000c;
+  min-height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 70px;
+  background-color: #000c;
+  padding: 3rem 0;
 }
 
 .explore_title {
