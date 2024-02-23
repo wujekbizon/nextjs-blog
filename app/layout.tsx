@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Layout from '@/components/layout/Layout'
 import { NotificationContextProvider } from '@/store/notificationContext'
+import ErrorBoundary from '@/components/error/ErrorBoundary'
+
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
@@ -22,7 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <NotificationContextProvider>
       <html lang="en">
         <body className={poppins.variable}>
-          <Layout>{children}</Layout>
+          <ErrorBoundary>
+            <Layout>{children}</Layout>
+          </ErrorBoundary>
         </body>
       </html>
     </NotificationContextProvider>

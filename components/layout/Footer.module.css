@@ -32,17 +32,18 @@
 }
 
 .footer_title p {
-  color: #ababab;
+  color: whitesmoke;
   font-size: 15px;
 }
 
 .link {
   padding: 0 5px;
+  color: #a8a6a6;
   text-decoration: underline;
 }
 
 .link:hover {
-  color: #838181;
+  color: #9f9090;
 }
 
 .submit_btn {
@@ -94,4 +95,38 @@
 .input::placeholder {
   color: #ababab;
   font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .footer_title h2 {
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .footer_title p {
+    text-align: center;
+  }
+
+  .input {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .submit_btn {
+    width: 100%;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 24px;
+  }
 }

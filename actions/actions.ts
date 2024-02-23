@@ -1,5 +1,6 @@
 'use server'
 import { connectDatabase, insertDocument } from '@/helpers/db-utilis'
+import * as Sentry from '@sentry/nextjs'
 
 function isInvalidText(text: string | null): boolean {
   return !text || text.trim() === ''
@@ -20,21 +21,72 @@ export async function sendEmail(formData: FormData) {
     isInvalidText(messageContent.name) ||
     isInvalidText(messageContent.message)
   ) {
+    Sentry.captureMessage('Invalid input fields!')
     throw new Error('Invalid input fields!')
   }
 
   try {
     client = await connectDatabase('blog')
   } catch (error) {
-    console.log(error)
-    return
+    Sentry.captureException(error)
+    throw new Error('Error connecting to database, please try again later')
+  } finally {
+    // Close database connection
+    if (client) {
+      await client.close()
+    }
   }
 
   let result
   try {
     result = await insertDocument(client, 'messages', messageContent)
-    console.log(result)
+    console.log('You successfully send a meassage:', result) // Log success for debugging
   } catch (error) {
-    console.log(error)
+    Sentry.captureException(error)
+    throw new Error('Error sending a message')
+  } finally {
+    // Close database connection if necessary
+    if (client) {
+      await client.close()
+    }
   }
+
+  return { message: 'Successfully send a message!' }
+}
+
+export async function subscribeToNewsletter(formData: FormData) {
+  let client
+
+  const newSubscription = {
+    email: formData.get('email') as string,
+  }
+
+  // email validation
+  if (!newSubscription.email || !newSubscription.email.includes('@')) {
+    Sentry.captureMessage('Invalid email format')
+    throw new Error('Invalid email format')
+  }
+
+  // connecting to db
+  try {
+    client = await connectDatabase('blog')
+  } catch (error) {
+    Sentry.captureException(error)
+    throw new Error('Error connecting to database, please try again later')
+  }
+
+  let result
+  try {
+    result = await insertDocument(client, 'newsletters', newSubscription)
+    console.log('Subscription successful:', result) // Log success for debugging
+  } catch (error) {
+    Sentry.captureException(error)
+    throw new Error('Error subscribing to newsletter')
+  } finally {
+    // Close database connection if necessary
+    if (client) {
+      await client.close()
+    }
+  }
+  return { message: 'Successfully subscribed to newsletter!' }
 }

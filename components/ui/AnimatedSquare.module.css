@@ -1,5 +1,5 @@
 .pad_container {
-  height: 1000px;
+  height: 800px;
   display: flex;
   align-items: center;
 }
@@ -52,6 +52,11 @@
 @media (max-width: 1024px) {
   .pad_container {
     justify-content: center;
+  }
+
+  .pad {
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 }
 

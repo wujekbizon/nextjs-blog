@@ -13,7 +13,11 @@ export const connectDatabase = async (dbName: string) => {
   return client
 }
 
-export const insertDocument = async (client: MongoClient, collection: string, document: ContactDocument) => {
+export const insertDocument = async (
+  client: MongoClient,
+  collection: string,
+  document: ContactDocument | { email: string }
+) => {
   const db = client.db()
   const result = await db.collection(collection).insertOne(document)
   return result

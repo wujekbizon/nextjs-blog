@@ -1,11 +1,7 @@
 import Link from 'next/link'
 import Hero from '../home-page/Hero'
 import styles from './Footer.module.css'
-
-const subscribe = async (formData: FormData) => {
-  'use server'
-  console.log(formData.get('email') as string)
-}
+import { subscribeToNewsletter } from '@/actions/actions'
 
 const Footer = () => {
   return (
@@ -21,7 +17,7 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <form className={styles.form} action={subscribe}>
+        <form className={styles.form} action={subscribeToNewsletter}>
           <input
             placeholder="Enter your email address here"
             className={styles.input}
