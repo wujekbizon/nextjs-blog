@@ -1,27 +1,30 @@
-.list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  background: rgba(3, 27, 52, 0.95);
-  padding: 2rem;
+.modal {
+  height: calc(100vh - 30px);
+  width: calc(100vw - 24px);
   position: absolute;
-  top: 60px;
-  right: -20px;
-  border-radius: 25px;
-  box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
+  top: 0px;
+  right: -22px;
   z-index: 99;
+  border-radius: 20px;
+  background: linear-gradient(89.97deg, rgba(255, 68, 18, 0.6), rgba(62, 0, 0, 0.6) 102.67%);
+  backdrop-filter: blur(15px);
+  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
 }
 
-.list li {
+.list {
+  height: 100%;
   width: 100%;
-  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 24px;
 }
 
 .list a {
-  margin: 1rem 0;
   color: white;
   font-size: 30px;
   font-weight: 300;
-  text-transform: uppercase;
 }

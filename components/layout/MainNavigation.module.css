@@ -1,7 +1,7 @@
 .header {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: 5rem;
   background-color: #000;
   display: flex;
@@ -19,6 +19,11 @@
 .links {
   display: flex;
   align-items: center;
+  padding: 0 10px;
+}
+
+.links svg {
+  color: #fff;
 }
 
 .navbar_btn {
@@ -73,11 +78,11 @@
 
 @media (min-width: 991px) {
   .links {
-    gap: 10px;
+    gap: 20px;
   }
 
   .header {
-    padding: 0 4rem;
+    padding: 0 6rem;
   }
 
   .header nav {

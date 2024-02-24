@@ -3,17 +3,20 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 type NavLinkProps = {
-  children: React.ReactNode
+  title: string
   href: string
+  icon: JSX.Element
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
+const NavLink: React.FC<NavLinkProps> = ({ href, title, icon }) => {
   const path = usePathname()
 
   return (
-    <li>
-      <Link href={href} className={path === href ? `${styles.link} ${styles.active}` : styles.link}>
-        {children}
+    <li className={path === href ? `${styles.link} ${styles.active}` : styles.link}>
+      {icon}
+      <Link href={href}>
+        {title}
+        {path === href && <div className="underline"></div>}
       </Link>
     </li>
   )

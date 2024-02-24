@@ -86,6 +86,13 @@ li {
   );
 }
 
+.underline {
+  width: 100%;
+  height: 1px;
+  margin-top: -1px;
+  background: linear-gradient(90deg, #ff4412, #eb9d38);
+}
+
 .gradient_1 {
   background: linear-gradient(
     270deg,
@@ -141,8 +148,8 @@ li {
 
 @keyframes scale-up-center {
   0% {
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
   }
   100% {
     -webkit-transform: scale(1);

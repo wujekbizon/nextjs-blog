@@ -2,7 +2,6 @@
 
 import styles from './MainNavigation.module.css'
 import Logo from './Logo'
-import Link from 'next/link'
 import { useState } from 'react'
 import { MdClose } from 'react-icons/md'
 import { FiMenu } from 'react-icons/fi'
@@ -28,9 +27,7 @@ const MainNavigation = () => {
       <nav>
         <ul className={styles.links}>
           {links.map((item) => (
-            <NavLink key={item.title} href={item.href}>
-              {item.title}
-            </NavLink>
+            <NavLink {...item} key={item.title} />
           ))}
         </ul>
       </nav>
@@ -40,7 +37,7 @@ const MainNavigation = () => {
         </button>
 
         {navbarOpen && (
-          <div className="navbar_menu_container scale-up-center">
+          <div className="scale-up-center">
             <Menu closeMenu={closeMenu} />
           </div>
         )}

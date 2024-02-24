@@ -3,13 +3,13 @@ import styles from './AnimatedSquare.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-const AnimatedSquare = ({ children }: { children: React.ReactNode }) => {
+const AnimatedSquare = ({ children, duration }: { children: React.ReactNode; duration: number }) => {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const squareRef = useRef(null)
   const [isSmallScreen, setIsSmallScreen] = useState(false)
 
   // Animation configuration (adjustable parameters)
-  const ANIMATION_DURATION = 50 // Seconds
+  const ANIMATION_DURATION = duration // Seconds
 
   const CUSTOM_SHADOWS = [
     '0px 0px 4px  rgba(7, 7, 12, 1)',

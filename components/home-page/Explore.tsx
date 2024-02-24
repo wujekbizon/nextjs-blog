@@ -35,7 +35,7 @@ const Explore = () => {
           Check whats coming in near future!
         </h1>
       </div>
-      <AnimatedSquare>
+      <AnimatedSquare duration={50}>
         <h1>Animation - Framer Motion - CSS</h1>
         <p>
           Bring your designs to life with Framer fluid animations and CSS powerful styling, crafting experiences as

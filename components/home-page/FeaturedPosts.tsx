@@ -12,8 +12,8 @@ const FeaturedPosts = (posts: Post[]) => {
         <div className="gradient-divider"></div>
         <div className="gradient-divider"></div>
         <div className="gradient-divider"></div>
-        <h1 className={styles.title}>Wesa Blog</h1>
-        <p className={styles.subtitle}>Check out our recent blog posts.</p>
+        <h1 className={styles.title}>Wesa Tech Blog</h1>
+        <p className={styles.subtitle}>Check out our recent articles.</p>
       </div>
       <div className="gradient-divider"></div>
       <div className={styles.content}>
