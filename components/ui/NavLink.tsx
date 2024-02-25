@@ -1,12 +1,7 @@
 import styles from './NavLink.module.css'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-
-type NavLinkProps = {
-  title: string
-  href: string
-  icon: JSX.Element
-}
+import { NavLinkProps } from '@/types/linksTypes'
 
 const NavLink: React.FC<NavLinkProps> = ({ href, title, icon }) => {
   const path = usePathname()

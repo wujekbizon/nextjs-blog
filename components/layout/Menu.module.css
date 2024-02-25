@@ -3,14 +3,11 @@
   width: calc(100vw - 24px);
   position: absolute;
   top: 0px;
-  right: -22px;
+  right: -12px;
   z-index: 99;
   border-radius: 20px;
-  background: linear-gradient(89.97deg, rgba(255, 68, 18, 0.6), rgba(62, 0, 0, 0.6) 102.67%);
+  background-color: #07070c;
   backdrop-filter: blur(15px);
-  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
 }
 
 .list {
@@ -18,9 +15,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  padding: 24px;
+  padding: 16px;
 }
 
 .list a {

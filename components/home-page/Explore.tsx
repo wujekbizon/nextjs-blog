@@ -36,7 +36,7 @@ const Explore = () => {
         </h1>
       </div>
       <AnimatedSquare duration={50}>
-        <h1>Animation - Framer Motion - CSS</h1>
+        <h1>Animation - Framer Motion</h1>
         <p>
           Bring your designs to life with Framer fluid animations and CSS powerful styling, crafting experiences as
           dynamic as they are beautiful.
