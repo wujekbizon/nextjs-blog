@@ -5,17 +5,34 @@
   display: flex;
   flex-direction: column;
   background-color: #07070c;
-  padding: 6rem 4rem;
+  padding: 6rem 1.5rem;
 }
 
 .posts h1 {
-  font-size: var(--size-8);
+  font-size: var(--size-12);
+  font-weight: 700;
+  line-height: 50px;
   text-align: center;
   color: white;
+  padding: 64px 0;
 }
 
 @media (min-width: 768px) {
+  .posts {
+    padding: 6rem 4rem;
+  }
+
   .posts h1 {
-    font-size: var(--size-12);
+    font-size: var(--size-16);
+    font-weight: 700;
+    line-height: 65px;
+    padding: 64px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .posts h1 {
+    font-size: var(--size-8);
+    line-height: 40px;
   }
 }

@@ -1,0 +1,34 @@
+.flatlist {
+  width: 500px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  overflow: scroll;
+}
+
+.flatlist::-webkit-scrollbar {
+  height: 5px;
+}
+
+.flatlist::-webkit-scrollbar-track {
+  background: #07070c;
+}
+
+.flatlist::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(189.97deg, #07070c 1.84%, #ff4412, #3e0000 102.67%);
+  border-radius: 24px;
+  /* border: 1px solid black; */
+}
+
+.horizontal {
+  flex-direction: row;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.vertical {
+  flex-direction: column;
+  overflow-x: hidden;
+}

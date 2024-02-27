@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
+import { ErrorBoundary } from '@sentry/nextjs'
 import Layout from '@/components/layout/Layout'
 import GlobalError from './global-error'
-import { ErrorBoundary } from '@sentry/nextjs'
+import Providers from './providers'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={poppins.variable}>
         <ErrorBoundary fallback={({ error }) => <GlobalError error={error} />}>
-          <Layout>{children}</Layout>
+          <Providers>
+            <Layout>{children}</Layout>
+          </Providers>
         </ErrorBoundary>
       </body>
     </html>

@@ -1,0 +1,32 @@
+.item {
+  min-width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: linear-gradient(
+    190deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(7, 7, 12, 1) 15%,
+    rgba(62, 0, 0, 1) 30%,
+    rgba(255, 68, 18, 0.5) 45%,
+    rgba(255, 68, 18, 0.5) 60%,
+    rgba(62, 0, 0, 1) 75%,
+    rgba(7, 7, 12, 1) 90%,
+    rgba(0, 0, 0, 1) 105%
+  );
+  border-radius: 8px;
+  border: 1px solid rgba(62, 0, 0, 0.6);
+  transition: all 0.3s ease-in-out;
+}
+
+.item:hover {
+  background: #07070c;
+  border: 1px solid rgba(54, 51, 51, 0.6);
+}
+
+.item p {
+  font-size: 12px;
+}
