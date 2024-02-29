@@ -1,25 +1,27 @@
 .flatlist {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: fit-content;
+  flex: 1.5;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 0;
+  padding: 6px 0;
   overflow: scroll;
 }
 
 .flatlist::-webkit-scrollbar {
-  height: 5px;
+  height: 6px;
 }
 
 .flatlist::-webkit-scrollbar-track {
-  background: #07070c;
+  background: #000c;
 }
 
 .flatlist::-webkit-scrollbar-thumb:horizontal {
-  background: linear-gradient(189.97deg, #07070c 1.84%, #ff4412, #3e0000 102.67%);
+  background-color: #252535;
   border-radius: 24px;
-  /* border: 1px solid black; */
+  cursor: grab;
 }
 
 .horizontal {

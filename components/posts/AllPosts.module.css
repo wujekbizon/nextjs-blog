@@ -17,6 +17,13 @@
   padding: 64px 0;
 }
 
+.posts h2 {
+  font-size: var(--size-12);
+  font-weight: 400;
+  text-align: center;
+  color: #4a4a5e;
+}
+
 @media (min-width: 768px) {
   .posts {
     padding: 6rem 4rem;

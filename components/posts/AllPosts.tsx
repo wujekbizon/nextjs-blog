@@ -36,16 +36,9 @@ const AllPosts: React.FC<Post[]> = (posts) => {
   return (
     <section className={styles.posts}>
       <h1>Browse Our Extensive Article Collection</h1>
-      <Search onSetSearchTerm={setSearchTerm} term={searchTerm} />
-      {isLoading ? (
-        <p>Loading posts...</p>
-      ) : error ? (
-        <p>Error fetching posts: {error.message}</p>
-      ) : filteredPosts ? (
-        <PostGrid posts={filteredPosts} isFeatured />
-      ) : (
-        <PostGrid posts={postsArray} isFeatured />
-      )}
+      <Search onSetSearchTerm={setSearchTerm} term={searchTerm} isLoading={isLoading} error={error} />
+      {filteredPosts ? <PostGrid posts={filteredPosts} isFeatured /> : <PostGrid posts={postsArray} isFeatured />}
+      {filteredPosts?.length === 0 && <h2>No Data Available</h2>}
     </section>
   )
 }
