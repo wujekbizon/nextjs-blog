@@ -39,7 +39,7 @@ const Search = ({ term, onSetSearchTerm, isLoading, error }: SearchProps) => {
         <p>
           Discover in-depth articles, tutorials, and thought pieces on a wide range of coding and IT topics. From
           object-oriented programming in C++ to advanced Linux configuration and the intricacies of JavaScript and
-          TypeScript, we've got you covered.
+          TypeScript, we have got you covered.
         </p>
       </div>
       <div className={styles.list}>
