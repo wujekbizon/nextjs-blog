@@ -1,7 +1,7 @@
 import { ListDataItem } from '@/types/listDataTypes'
 import { FcLinux } from 'react-icons/fc'
 import { TbBrandCpp, TbBrandTypescript, TbBrandNextjs } from 'react-icons/tb'
-import { FaAws, FaRegFileCode } from 'react-icons/fa'
+import { FaAws, FaRegFileCode, FaReact } from 'react-icons/fa'
 import { RiJavascriptLine } from 'react-icons/ri'
 import { GiArtificialIntelligence } from 'react-icons/gi'
 import { SiGnubash } from 'react-icons/si'
@@ -51,5 +51,10 @@ export const CATEGORIES: ListDataItem[] = [
     id: 9,
     icon: <FaRegFileCode color="#fff" size={30} />,
     value: 'programmer',
+  },
+  {
+    id: 10,
+    icon: <FaReact color="#fff" size={30} />,
+    value: 'react',
   },
 ]
