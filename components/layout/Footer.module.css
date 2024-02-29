@@ -46,25 +46,6 @@
   color: #9f9090;
 }
 
-.submit_btn {
-  width: 250px;
-  height: 60px;
-  border: none;
-  background-color: #07070c;
-  color: #fff;
-  font-size: 22px;
-  backdrop-filter: blur(20px);
-  background: rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 8px 4px 0px rgba(0, 0, 0, 0.4);
-  transition: color 0.2s ease-in-out;
-}
-
-.submit_btn:hover {
-  color: rgba(255, 68, 18, 0.5);
-}
-
 .form {
   width: 100%;
   display: flex;
@@ -115,11 +96,6 @@
   }
 
   .input {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  .submit_btn {
     width: 100%;
     border-radius: 10px;
   }

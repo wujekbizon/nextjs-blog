@@ -1,6 +1,8 @@
 'use server'
 import { connectDatabase, insertDocument } from '@/helpers/db-utilis'
 import * as Sentry from '@sentry/nextjs'
+import { revalidatePath } from 'next/cache'
+import { z } from 'zod'
 
 function isInvalidText(text: string | null): boolean {
   return !text || text.trim() === ''
@@ -56,16 +58,23 @@ export async function sendEmail(formData: FormData) {
 
 export async function subscribeToNewsletter(formData: FormData) {
   let client
+  const createEmailSchema = z.object({
+    email: z.string().email(),
+  })
 
-  const newSubscription = {
-    email: formData.get('email') as string,
+  const { email } = createEmailSchema.parse({
+    email: formData.get('email'),
+  })
+
+  const newSubscripton = {
+    email,
   }
 
   // email validation
-  if (!newSubscription.email || !newSubscription.email.includes('@')) {
-    Sentry.captureMessage('Invalid email format')
-    throw new Error('Invalid email format')
-  }
+  // if (!newSubscription.email || !newSubscription.email.includes('@')) {
+  //   Sentry.captureMessage('Invalid email format')
+  //   throw new Error('Invalid email format')
+  // }
 
   // connecting to db
   try {
@@ -77,7 +86,7 @@ export async function subscribeToNewsletter(formData: FormData) {
 
   let result
   try {
-    result = await insertDocument(client, 'newsletters', newSubscription)
+    result = await insertDocument(client, 'newsletters', newSubscripton)
     console.log('Subscription successful:', result) // Log success for debugging
   } catch (error) {
     Sentry.captureException(error)
@@ -88,5 +97,6 @@ export async function subscribeToNewsletter(formData: FormData) {
       await client.close()
     }
   }
+  revalidatePath('/')
   return { message: 'Successfully subscribed to newsletter!' }
 }

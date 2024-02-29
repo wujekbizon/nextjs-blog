@@ -11,7 +11,7 @@ const ModalLink: React.FC<ModalLinksProps> = ({ title, href, imageUrl, onCloseHa
     <li onClick={onCloseHandler} className={styles.modal_links}>
       <Link className={styles.link} href={href}>
         <div className={styles.image_container}>
-          <Image className={styles.image} src={imageUrl} alt={title} width={650} height={350} />
+          <Image className={styles.image} src={imageUrl} alt={title} width={650} height={350} priority />
         </div>
         <div className={path === href ? `${styles.content} ${styles.activeBg}` : `${styles.content}`}>
           <h2 className={path === href ? `${styles.active}` : ''}>{title}</h2>

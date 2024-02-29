@@ -1,7 +1,7 @@
 ---
 title: 'Defining Algorithms: Powering Problem-solving with Precision'
 date: '2023-11-30'
-image: transforrmers.png
+image: algo.png
 excerpt:  "Welcome to an exploration into the realm of algorithm design. Whether you're a beginner or someone seeking to deepen your understanding, this article is your gateway to comprehending the art of writing algorithms."
 isFeatured: false
 ---
