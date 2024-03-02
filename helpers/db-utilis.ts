@@ -22,3 +22,10 @@ export const insertDocument = async (
   const result = await db.collection(collection).insertOne(document)
   return result
 }
+
+export const checkEmailExists = async (client: MongoClient, collection: string, email: string) => {
+  const db = client.db()
+
+  const existingEmail = await db.collection(collection).findOne({ email })
+  return existingEmail === null // Return true if email doesn't exist, false otherwise
+}

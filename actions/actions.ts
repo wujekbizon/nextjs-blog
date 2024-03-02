@@ -1,5 +1,7 @@
 'use server'
-import { connectDatabase, insertDocument } from '@/helpers/db-utilis'
+import { checkEmailExists, connectDatabase, insertDocument } from '@/helpers/db-utilis'
+import { fromErrorToFormState, toFormState } from '@/helpers/fromErrorToFormState'
+import { FormState } from '@/types/actionTypes'
 import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
@@ -56,41 +58,39 @@ export async function sendEmail(formData: FormData) {
   return { message: 'Successfully send a message!' }
 }
 
-export async function subscribeToNewsletter(formData: FormData) {
+export async function subscribeToNewsletter(formState: FormState, formData: FormData) {
   let client
+
   const createEmailSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email({ message: 'Invalid email format' }),
   })
-
-  const { email } = createEmailSchema.parse({
-    email: formData.get('email'),
-  })
-
-  const newSubscripton = {
-    email,
-  }
-
-  // email validation
-  // if (!newSubscription.email || !newSubscription.email.includes('@')) {
-  //   Sentry.captureMessage('Invalid email format')
-  //   throw new Error('Invalid email format')
-  // }
 
   // connecting to db
   try {
     client = await connectDatabase('blog')
   } catch (error) {
     Sentry.captureException(error)
-    throw new Error('Error connecting to database, please try again later')
+    return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
   let result
   try {
-    result = await insertDocument(client, 'newsletters', newSubscripton)
+    const { email } = createEmailSchema.parse({
+      email: formData.get('email'),
+    })
+
+    // Check if email already exists in DB before continuing
+    const isEmailUnique = await checkEmailExists(client, 'newsletters', email)
+
+    if (!isEmailUnique) {
+      return toFormState('ERROR', 'Email is already subscribed to the newsletter')
+    }
+
+    result = await insertDocument(client, 'newsletters', { email })
     console.log('Subscription successful:', result) // Log success for debugging
   } catch (error) {
     Sentry.captureException(error)
-    throw new Error('Error subscribing to newsletter')
+    return fromErrorToFormState(error)
   } finally {
     // Close database connection if necessary
     if (client) {
@@ -98,5 +98,5 @@ export async function subscribeToNewsletter(formData: FormData) {
     }
   }
   revalidatePath('/')
-  return { message: 'Successfully subscribed to newsletter!' }
+  return toFormState('SUCCESS', 'Successfully subscribed to newsletter!')
 }

@@ -52,7 +52,6 @@ const AnimatedSquare = ({ children, duration }: { children: React.ReactNode; dur
           className={styles.pad}
           animate={{
             x: ['5vw', '66vw', '5vw', '66vw', '5vw'],
-            height: [500, 500, 500, 300, 500],
             borderRadius: BORDER_RADIUS,
             boxShadow: CUSTOM_SHADOWS,
           }}

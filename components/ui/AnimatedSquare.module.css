@@ -1,13 +1,13 @@
 .pad_container {
-  height: 700px;
+  height: 600px;
   display: flex;
   align-items: center;
 }
 
 .pad {
   position: relative;
-  height: 100%;
-  width: 500px;
+  height: 400px;
+  width: 400px;
   background-color: rgb(2, 2, 2);
   background-image: url('/assets/images/logo_m.png');
   background-size: 100% 100%;

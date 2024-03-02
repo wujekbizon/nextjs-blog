@@ -1,15 +1,9 @@
-'use client'
-
 import Link from 'next/link'
 import Hero from '../home-page/Hero'
 import styles from './Footer.module.css'
-import { subscribeToNewsletter } from '@/actions/actions'
-import { useFormStatus } from 'react-dom'
-import SubmitButton from '../ui/SubmitButton'
+import NewsletterForm from '../home-page/NewsletterForm'
 
 const Footer = () => {
-  const { pending } = useFormStatus()
-
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -23,17 +17,7 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <form className={styles.form} action={subscribeToNewsletter}>
-          <input
-            placeholder="Enter your email address here"
-            className={styles.input}
-            type="text"
-            name="email"
-            id="email"
-            required
-          />
-          <SubmitButton label="Subscribe" loading="Subscribing ..." />
-        </form>
+        <NewsletterForm />
       </div>
       {/* <Hero /> */}
     </footer>

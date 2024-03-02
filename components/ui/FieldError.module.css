@@ -1,0 +1,19 @@
+.error_container {
+  width: 60%;
+  min-height: 25px;
+  background-color: transparent;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error_active {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+}
+
+.error {
+  color: var(--color-error-100);
+  font-size: 16px;
+}
