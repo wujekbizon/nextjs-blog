@@ -1,45 +1,68 @@
 .contact {
-  height: 100vh;
-  max-width: 1180px;
+  width: 100%;
+  max-width: 1024px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
+  padding: 200px 28px 28px 28px;
 }
 
 .title {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-.title h1 {
-  font-size: 28px;
-  color: white;
+.title h4 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #e4dada;
+  margin-bottom: 35px;
+  margin-top: 40px;
 }
 
 .title p {
-  color: white;
-  font-size: 21px;
-  font-weight: 300;
-  line-height: 35px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #4a4a5e;
+}
+
+.title p:last-child {
+  margin-bottom: 40px;
+}
+
+.icon_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+}
+
+.form_title {
+  padding-top: 50px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #e4dada;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
-  .title {
-    padding: 4rem;
+  .contact {
+    padding: 200px 64px 64px 64px;
   }
 
-  .title h1 {
-    font-size: 50px;
+  .title h4 {
+    font-size: 26px;
   }
 
   .title p {
-    font-size: 24px;
+    font-size: 18px;
+  }
+
+  .form_title {
+    font-size: 28px;
   }
 }

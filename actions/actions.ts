@@ -6,48 +6,42 @@ import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
-function isInvalidText(text: string | null): boolean {
-  return !text || text.trim() === ''
-}
-
-export async function sendEmail(formData: FormData) {
+export async function sendEmail(formState: FormState, formData: FormData) {
   let client
 
-  const messageContent = {
-    email: formData.get('email') as string,
-    name: formData.get('name') as string,
-    message: formData.get('message') as string,
-  }
+  const createMessageSchema = z.object({
+    email: z.string().email({ message: 'Invalid email format' }),
+    name: z
+      .string()
+      .min(1, { message: 'Name field cannot be empty' })
+      .max(191, { message: 'The length cannot be longer than 191 characters' }),
+    message: z
+      .string()
+      .min(1, { message: 'Message field cannot be empty' })
+      .max(350, { message: 'The length cannot be longer than 350 characters' }),
+  })
 
-  if (
-    !messageContent.email ||
-    !messageContent.email.includes('@') ||
-    isInvalidText(messageContent.name) ||
-    isInvalidText(messageContent.message)
-  ) {
-    Sentry.captureMessage('Invalid input fields!')
-    throw new Error('Invalid input fields!')
-  }
-
+  // connecting to db
   try {
     client = await connectDatabase('blog')
   } catch (error) {
     Sentry.captureException(error)
-    throw new Error('Error connecting to database, please try again later')
-  } finally {
-    // Close database connection
-    if (client) {
-      await client.close()
-    }
+    return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
   let result
   try {
+    const messageContent = createMessageSchema.parse({
+      email: formData.get('email'),
+      name: formData.get('name'),
+      message: formData.get('message'),
+    })
+
     result = await insertDocument(client, 'messages', messageContent)
     console.log('You successfully send a meassage:', result) // Log success for debugging
   } catch (error) {
     Sentry.captureException(error)
-    throw new Error('Error sending a message')
+    return fromErrorToFormState(error)
   } finally {
     // Close database connection if necessary
     if (client) {
@@ -55,7 +49,8 @@ export async function sendEmail(formData: FormData) {
     }
   }
 
-  return { message: 'Successfully send a message!' }
+  revalidatePath('/')
+  return toFormState('SUCCESS', 'Successfully send a message!')
 }
 
 export async function subscribeToNewsletter(formState: FormState, formData: FormData) {

@@ -1,0 +1,29 @@
+.notfound {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+}
+
+.notfound h2 {
+  font-size: 22px;
+  text-align: center;
+  color: #ff4512af;
+  font-weight: 400;
+}
+
+.notfound p {
+  font-size: 16px;
+  text-align: center;
+  color: #ababab;
+  padding: 0 30px;
+}
+
+.image {
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 40px;
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import styles from './NewsletterForm.module.css'
-import { useEffect, useRef } from 'react'
 import { subscribeToNewsletter } from '@/actions/actions'
 import { useFormState } from 'react-dom'
 import SubmitButton from '../ui/SubmitButton'
