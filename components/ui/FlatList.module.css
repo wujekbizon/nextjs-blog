@@ -1,0 +1,36 @@
+.flatlist {
+  width: 100%;
+  max-width: 500px;
+  height: fit-content;
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  overflow: scroll;
+}
+
+.flatlist::-webkit-scrollbar {
+  height: 6px;
+}
+
+.flatlist::-webkit-scrollbar-track {
+  background: #000c;
+}
+
+.flatlist::-webkit-scrollbar-thumb:horizontal {
+  background-color: #252535;
+  border-radius: 24px;
+  cursor: grab;
+}
+
+.horizontal {
+  flex-direction: row;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.vertical {
+  flex-direction: column;
+  overflow-x: hidden;
+}

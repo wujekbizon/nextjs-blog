@@ -2,8 +2,8 @@
 title: 'AWS EC2 Instance - Deploy our first Node.js server'
 date: '2023-08-01'
 image: server.png
-excerpt:  "Ready to take your server deployment skills to the next level? In this article, we're diving headfirst into the world of AWS EC2 instances, guiding you through the process of deploying your very own Node.js server. Buckle up and get ready to code in the cloud!"
-isFeatured: false
+excerpt:  "Ready to take your server deployment skills to the next level? In this article, we're diving headfirst into the world of AWS EC2 instances, guiding you through the process of deploying your very own Node.js server."
+isFeatured: true
 ---
 
 ### 1. Prerequisites: Getting Ready to Deploy Your First Node.js Server on AWS EC2 Instance.

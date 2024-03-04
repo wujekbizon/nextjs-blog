@@ -2,19 +2,27 @@
 // import React, { ReactNode, ReactElement } from 'react';
 
 export interface PostItemType {
-  slug: string;
-  data: { title: string; image: string; excerpt: string; date: string };
-  content: string;
+  slug: string
+  data: { title: string; image: string; excerpt: string; date: string }
+  content: string
 }
 
 export type PostsProps = {
-  posts: PostItemType[];
-};
+  posts: PostItemType[]
+}
 
 export type PostProps = {
-  post: PostItemType;
-};
+  post: PostItemType
+}
 
+export type Post = {
+  data: {
+    [key: string]: string
+  }
+
+  content: string
+  slug: string
+}
 // type NodeToProps<T> = {
 //   node: T;
 //   children: T extends { children: any } ? ReactNode : never;

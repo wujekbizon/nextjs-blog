@@ -1,38 +1,29 @@
 .header {
-  width: 100%;
-  height: 6rem;
-  background-color: rgba(4, 12, 24, 1);
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 5rem;
+  background-color: #000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10%;
+  padding: 0 1.5rem;
+  z-index: 10;
+  border-bottom: 1px solid #07070c;
 }
 
 .header nav {
   display: none;
 }
 
-.header ul {
-  list-style: none;
+.links {
   display: flex;
-  align-items: baseline;
-  margin: 0;
-  padding: 0;
+  align-items: center;
+  padding: 0 10px;
 }
 
-.header li {
-  margin: 0 var(--size-4);
-}
-
-.header a {
-  color: white;
-  font-size: var(--size-4);
-}
-
-.header a:hover,
-.header a:active,
-.header a.active {
-  color: whitesmoke;
+.links svg {
+  color: #fff;
 }
 
 .navbar_btn {
@@ -65,23 +56,33 @@
 
 .mdclose {
   color: hsl(0 0% 100%);
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
 }
 
 .fimenu {
   color: hsl(0 0% 100%);
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
 }
 
-@media (min-width: 768px) {
-  .header ul {
-    gap: 0.5rem;
+.navbar_gradient {
+  position: absolute;
+  width: 40%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+}
+
+@media (min-width: 991px) {
+  .links {
+    gap: 20px;
   }
 
-  .header a {
-    font-size: var(--size-5);
+  .header {
+    padding: 0 6rem;
   }
 
   .header nav {

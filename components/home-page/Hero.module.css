@@ -1,13 +1,16 @@
 .hero {
-  text-align: center;
-  background-image: linear-gradient(to top, rgba(0, 40, 83, 1) 0%, rgba(4, 12, 24, 1) 100%);
-  padding: var(--size-8) 0;
-  /* display: flex; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  /* border-top: 1px solid #07070c; */
 }
 
 .image {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   overflow: hidden;
@@ -23,39 +26,39 @@
 }
 
 .hero h1 {
-  font-size: var(--size-10);
-  margin: var(--size-3) 0;
+  text-align: center;
+  font-size: 28px;
+  text-transform: uppercase;
+  font-weight: 200;
 }
 
 .hero h3 {
+  text-align: center;
   font-size: var(--size-3);
   font-weight: 300;
-  margin: var(--size-6) 0;
-  color: #fa8231;
+  color: rgba(255, 68, 18, 0.7);
 }
 
 .hero p {
-  font-size: var(--size-4);
-  color: #c0c5cc;
-  width: 90%;
-  max-width: 50rem;
-  margin: auto;
+  text-align: center;
+  font-size: 15px;
+  color: #4a4a5e;
 }
 
 @media (min-width: 768px) {
+  .hero {
+    padding: 64px;
+  }
+
   .hero h1 {
-    font-size: var(--size-14);
+    font-size: var(--size-12);
   }
 
   .hero h3 {
-    font-size: var(--size-4);
+    font-size: var(--size-5);
   }
 
   .hero p {
-    font-size: var(--size-6);
-    color: #c0c5cc;
-    width: 90%;
-    max-width: 50rem;
-    margin: auto;
+    font-size: var(--size-4);
   }
 }

@@ -1,28 +1,27 @@
-.list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  background: rgba(3, 27, 52, 0.95);
-  padding: 2rem;
+.modal {
+  height: calc(100vh - 30px);
+  width: calc(100vw - 24px);
   position: absolute;
-  top: 60px;
-  right: -20px;
-  border-radius: 25px;
-  box-shadow: 0 0 5 rgba(0, 0, 0, 0.2);
+  top: 0px;
+  right: -12px;
   z-index: 99;
+  border-radius: 20px;
+  background-color: #07070c;
+  backdrop-filter: blur(15px);
 }
 
-.list li {
-  margin: 0;
+.list {
+  height: 100%;
   width: 100%;
-  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16px;
 }
 
 .list a {
-  margin: 1rem 0;
   color: white;
   font-size: 30px;
   font-weight: 300;
-  text-transform: uppercase;
 }

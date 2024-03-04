@@ -2,7 +2,7 @@
 title: 'AWS - Introduction to Amazon Web Services'
 date: '2023-07-28'
 image: cloud.png
-excerpt:  AWS (Amazon Web Services) is a leading cloud computing platform, offering a comprehensive suite of secure, scalable, and flexible services that enable businesses to leverage the power of the cloud to drive innovation, reduce costs, and achieve operational efficiency
+excerpt:  AWS is a leading cloud computing platform, offering a comprehensive suite of secure, scalable, and flexible services that enable businesses to leverage the power of the cloud to drive innovation, reduce costs, and more.
 isFeatured: false
 ---
 

@@ -1,0 +1,30 @@
+.explore {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #000c;
+  padding: 3rem 0;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.explore_title {
+  font-size: 38px;
+  text-align: center;
+  padding: 0 15px 15px 15px;
+}
+
+.custom_margin {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 480px) {
+  .explore_title {
+    font-size: 26px;
+  }
+}

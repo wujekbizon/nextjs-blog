@@ -1,12 +1,32 @@
-.logo img {
+.logo_mobile {
+  display: block;
+  height: 55px;
+  width: 55px;
   object-fit: cover;
-  width: 80%;
-  height: 80%;
 }
 
-@media (min-width: 768px) {
-  .logo img {
-    width: 100%;
+.logo_main {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    width: 250px;
+  }
+
+  .logo_main {
+    display: block;
     height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .logo_mobile {
+    display: none;
   }
 }

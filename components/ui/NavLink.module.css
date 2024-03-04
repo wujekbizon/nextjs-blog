@@ -1,0 +1,29 @@
+.link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(217, 217, 217, 0.8);
+  font-size: 24px;
+  font-weight: 700;
+  padding: 10px;
+  letter-spacing: 1px;
+}
+
+.link:hover {
+  color: #eb9d38;
+}
+
+.link a {
+  border-bottom: 1px solid transparent;
+}
+
+.active {
+  background: linear-gradient(90deg, #ff4412, #eb9d38);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.active a {
+  border-bottom: none;
+}

@@ -1,6 +1,6 @@
 import styles from './PostContent.module.css'
 import PostHeader from './PostHeader'
-import { PostProps } from '../../../types/postsTypes'
+import { Post } from '@/types/postsTypes'
 import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -20,7 +20,7 @@ SyntaxHighlighter.registerLanguage('tsx', tsx)
 SyntaxHighlighter.registerLanguage('jsx', jsx)
 SyntaxHighlighter.registerLanguage('cpp', cpp)
 
-const PostContent = ({ post }: PostProps) => {
+const PostContent: React.FC<Post> = (post) => {
   const imagePath = `/images/posts/${post.slug}/${post.data.image}`
 
   const customRenderers = {
