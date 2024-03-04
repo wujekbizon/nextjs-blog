@@ -41,14 +41,14 @@ const ContactHero = () => {
         <p>
           Ultimately, I believe technology has the power to positively impact our lives in countless ways. If my
           experiences can help others on their own tech journeys, whether it&apos;s by providing clear explanations of
-          complex concepts, offering practical tutorials, or simply sparking curiosity and inspiration, then I've
+          complex concepts, offering practical tutorials, or simply sparking curiosity and inspiration, then I&apos;ve
           achieved my goal.
         </p>
         <br />
         <p>
           This is a two-way street, of course! I&apos;m always eager to learn from others and foster a vibrant
           community. So, if you have any questions about something you&apos;ve read here, don&apos;t hesitate to reach
-          out. I'm also happy to hear your stories and experiences with technology. Whether you&apos;re a fellow
+          out. I&apos;m also happy to hear your stories and experiences with technology. Whether you&apos;re a fellow
           enthusiast, a complete beginner, or somewhere in between, I welcome your comments and feedback.
         </p>
       </div>
