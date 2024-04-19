@@ -6,6 +6,7 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { createHash } from 'crypto'
 
 export async function sendEmail(formState: FormState, formData: FormData) {
   let client
@@ -57,8 +58,8 @@ export async function sendEmail(formState: FormState, formData: FormData) {
 export async function subscribeToNewsletter(formState: FormState, formData: FormData) {
   //S3 Config
   const s3Config = {
-    bucketName: process.env.AWS_BUCKET_NAME as string,
-    region: process.env.AWS_REGION as string,
+    bucketName: process.env.NEWSLETTER_BUCKET_NAME,
+    region: process.env.AWS_REGION,
     accessKeyId: process.env.AWS_ACCESS_ID as string,
     secretAccessKey: process.env.AWS_SECRET_ID as string,
   }
@@ -82,19 +83,21 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
       email: formData.get('email'),
     })
 
-    const data = JSON.stringify({ email }) // Convert email to JSON string
+    // Generate a unique ID based on a secure hash
+    const uniqueId = createHash('sha256').update(email).digest('hex')
+
+    const data = JSON.stringify({ email, id: uniqueId })
 
     const s3 = new S3Client({
       ...s3Config,
     })
 
     const params = {
-      Bucket: process.env.AWS_BUCKET_NAME as string, // Replace with your bucket name
-      Key: `${Date.now()}.json`, // Create unique filename with timestamp
+      Bucket: s3Config.bucketName,
+      Key: `${uniqueId}.json`,
       Body: data,
-      ContentType: 'application/json', // Specify content type for proper handling
+      ContentType: 'application/json',
     }
-
     // Check if email already exists in DB before continuing
     // const isEmailUnique = await checkEmailExists(client, 'newsletters', email)
 
