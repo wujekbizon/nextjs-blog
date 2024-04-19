@@ -61,8 +61,8 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
   const s3Config = {
     bucketName: NEWSLETTER_BUCKET_ROOT,
     region: AWS_REGION,
-    accessKeyId: process.env.AWS_ACCESS_ID as string,
-    secretAccessKey: process.env.AWS_SECRET_ID as string,
+    accessKeyId: 'AKIA3SKZIWLS7SXFOF6W',
+    secretAccessKey: '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',
   }
   let client
 
@@ -94,7 +94,7 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
     })
 
     const params = {
-      Bucket: s3Config.bucketName,
+      Bucket: s3Config?.bucketName,
       Key: `${uniqueId}.json`,
       Body: data,
       ContentType: 'application/json',
