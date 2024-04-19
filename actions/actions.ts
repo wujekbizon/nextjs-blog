@@ -7,6 +7,7 @@ import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createHash } from 'crypto'
+import { AWS_REGION, NEWSLETTER_BUCKET_ROOT } from '@/constants/awsData'
 
 export async function sendEmail(formState: FormState, formData: FormData) {
   let client
@@ -58,8 +59,8 @@ export async function sendEmail(formState: FormState, formData: FormData) {
 export async function subscribeToNewsletter(formState: FormState, formData: FormData) {
   //S3 Config
   const s3Config = {
-    bucketName: process.env.NEWSLETTER_BUCKET_NAME,
-    region: process.env.AWS_REGION,
+    bucketName: NEWSLETTER_BUCKET_ROOT,
+    region: AWS_REGION,
     accessKeyId: process.env.AWS_ACCESS_ID as string,
     secretAccessKey: process.env.AWS_SECRET_ID as string,
   }
