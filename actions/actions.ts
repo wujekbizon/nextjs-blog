@@ -2,9 +2,11 @@
 import { checkEmailExists, connectDatabase, insertDocument } from '@/helpers/db-utilis'
 import { fromErrorToFormState, toFormState } from '@/helpers/fromErrorToFormState'
 import { FormState } from '@/types/actionTypes'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
+import { createHash } from 'crypto'
 
 export async function sendEmail(formState: FormState, formData: FormData) {
   let client
@@ -54,6 +56,13 @@ export async function sendEmail(formState: FormState, formData: FormData) {
 }
 
 export async function subscribeToNewsletter(formState: FormState, formData: FormData) {
+  //S3 Config
+  const s3Config = {
+    bucketName: process.env.NEWSLETTER_BUCKET_NAME,
+    region: process.env.AWS_REGION,
+    accessKeyId: process.env.AWS_ACCESS_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ID as string,
+  }
   let client
 
   const createEmailSchema = z.object({
@@ -61,36 +70,51 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
   })
 
   // connecting to db
-  try {
-    client = await connectDatabase('blog')
-  } catch (error) {
-    Sentry.captureException(error)
-    return toFormState('ERROR', 'Error connecting to database, please try again later')
-  }
+  // try {
+  //   // client = await connectDatabase('blog')
+  // } catch (error) {
+  //   Sentry.captureException(error)
+  //   return toFormState('ERROR', 'Error connecting to database, please try again later')
+  // }
 
-  let result
+  // let result
   try {
     const { email } = createEmailSchema.parse({
       email: formData.get('email'),
     })
 
-    // Check if email already exists in DB before continuing
-    const isEmailUnique = await checkEmailExists(client, 'newsletters', email)
+    // Generate a unique ID based on a secure hash
+    const uniqueId = createHash('sha256').update(email).digest('hex')
 
-    if (!isEmailUnique) {
-      return toFormState('ERROR', 'Email is already subscribed to the newsletter')
+    const data = JSON.stringify({ email, id: uniqueId })
+
+    const s3 = new S3Client({
+      ...s3Config,
+    })
+
+    const params = {
+      Bucket: s3Config.bucketName,
+      Key: `${uniqueId}.json`,
+      Body: data,
+      ContentType: 'application/json',
     }
+    // Check if email already exists in DB before continuing
+    // const isEmailUnique = await checkEmailExists(client, 'newsletters', email)
 
-    result = await insertDocument(client, 'newsletters', { email })
+    // if (!isEmailUnique) {
+    //   return toFormState('ERROR', 'Email is already subscribed to the newsletter')
+    // }
+    const result = await s3.send(new PutObjectCommand(params))
+    // result = await insertDocument(client, 'newsletters', { email })
     console.log('Subscription successful:', result) // Log success for debugging
   } catch (error) {
-    Sentry.captureException(error)
+    // Sentry.captureException(error)
     return fromErrorToFormState(error)
   } finally {
     // Close database connection if necessary
-    if (client) {
-      await client.close()
-    }
+    // if (client) {
+    //   await client.close()
+    // }
   }
   revalidatePath('/')
   return toFormState('SUCCESS', 'Successfully subscribed to newsletter!')
