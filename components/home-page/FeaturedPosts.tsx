@@ -1,9 +1,9 @@
 import styles from './FeaturedPosts.module.css'
 import PostGrid from '@/components/posts/PostGrid'
-import { Post } from '@/types/postsTypes'
+import { PostItemType } from '@/types/postsTypes'
 import Link from 'next/link'
 
-const FeaturedPosts = (posts: Post[]) => {
+const FeaturedPosts = ({ posts }: { posts: PostItemType[] }) => {
   return (
     <section className={styles.latest}>
       <div className={styles.title_container}>

@@ -7,9 +7,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useSearchTermStore } from '@/store/searchTermStore'
 import PostGrid from '@/components/posts/PostGrid'
 import Search from '@/components/ui/Search'
-import { Post } from '@/types/postsTypes'
+import { PostItemType } from '@/types/postsTypes'
 
-const AllPosts: React.FC<Post[]> = (posts) => {
+const AllPosts: React.FC<PostItemType[]> = (posts) => {
   const { searchTerm, setSearchTerm } = useSearchTermStore()
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm)
   const debouncedSearchTermUpdated = useDebounce(debouncedSearchTerm, 250) // Debounce search
@@ -22,8 +22,8 @@ const AllPosts: React.FC<Post[]> = (posts) => {
 
       const filteredPosts = postsArray.filter(
         ({ data }) =>
-          data.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-          data.excerpt.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+          data?.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+          data?.excerpt?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       )
       return filteredPosts
     }

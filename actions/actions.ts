@@ -2,7 +2,6 @@
 import { checkEmailExists, connectDatabase, insertDocument } from '@/helpers/db-utilis'
 import { fromErrorToFormState, toFormState } from '@/helpers/fromErrorToFormState'
 import { FormState } from '@/types/actionTypes'
-import * as Sentry from '@sentry/nextjs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -25,7 +24,6 @@ export async function sendEmail(formState: FormState, formData: FormData) {
   try {
     client = await connectDatabase('blog')
   } catch (error) {
-    Sentry.captureException(error)
     return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
@@ -40,7 +38,6 @@ export async function sendEmail(formState: FormState, formData: FormData) {
     result = await insertDocument(client, 'messages', messageContent)
     console.log('You successfully send a meassage:', result) // Log success for debugging
   } catch (error) {
-    Sentry.captureException(error)
     return fromErrorToFormState(error)
   } finally {
     // Close database connection if necessary
@@ -64,7 +61,6 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
   try {
     client = await connectDatabase('blog')
   } catch (error) {
-    Sentry.captureException(error)
     return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
@@ -84,7 +80,6 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
     result = await insertDocument(client, 'newsletters', { email })
     console.log('Subscription successful:', result) // Log success for debugging
   } catch (error) {
-    Sentry.captureException(error)
     return fromErrorToFormState(error)
   } finally {
     // Close database connection if necessary

@@ -3,7 +3,7 @@ import { getPostData } from '@/helpers/archiveUtils'
 
 export const generateMetadata = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params
-  const postDetail = getPostData(slug)
+  const postDetail = await getPostData(slug)
 
   return {
     title: postDetail.data.title,
@@ -11,9 +11,9 @@ export const generateMetadata = async ({ params }: { params: { slug: string } })
   }
 }
 
-const PostDetailsPage = ({ params }: { params: { slug: string } }) => {
+const PostDetailsPage = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params
-  const postDetail = getPostData(slug)
+  const postDetail = await getPostData(slug)
 
   return (
     <section>

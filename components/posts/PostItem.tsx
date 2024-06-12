@@ -1,10 +1,10 @@
 import styles from './PostItem.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Post } from '@/types/postsTypes'
+import { PostItemType } from '@/types/postsTypes'
 
-const PostItem = (props: Post & { index: number }) => {
-  const { title, excerpt, image, date } = props.data
+const PostItem = (props: PostItemType & { index: number }) => {
+  const { title, excerpt, image, date } = props?.data
 
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',
@@ -22,7 +22,7 @@ const PostItem = (props: Post & { index: number }) => {
         </div>
         <div className={styles.content}>
           <h3>{title}</h3>
-          {/* <time>{formattedDate}</time> */}
+          <time>{formattedDate}</time>
           <p>{excerpt}</p>
         </div>
       </Link>

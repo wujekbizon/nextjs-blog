@@ -3,7 +3,7 @@
 
 export interface PostItemType {
   slug: string
-  data: { title: string; image: string; excerpt: string; date: string }
+  data: { title: string; image: string; excerpt: string; date: string; isFeatured: boolean }
   content: string
 }
 
@@ -17,9 +17,8 @@ export type PostProps = {
 
 export type Post = {
   data: {
-    [key: string]: string
+    [key: string]: string | boolean
   }
-
   content: string
   slug: string
 }

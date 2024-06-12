@@ -1,6 +1,6 @@
 import styles from './PostContent.module.css'
 import PostHeader from './PostHeader'
-import { Post } from '@/types/postsTypes'
+import { PostItemType } from '@/types/postsTypes'
 import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -20,7 +20,7 @@ SyntaxHighlighter.registerLanguage('tsx', tsx)
 SyntaxHighlighter.registerLanguage('jsx', jsx)
 SyntaxHighlighter.registerLanguage('cpp', cpp)
 
-const PostContent: React.FC<Post> = (post) => {
+const PostContent: React.FC<PostItemType> = (post) => {
   const imagePath = `/images/posts/${post.slug}/${post.data.image}`
 
   const customRenderers = {
@@ -59,7 +59,7 @@ const PostContent: React.FC<Post> = (post) => {
 
   return (
     <article className={styles.content}>
-      <PostHeader title={post.data.title} image={imagePath} />
+      <PostHeader title={post.data.title || ''} image={imagePath} />
       <ReactMarkdown components={customRenderers}>{post.content}</ReactMarkdown>
     </article>
   )

@@ -1,9 +1,9 @@
 import styles from './PostGrid.module.css'
-import { Post } from '@/types/postsTypes'
+import { PostItemType } from '@/types/postsTypes'
 import PostItem from '@/components/posts/PostItem'
 
 interface EnhancedFeaturedPostsProps {
-  posts: Post[]
+  posts: PostItemType[]
   isFeatured?: boolean // Optional `isFeatured` prop with default value (`false`)
 }
 
