@@ -4,8 +4,8 @@ import { PostItemType } from '@/types/postsTypes'
 import ReactMarkdown from 'react-markdown'
 import Image from 'next/image'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import duotoneSpace from 'react-syntax-highlighter/dist/cjs/styles/prism/duotone-space'
-import nightOwl from 'react-syntax-highlighter/dist/cjs/styles/prism/night-owl'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { coldarkDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript'
 import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript'
 import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx'
@@ -36,7 +36,6 @@ const PostContent: React.FC<PostItemType> = (post) => {
               alt={image.properties.alt}
               width={800}
               height={400}
-              style={{ width: '100%', height: 'auto' }}
               priority
             />
           </div>
@@ -50,7 +49,7 @@ const PostContent: React.FC<PostItemType> = (post) => {
       const language = className.split('-')[1] // className is something like language-js => We need the "js" part here
 
       return (
-        <SyntaxHighlighter style={language == 'cpp' ? nightOwl : duotoneSpace} language={language}>
+        <SyntaxHighlighter style={language == 'cpp' ? coldarkDark : vscDarkPlus} language={language}>
           {children}
         </SyntaxHighlighter>
       )
