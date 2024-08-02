@@ -50,6 +50,7 @@ const PostContent: React.FC<PostItemType> = (post) => {
       const language = className.split('-')[1] // className is something like language-js => We need the "js" part here
 
       return (
+        // @ts-ignore
         <SyntaxHighlighter style={language == 'cpp' ? coldarkDark : vscDarkPlus} language={language}>
           {children}
         </SyntaxHighlighter>

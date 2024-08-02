@@ -49,7 +49,15 @@ const AnimatedSquare = ({ children, duration }: { children: React.ReactNode; dur
       ) : (
         <motion.div
           ref={squareRef}
-          className={styles.pad}
+          style={{
+            position: 'relative',
+            height: 400,
+            width: 400,
+            backgroundColor: '#020202',
+            backgroundImage: '/assets/images/logo_m.png',
+            backgroundSize: '100% 100%',
+            backgroundPosition: 'center',
+          }}
           animate={{
             x: ['5vw', '66vw', '5vw', '66vw', '5vw'],
             borderRadius: BORDER_RADIUS,

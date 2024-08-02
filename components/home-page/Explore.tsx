@@ -18,9 +18,9 @@ const Explore = () => {
               repeat: Infinity,
               repeatType: 'loop',
             }}
-            className="gradient-divider"
+            style={{ width: '100%', height: 1, background: '#ff4412' }}
           ></motion.div>
-          <motion.div className="gradient-divider"></motion.div>
+          <motion.div style={{ width: '100%', height: 1, background: '#ff4412' }}></motion.div>
           <motion.div
             animate={{
               opacity: [0, 1, 0],
@@ -30,7 +30,7 @@ const Explore = () => {
               repeat: Infinity,
               repeatType: 'loop',
             }}
-            className={`${styles.custom_margin} gradient-divider`}
+            style={{ width: '100%', height: 1, background: '#ff4412', marginBottom: 10 }}
           ></motion.div>
           Check whats coming in near future!
         </h1>

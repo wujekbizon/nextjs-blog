@@ -9,6 +9,7 @@ export default function DislikePostForm({ title }: { title: string }) {
   const [formState, action] = useActionState(dislikePostAction, EMPTY_FORM_STATE)
   const { dislikes, hasLiked, hasDisliked, toggleDislike } = usePostLikes()
   const noScriptFallback = useToastMessage(formState)
+
   return (
     <form className="flex items-center gap-3" action={action}>
       <div className="flex items-center gap-2">
