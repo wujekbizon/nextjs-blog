@@ -24,7 +24,7 @@ export const getPostsFile = async (): Promise<string[]> => {
       throw new Error('Failed to read posts directory.')
     } else {
       console.error(error)
-      throw new Error('Unknown error occured')
+      throw new Error('Unknown error occurred')
     }
   }
 }
@@ -66,7 +66,7 @@ export const getPostData = async (postIdentifier: string): Promise<PostItemType>
       throw new Error('Failed to read post data')
     } else {
       console.error(error)
-      throw new Error('Unknown error occured')
+      throw new Error('Unknown error occurred')
     }
   }
 }
@@ -99,7 +99,31 @@ export const getAllPosts = async (): Promise<PostItemType[]> => {
       throw new Error('Failed to get or sort all posts')
     } else {
       console.error(error)
-      throw new Error('Unknown error occured')
+      throw new Error('Unknown error occurred')
+    }
+  }
+}
+
+export const getPostByTitle = async (title: string): Promise<PostItemType> => {
+  try {
+    // Get data for all posts
+    const allPosts = await getAllPosts()
+
+    // Filter  post based on the title property
+    const post = allPosts.find((post) => post.data.title === title)
+
+    if (!post) {
+      throw new Error('Post not found!')
+    }
+
+    return post
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error fetching or filtering featured posts:', error)
+      throw new Error('Failed to get or filter featured posts')
+    } else {
+      console.error(error)
+      throw new Error('Unknown error occurred')
     }
   }
 }
@@ -126,7 +150,7 @@ export const getFeaturedPosts = async (): Promise<PostItemType[]> => {
       throw new Error('Failed to get or filter featured posts')
     } else {
       console.error(error)
-      throw new Error('Unknown error occured')
+      throw new Error('Unknown error occurred')
     }
   }
 }

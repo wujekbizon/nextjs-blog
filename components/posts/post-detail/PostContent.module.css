@@ -2,11 +2,12 @@
   width: 95%;
   max-width: 80rem;
   margin: 100px auto;
+  padding: var(--size-4);
   font-size: var(--size-5);
   line-height: var(--size-8);
   background-color: rgb(4, 4, 4);
   border-radius: 6px;
-  padding: var(--size-4);
+  border: 1px solid #07070c;
 }
 
 .content pre {
@@ -109,7 +110,7 @@
     padding: var(--size-8);
   }
   .content pre {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .content h1,

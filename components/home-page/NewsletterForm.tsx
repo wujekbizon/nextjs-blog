@@ -9,9 +9,10 @@ import { MdAttachEmail } from 'react-icons/md'
 import { EMPTY_FORM_STATE } from '@/constants/formState'
 import { useToastMessage } from '@/hooks/useToastMessage'
 import { useFormReset } from '@/hooks/useFormReset'
+import { useActionState } from 'react'
 
 const NewsletterForm = () => {
-  const [formState, action] = useFormState(subscribeToNewsletter, EMPTY_FORM_STATE)
+  const [formState, action] = useActionState(subscribeToNewsletter, EMPTY_FORM_STATE)
   const formRef = useFormReset(formState)
 
   const noScriptFallback = useToastMessage(formState)

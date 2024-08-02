@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb'
+import { InsertOneResult, MongoClient } from 'mongodb'
 
 export type ContactDocument = {
   email: string
@@ -6,7 +6,7 @@ export type ContactDocument = {
   message: string
 }
 
-export const connectDatabase = async (dbName: string) => {
+export const connectDatabase = async (dbName: string): Promise<MongoClient> => {
   const client = await MongoClient.connect(
     `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.knuso.mongodb.net/${dbName}?retryWrites=true&w=majority`
   )
@@ -17,7 +17,7 @@ export const insertDocument = async (
   client: MongoClient,
   collection: string,
   document: ContactDocument | { email: string }
-) => {
+): Promise<InsertOneResult> => {
   const db = client.db()
   const result = await db.collection(collection).insertOne(document)
   return result

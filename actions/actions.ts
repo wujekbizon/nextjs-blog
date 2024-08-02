@@ -2,11 +2,12 @@
 import { checkEmailExists, connectDatabase, insertDocument } from '@/helpers/db-utilis'
 import { fromErrorToFormState, toFormState } from '@/helpers/fromErrorToFormState'
 import { FormState } from '@/types/actionTypes'
+import { InsertOneResult, MongoClient } from 'mongodb'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 export async function sendEmail(formState: FormState, formData: FormData) {
-  let client
+  let client: MongoClient
 
   const createMessageSchema = z.object({
     email: z.string().email({ message: 'Invalid email format' }),
@@ -27,7 +28,7 @@ export async function sendEmail(formState: FormState, formData: FormData) {
     return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
-  let result
+  let result: InsertOneResult
   try {
     const messageContent = createMessageSchema.parse({
       email: formData.get('email'),
@@ -36,7 +37,7 @@ export async function sendEmail(formState: FormState, formData: FormData) {
     })
 
     result = await insertDocument(client, 'messages', messageContent)
-    console.log('You successfully send a meassage:', result) // Log success for debugging
+    console.log('You successfully send a meassage:', result.insertedId) // Log success for debugging
   } catch (error) {
     return fromErrorToFormState(error)
   } finally {
@@ -51,7 +52,7 @@ export async function sendEmail(formState: FormState, formData: FormData) {
 }
 
 export async function subscribeToNewsletter(formState: FormState, formData: FormData) {
-  let client
+  let client: MongoClient
 
   const createEmailSchema = z.object({
     email: z.string().email({ message: 'Invalid email format' }),
@@ -64,7 +65,7 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
     return toFormState('ERROR', 'Error connecting to database, please try again later')
   }
 
-  let result
+  let result: InsertOneResult
   try {
     const { email } = createEmailSchema.parse({
       email: formData.get('email'),
@@ -78,7 +79,7 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
     }
 
     result = await insertDocument(client, 'newsletters', { email })
-    console.log('Subscription successful:', result) // Log success for debugging
+    console.log('Subscription successful:', result.insertedId) // Log success for debugging
   } catch (error) {
     return fromErrorToFormState(error)
   } finally {
@@ -89,4 +90,26 @@ export async function subscribeToNewsletter(formState: FormState, formData: Form
   }
   revalidatePath('/')
   return toFormState('SUCCESS', 'Successfully subscribed to newsletter!')
+}
+
+export async function likePostAction(formState: FormState, formData: FormData) {
+  // let client: MongoClient
+
+  // // connecting to db
+  // try {
+  //   client = await connectDatabase('blog')
+  // } catch (error) {
+  //   return toFormState('ERROR', 'Error connecting to database, please try again later')
+  // }
+
+  // let result: InsertOneResult
+
+  console.log(formData)
+
+  return toFormState('SUCCESS', 'Successfully liked post!')
+}
+
+export async function dislikePostAction(formState: FormState, formData: FormData) {
+  console.log(formData)
+  return toFormState('SUCCESS', 'Successfully disLiked post!')
 }

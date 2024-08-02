@@ -1,6 +1,5 @@
 'use client'
 
-import { useFormState } from 'react-dom'
 import styles from './ContactForm.module.css'
 import { sendEmail } from '@/actions/actions'
 import { EMPTY_FORM_STATE } from '@/constants/formState'
@@ -8,9 +7,10 @@ import { useFormReset } from '@/hooks/useFormReset'
 import { useToastMessage } from '@/hooks/useToastMessage'
 import FieldError from '../ui/FieldError'
 import SubmitButton from '../ui/SubmitButton'
+import { useActionState } from 'react'
 
 const ContactForm = () => {
-  const [formState, action] = useFormState(sendEmail, EMPTY_FORM_STATE)
+  const [formState, action] = useActionState(sendEmail, EMPTY_FORM_STATE)
   const formRef = useFormReset(formState)
 
   const noScriptFallback = useToastMessage(formState)

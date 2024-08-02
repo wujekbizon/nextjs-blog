@@ -1,3 +1,4 @@
+'use client'
 import styles from './PostContent.module.css'
 import PostHeader from './PostHeader'
 import { PostItemType } from '@/types/postsTypes'
