@@ -20,7 +20,6 @@ const nextConfig = {
       },
     },
     reactCompiler: true,
-    ppr: 'incremental',
   },
 }
 
