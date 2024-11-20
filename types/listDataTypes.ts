@@ -1,3 +1,5 @@
+import { JSX } from 'react'
+
 interface OptionItem {
   value: string
   label: string // Use label for human-readable display text
